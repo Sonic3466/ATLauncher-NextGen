@@ -11,8 +11,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ForkJoinPool;
 
 public final class ATLauncher{
+    public static ForkJoinPool TASKS = new ForkJoinPool();
+
     private static Injector injector;
 
     public static void main(String... args)
@@ -25,6 +28,8 @@ public final class ATLauncher{
                 module = regenModule(pC);
             }
             injector = Guice.createInjector(module);
+
+            Settings.updateLauncherFiles();
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }
