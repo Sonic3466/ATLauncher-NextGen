@@ -1,0 +1,27 @@
+[
+    {
+        "group":"com.google.code.gson",
+        "artifact":"gson",
+        "version":"2.2.4"
+    },
+    {
+        "group":"aopalliance",
+        "artifact":"aopalliance",
+        "version":"1.0"
+    },
+    {
+        "group":"com.google.guava",
+        "artifact":"guava",
+        "version":"16.0.1"
+    },
+    {
+        "group":"com.google.inject",
+        "artifact":"guice",
+        "version":"4.0-beta4"
+    },
+    {
+        "group":"javax.inject",
+        "artifact":"javax.inject",
+        "version":"1"
+    }
+]

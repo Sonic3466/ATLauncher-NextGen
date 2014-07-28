@@ -1,0 +1,13 @@
+# Ignore Everything
+/*
+/*/
+
+# Except These
+!/src/
+!/macapp/
+!/Core/
+!/Bootstrap/
+!/.gitignore
+!/LICENSE
+!/README.md
+!/pom.xml
