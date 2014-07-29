@@ -1,5 +1,6 @@
 package com.atlauncher;
 
+import com.atlauncher.ui.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 
 import com.google.inject.AbstractModule;
@@ -12,6 +13,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ForkJoinPool;
+import javax.swing.SwingUtilities;
 
 public final class ATLauncher{
     public static ForkJoinPool TASKS = new ForkJoinPool();
@@ -30,6 +32,14 @@ public final class ATLauncher{
             injector = Guice.createInjector(module);
 
             Settings.updateLauncherFiles();
+
+            final ATLauncherFrame frame = new ATLauncherFrame();
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run(){
+                    frame.setVisible(true);
+                }
+            });
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }

@@ -2,6 +2,7 @@ package com.atlauncher;
 
 import com.atlauncher.obj.Downloadable;
 import com.atlauncher.obj.FileHash;
+import com.atlauncher.obj.News;
 import com.atlauncher.obj.Server;
 
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ public final class Settings{
 
     public static final Path CORE = Paths.get(System.getProperty("user.home"), ".atlauncher");
     public static final Path DATA = CORE.resolve("data");
+    public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("images");
 
     public static final Server.Servers SERVERS = ATLauncher.getInjector().getInstance(Server.Servers.class);
@@ -42,11 +44,28 @@ public final class Settings{
         }
     }
 
+    public static News[] getNews(){
+        Path news = JSON.resolve("news.json");
+        if(!Files.exists(news)){
+            updateLauncherFiles();
+            return getNews();
+        }
+
+        try{
+            InputStream fis = new FileInputStream(news.toFile());
+            News[] n = GSON.fromJson(new InputStreamReader(fis), News[].class);
+            fis.close();
+            return n;
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
     public static void updateLauncherFiles(){
         FileHash[] hashes = Settings.getFileHashes();
         for(FileHash hash : hashes){
             if(hash.size != 0){
-                hash.getDownload().run();
+                ATLauncher.TASKS.execute(hash.getDownload());
             }
         }
     }
