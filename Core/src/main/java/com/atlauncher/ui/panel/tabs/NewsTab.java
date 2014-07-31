@@ -11,6 +11,7 @@ extends JPanel
 implements Card{
     public NewsTab(){
         super(new BorderLayout());
+        this.setOpaque(false);
         this.add(new NewsPanel(), BorderLayout.CENTER);
     }
 

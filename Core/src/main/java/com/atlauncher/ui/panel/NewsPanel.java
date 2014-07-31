@@ -16,12 +16,14 @@ extends JPanel{
         this.setStyleSheet(Resources.makeStyleSheet("news"));
     }};
     private final JEditorPane NEWS_PANE = new JEditorPane("text/html", ""){{
+        this.setOpaque(false);
         this.setEditable(false);
         this.setEditorKit(HTML_KIT);
     }};
 
     public NewsPanel(){
         super(new BorderLayout());
+        this.setOpaque(false);
         this.add(new JScrollPane(this.NEWS_PANE), BorderLayout.CENTER);
         this.reload();
     }

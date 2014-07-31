@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public final class BackPanel
 extends JPanel{
@@ -21,7 +22,7 @@ extends JPanel{
         this.backgrounds.put("scene", Resources.makeImage("background/scene"));
     }
 
-    private BufferedImage b = Resources.makeImage("background/scene");
+    private volatile BufferedImage b = Resources.makeImage("background/scene");
 
     public BackPanel(){
         super(new BorderLayout());
@@ -30,9 +31,14 @@ extends JPanel{
     }
 
     @Subscribe
-    public void onBackgroundChange(BackgroundChangeEvent event){
-        this.b = this.backgrounds.get(event.id);
-        this.repaint();
+    public void onBackgroundChange(final BackgroundChangeEvent event){
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                b = backgrounds.get(event.id);
+                repaint();
+            }
+        });
     }
 
     @Override
