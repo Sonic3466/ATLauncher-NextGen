@@ -1,10 +1,9 @@
 package com.atlauncher;
 
+import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.ATLauncherFrame;
-import com.atlauncher.utils.CLIParser;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.lang.reflect.Constructor;
@@ -14,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ForkJoinPool;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public final class ATLauncher{
     public static ForkJoinPool TASKS = new ForkJoinPool();
@@ -22,7 +22,10 @@ public final class ATLauncher{
 
     public static void main(String... args)
     throws Exception{
+        UIManager.setLookAndFeel(ATLLookAndFeel.class.getName());
+
         try{
+            /*
             CLIParser parser = new CLIParser(args);
             String pC = parser.get("provider");
             AbstractModule module = genModule(pC);
@@ -32,6 +35,7 @@ public final class ATLauncher{
             injector = Guice.createInjector(module);
 
             Settings.updateLauncherFiles();
+            */
 
             final ATLauncherFrame frame = new ATLauncherFrame();
             SwingUtilities.invokeLater(new Runnable(){

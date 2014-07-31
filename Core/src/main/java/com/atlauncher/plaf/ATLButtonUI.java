@@ -1,0 +1,96 @@
+package com.atlauncher.plaf;
+
+import sun.swing.SwingUtilities2;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.Rectangle;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicButtonUI;
+
+public final class ATLButtonUI
+extends BasicButtonUI{
+    protected static final Color PRESSED = new Color(45, 150, 190);
+    protected static final Color UNPRESSED = new Color(55, 55, 55);
+    protected static final Color TEXT = Color.WHITE;
+    protected static final ATLButtonUI buttonUI = new ATLButtonUI();
+
+    public static ComponentUI createUI(JComponent comp){
+        return buttonUI;
+    }
+
+    private Rectangle viewRect = new Rectangle();
+    private Rectangle iconRect = new Rectangle();
+    private Rectangle textRect = new Rectangle();
+
+    @Override
+    public void installUI(JComponent comp){
+        super.installUI(comp);
+
+        if(comp instanceof JButton){
+            JButton button = (JButton) comp;
+            button.setFocusPainted(false);
+            button.setBorderPainted(false);
+            button.setForeground(TEXT);
+            button.setBackground(UNPRESSED);
+        }
+    }
+
+    @Override
+    public Dimension getMinimumSize(JComponent comp){
+        return new Dimension(176, 54);
+    }
+
+    @Override
+    public Dimension getMaximumSize(JComponent comp){
+        return new Dimension(176, 54);
+    }
+
+    @Override
+    public void paint(Graphics g, JComponent c){
+        AbstractButton b = (AbstractButton) c;
+        Graphics2D g2 = (Graphics2D) g;
+        if(b.getModel().isPressed()){
+            g2.setColor(PRESSED);
+            g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+        } else{
+            if(b.isOpaque()){
+                g2.setColor(b.getBackground());
+                g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+            }
+        }
+
+        String text = this.layout(b, SwingUtilities2.getFontMetrics(b, g2), b.getWidth(), b.getHeight());
+
+        this.paintIcon(g, c, this.iconRect);
+        this.paintText(g, c, this.textRect, text);
+    }
+
+    private String layout(AbstractButton b, FontMetrics fm,
+                          int width, int height) {
+        Insets i = b.getInsets();
+        viewRect.x = i.left;
+        viewRect.y = i.top;
+        viewRect.width = width - (i.right + viewRect.x);
+        viewRect.height = height - (i.bottom + viewRect.y);
+
+        textRect.x = textRect.y = textRect.width = textRect.height = 0;
+        iconRect.x = iconRect.y = iconRect.width = iconRect.height = 0;
+
+        // layout the text and icon
+        return SwingUtilities.layoutCompoundLabel(
+                b, fm, b.getText(), b.getIcon(),
+                b.getVerticalAlignment(), b.getHorizontalAlignment(),
+                b.getVerticalTextPosition(), b.getHorizontalTextPosition(),
+                viewRect, iconRect, textRect,
+                b.getText() == null ? 0 : b.getIconTextGap());
+    }
+}

@@ -2,11 +2,13 @@ package com.atlauncher;
 
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
 import javax.swing.text.html.StyleSheet;
 
 public final class Resources{
@@ -42,6 +44,25 @@ public final class Resources{
 
                 resources.put(name, sheet);
                 return sheet;
+            }
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static BufferedImage makeImage(String name){
+        try{
+            if(resources.containsKey(name)){
+                Object obj = resources.get(name);
+                if(!(obj instanceof BufferedImage)){
+                    throw new RuntimeException("Reference for " + name + " ended up with a bad value, suggested=" + Font.class.getName() + "; got=" + obj.getClass().getName());
+                } else{
+                    return (BufferedImage) obj;
+                }
+            } else{
+                BufferedImage image = ImageIO.read(System.class.getResource("/assets/images/" + name + ".png"));
+                resources.put(name, image);
+                return image;
             }
         } catch(Exception ex){
             throw new RuntimeException(ex);

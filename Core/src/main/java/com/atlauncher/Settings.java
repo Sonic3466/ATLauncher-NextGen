@@ -8,14 +8,18 @@ import com.atlauncher.obj.Server;
 import com.google.gson.Gson;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 
 public final class Settings{
     public static final Gson GSON = new Gson();
+    public static final Properties properties = new Properties();
 
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";
 
@@ -23,6 +27,38 @@ public final class Settings{
     public static final Path DATA = CORE.resolve("data");
     public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("images");
+
+    static
+    {
+        try{
+            Path path = CORE.resolve("atlauncher.cfg");
+
+            if(!Files.exists(path)){
+                Files.createFile(path);
+            }
+
+            InputStream in = new FileInputStream(path.toFile());
+            properties.load(in);
+            in.close();
+        } catch(Exception ex){
+            ex.printStackTrace(System.err);
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    Path path = CORE.resolve("atlauncher.cfg");
+
+                    OutputStream out = new FileOutputStream(path.toFile());
+                    properties.store(out, "Don't Edit This File");
+                    out.close();
+                } catch(Exception ex){
+                    ex.printStackTrace(System.err);
+                }
+            }
+        }));
+    }
 
     public static final Server.Servers SERVERS = ATLauncher.getInjector().getInstance(Server.Servers.class);
 

@@ -1,5 +1,8 @@
 package com.atlauncher.ui;
 
+import com.atlauncher.ui.panel.CenterPanel;
+import com.atlauncher.ui.panel.RightPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.InputEvent;
@@ -12,6 +15,9 @@ import javax.swing.WindowConstants;
 public final class ATLauncherFrame
 extends JFrame
 implements MouseListener, MouseMotionListener{
+    private final RightPanel rightPanel = new RightPanel();
+    private final CenterPanel centerPanel = new CenterPanel();
+
     private int dGX;
     private int dGY;
 
@@ -22,9 +28,11 @@ implements MouseListener, MouseMotionListener{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(new BorderLayout());
-        this.setMinimumSize(new Dimension(1000, 640));
+        this.setMinimumSize(new Dimension(830, 510));
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+        this.add(this.centerPanel, BorderLayout.CENTER);
+        this.add(this.rightPanel, BorderLayout.EAST);
     }
 
     @Override
