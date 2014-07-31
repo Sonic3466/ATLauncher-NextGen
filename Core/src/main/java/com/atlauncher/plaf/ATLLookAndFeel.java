@@ -11,6 +11,7 @@ extends BasicLookAndFeel{
         Object[] def = {
                 "ButtonUI", get("ATLButtonUI"),
                 "ToggleButtonUI", get("ATLToggleButtonUI"),
+                "TabbedPaneUI", get("ATLTabbedPaneUI")
         };
         table.putDefaults(def);
     }
