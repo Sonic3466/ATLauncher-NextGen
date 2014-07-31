@@ -1,5 +1,7 @@
 package com.atlauncher.ui.panel;
 
+import com.atlauncher.obj.Pack;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
@@ -8,8 +10,8 @@ extends JPanel{
     private final BottomPanel bottomPanel = new BottomPanel();
     private final PackDisplayPanel packDisplayPanel = new PackDisplayPanel();
     {
-        this.packDisplayPanel.register(new PackPanel("beyondreality"));
-        this.packDisplayPanel.register(new PackPanel("businesselite"));
+        this.packDisplayPanel.register(new PackPanel(new Pack("The CrackPack", "Mindblown")));
+        this.packDisplayPanel.register(new PackPanel(new Pack("MoonQuest", "Welcome to this Yogscast Inspired Unofficial Minecraft Modpack! If you haven't seen their new Minecraft series yet this modpack has all those mods and now you can go ahead and play along too! You should really go watch it!")));
     }
 
     private final JPanel bottom = new JPanel(new BorderLayout());

@@ -2,8 +2,10 @@ package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.ATLauncherFrame;
+import com.atlauncher.utils.CLIParser;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.lang.reflect.Constructor;
@@ -25,7 +27,6 @@ public final class ATLauncher{
         UIManager.setLookAndFeel(ATLLookAndFeel.class.getName());
 
         try{
-            /*
             CLIParser parser = new CLIParser(args);
             String pC = parser.get("provider");
             AbstractModule module = genModule(pC);
@@ -35,7 +36,6 @@ public final class ATLauncher{
             injector = Guice.createInjector(module);
 
             Settings.updateLauncherFiles();
-            */
 
             final ATLauncherFrame frame = new ATLauncherFrame();
             SwingUtilities.invokeLater(new Runnable(){
