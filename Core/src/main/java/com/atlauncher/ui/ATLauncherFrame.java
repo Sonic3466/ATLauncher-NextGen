@@ -1,7 +1,6 @@
 package com.atlauncher.ui;
 
 import com.atlauncher.Resources;
-import com.atlauncher.ui.panel.BackPanel;
 import com.atlauncher.ui.panel.CenterPanel;
 import com.atlauncher.ui.panel.RightPanel;
 import com.atlauncher.ui.panel.TopPanel;
@@ -36,7 +35,6 @@ implements MouseListener, MouseMotionListener{
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(830, 510));
         this.addMouseListener(this);
-        this.setContentPane(new BackPanel());
         this.addMouseMotionListener(this);
         this.getContentPane().add(this.rightPanel, BorderLayout.EAST);
         this.getContentPane().add(this.centerPanel, BorderLayout.CENTER);
