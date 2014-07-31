@@ -3,11 +3,13 @@ package com.atlauncher.ui.panel;
 import com.atlauncher.Resources;
 import com.atlauncher.Settings;
 import com.atlauncher.obj.News;
+import com.atlauncher.ui.comp.LightBarScrollPane;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.text.html.HTMLEditorKit;
 
 public final class NewsPanel
@@ -16,16 +18,16 @@ extends JPanel{
         this.setStyleSheet(Resources.makeStyleSheet("news"));
     }};
     private final JEditorPane NEWS_PANE = new JEditorPane("text/html", ""){{
-        this.setOpaque(false);
         this.setEditable(false);
+        this.setBackground(new Color(40, 45, 50));
         this.setEditorKit(HTML_KIT);
     }};
 
     public NewsPanel(){
         super(new BorderLayout());
-        this.setOpaque(false);
-        this.add(new JScrollPane(this.NEWS_PANE), BorderLayout.CENTER);
+        this.add(new LightBarScrollPane(this.NEWS_PANE), BorderLayout.CENTER);
         this.reload();
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
     }
 
     public void reload(){

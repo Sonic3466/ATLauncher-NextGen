@@ -20,6 +20,7 @@ public final class ATLauncher{
     public static final EventBus EVENT_BUS = new EventBus();
 
     private static Injector injector;
+    private static ATLauncherFrame frame;
 
     public static void main(String... args)
     throws Exception{
@@ -36,7 +37,7 @@ public final class ATLauncher{
 
             Settings.updateLauncherFiles();
 
-            final ATLauncherFrame frame = new ATLauncherFrame();
+            frame = new ATLauncherFrame();
             SwingUtilities.invokeLater(new Runnable(){
                 @Override
                 public void run(){

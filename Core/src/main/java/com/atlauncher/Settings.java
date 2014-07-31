@@ -28,6 +28,7 @@ public final class Settings{
     public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("images");
     public static final Path SKINS = DATA.resolve("skins");
+    public static final Path LANGUAGES = DATA.resolve("languages");
 
     static
     {
