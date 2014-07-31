@@ -37,6 +37,7 @@ extends JPanel{
 
     public RightPanel(){
         super(new GridBagLayout());
+        this.setOpaque(false);
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;

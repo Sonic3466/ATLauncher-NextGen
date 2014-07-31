@@ -1,29 +1,20 @@
 package com.atlauncher.ui.panel;
 
-import com.atlauncher.ui.comp.ToggleButtonGroup;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
 public final class BottomPanel
 extends JPanel{
-    private final JToggleButton openDirButton = new JToggleButton("Open Dir");
-    private final JToggleButton texturesButton = new JToggleButton("Textures");
-    private final JToggleButton modsButton = new JToggleButton("Mods");
-    private final JToggleButton launchButton = new JToggleButton("Launch");
-
-    private final ToggleButtonGroup tbg = new ToggleButtonGroup();
-    {
-        this.tbg.add(this.openDirButton);
-        this.tbg.add(this.texturesButton);
-        this.tbg.add(this.modsButton);
-        this.tbg.add(this.launchButton);
-    }
+    private final JButton openDirButton = new JButton("Open Dir");
+    private final JButton texturesButton = new JButton("Textures");
+    private final JButton modsButton = new JButton("Mods");
+    private final JButton launchButton = new JButton("Launch");
 
     public BottomPanel(){
         super(new GridBagLayout());
+        this.setOpaque(false);
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;

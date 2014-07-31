@@ -2,6 +2,7 @@ package com.atlauncher.plaf;
 
 import sun.swing.SwingUtilities2;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -48,8 +49,10 @@ extends BasicButtonUI{
         AbstractButton b = (AbstractButton) c;
         Graphics2D g2 = (Graphics2D) g;
         if(b.getModel().isPressed()){
-            g2.setColor(PRESSED);
-            g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+            if(b.isOpaque()){
+                g2.setPaint(PRESSED);
+                g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+            }
         } else{
             if(b.isOpaque()){
                 g2.setColor(b.getBackground());
@@ -61,6 +64,10 @@ extends BasicButtonUI{
 
         this.paintIcon(g, c, this.iconRect);
         this.paintText(g, c, this.textRect, text);
+    }
+
+    private AlphaComposite alpha(float alpha){
+        return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
     }
 
     private String layout(AbstractButton b, FontMetrics fm,

@@ -29,9 +29,13 @@ extends JPanel{
         this.backButton.setOpaque(false);
     }
     private final JPanel displayPanel = new JPanel(new CardLayout());
+    {
+        this.displayPanel.setOpaque(false);
+    }
 
     public PackDisplayPanel(){
         super(new BorderLayout());
+        this.setOpaque(false);
 
         this.nextButton.addActionListener(new ActionListener(){
             @Override
