@@ -18,13 +18,15 @@ public final class RightPanel
 extends JPanel{
     private static final Color GRAY = new Color(140, 150, 165);
 
-    private final JToggleButton modpacksButton = new JToggleButton("MODPACKS", true);
+    private final JToggleButton newsButton = new JToggleButton("NEWS", true);
+    private final JToggleButton modpacksButton = new JToggleButton("MODPACKS");
     private final JToggleButton instancesButton = new JToggleButton("INSTANCES");
     private final JToggleButton accountsButton = new JToggleButton("ACCOUNTS");
     private final JToggleButton settingsButton = new JToggleButton("SETTINGS");
 
     private final ToggleButtonGroup tbg = new ToggleButtonGroup();
     {
+        this.tbg.add(this.newsButton);
         this.tbg.add(this.modpacksButton);
         this.tbg.add(this.instancesButton);
         this.tbg.add(this.settingsButton);
@@ -35,6 +37,8 @@ extends JPanel{
         super(new GridBagLayout());
         this.setOpaque(false);
 
+        this.newsButton.setForeground(GRAY);
+        this.newsButton.setBackground(Color.WHITE);
         this.settingsButton.setForeground(GRAY);
         this.settingsButton.setBackground(Color.WHITE);
         this.modpacksButton.setForeground(GRAY);
@@ -44,6 +48,14 @@ extends JPanel{
         this.accountsButton.setForeground(GRAY);
         this.accountsButton.setBackground(Color.WHITE);
 
+        this.newsButton.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent e){
+                if(newsButton.isSelected()){
+                    ATLauncher.EVENT_BUS.post(new ShowEvent("news"));
+                }
+            }
+        });
         this.settingsButton.addItemListener(new ItemListener(){
             @Override
             public void itemStateChanged(ItemEvent e){
@@ -85,6 +97,8 @@ extends JPanel{
         c.gridx = 0;
         c.gridy = 1;
         this.add(new HeadPanel(new Account("Asyncronos")), c);
+        c.gridy++;
+        this.add(this.newsButton, c);
         c.gridy++;
         this.add(this.modpacksButton, c);
         c.gridy++;
