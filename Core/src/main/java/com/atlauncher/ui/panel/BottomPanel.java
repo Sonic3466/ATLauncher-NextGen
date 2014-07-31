@@ -24,6 +24,7 @@ extends JPanel{
 
     public BottomPanel(){
         super(new GridBagLayout());
+
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 0.5;

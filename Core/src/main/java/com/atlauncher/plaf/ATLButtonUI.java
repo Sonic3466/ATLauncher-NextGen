@@ -3,7 +3,6 @@ package com.atlauncher.plaf;
 import sun.swing.SwingUtilities2;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,16 +41,6 @@ extends BasicButtonUI{
             button.setForeground(TEXT);
             button.setBackground(UNPRESSED);
         }
-    }
-
-    @Override
-    public Dimension getMinimumSize(JComponent comp){
-        return new Dimension(176, 54);
-    }
-
-    @Override
-    public Dimension getMaximumSize(JComponent comp){
-        return new Dimension(176, 54);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.atlauncher.plaf;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -8,6 +9,8 @@ import java.util.Map;
 
 public final class UIUtils{
     private UIUtils(){}
+
+    public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
     private static Map<RenderingHints.Key, Object> hints;
     private static Map<RenderingHints.Key, Object> oldHints;
