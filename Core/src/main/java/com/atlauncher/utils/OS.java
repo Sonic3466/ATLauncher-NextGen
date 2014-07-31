@@ -1,4 +1,4 @@
-package com.atlauncher.bootstrap.utils;
+package com.atlauncher.utils;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

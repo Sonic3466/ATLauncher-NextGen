@@ -11,14 +11,14 @@ import java.util.jar.JarFile;
 
 public final class ProviderClassLoader
 extends URLClassLoader{
-    private static final Path libs = Paths.get(System.getProperty("user.home"), ".atlauncher", "libs");
+    private static final Path libs = OS.getStorageLocation().resolve("libs");
     private static final URL[] jars;
 
     static
     {
         try{
             jars = new URL[]{
-                    libs.resolve("atl_provider.jar").toUri().toURL()
+                    libs.resolve("ATLauncher-DataProvider.jar").toUri().toURL()
             };
         } catch(Exception ex){
             throw new RuntimeException(ex);
@@ -31,7 +31,7 @@ extends URLClassLoader{
 
     public void emptyProviderJar()
     throws IOException{
-        JarFile jarFile = new JarFile(libs.resolve("atl_provider.jar").toFile());
+        JarFile jarFile = new JarFile(libs.resolve("ATLauncher-DataProvider.jar").toFile());
         Enumeration<JarEntry> entries = jarFile.entries();
         while(entries.hasMoreElements()){
             JarEntry entry = entries.nextElement();

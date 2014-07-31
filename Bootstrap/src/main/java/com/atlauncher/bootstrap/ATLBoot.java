@@ -28,13 +28,13 @@ public final class ATLBoot{
     public static void main(String... args)
     throws IOException{
         try{
-            Path core = Paths.get(System.getProperty("user.home"), ".atlauncher");
+            Path core = OS.getStorageLocation();
 
             if(!Files.exists(core)){
                 Files.createDirectories(core);
             }
 
-            Path c = core.resolve("atlauncher.jar");
+            Path c = core.resolve("ATLauncher-Core.jar");
 
             try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-Core.jar").openStream();
                 FileChannel channel = FileChannel.open(c, EnumSet.of(
@@ -58,7 +58,7 @@ public final class ATLBoot{
             Files.createDirectories(parent);
         }
 
-        Path provider = parent.resolve("atl_provider.jar");
+        Path provider = parent.resolve("ATLauncher-DataProvider.jar");
         if(!Files.exists(provider)){
             try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-DataProvider.jar").openStream();
                 FileChannel channel = FileChannel.open(provider, EnumSet.of(
@@ -99,7 +99,7 @@ public final class ATLBoot{
                 }
                 a.add(p);
                 a.add("-jar");
-                a.add(parent.resolve("atlauncher.jar").toString());
+                a.add(parent.resolve("ATLauncher-Core.jar").toString());
                 a.add("--provider");
                 a.add("com.atlauncher.ATLModule");
             }
