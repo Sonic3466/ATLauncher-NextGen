@@ -29,6 +29,14 @@ public final class UIUtils{
         return image;
     }
 
+    @Deprecated
+    public static void drawCrossHair(Graphics g, int x, int y, int len, Color c){
+        int subLen = (len / 2) - 1;
+        g.setColor(c);
+        g.fillRect(x, y, len, 1);
+        g.fillRect(x - subLen, y - subLen, 1, len);
+    }
+
     public static BufferedImage createColoredBackground(Color c){
         BufferedImage background = Resources.makeImage("background/scene");
         BufferedImage b = new BufferedImage(background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
