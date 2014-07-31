@@ -4,6 +4,7 @@ import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 
+import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -18,7 +19,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class ATLauncher{
-    public static ForkJoinPool TASKS = new ForkJoinPool();
+    public static final ForkJoinPool TASKS = new ForkJoinPool();
+    public static final EventBus EVENT_BUS = new EventBus();
 
     private static Injector injector;
 

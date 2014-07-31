@@ -1,6 +1,5 @@
 package com.atlauncher.ui;
 
-import com.atlauncher.Resources;
 import com.atlauncher.ui.panel.BackPanel;
 import com.atlauncher.ui.panel.CenterPanel;
 import com.atlauncher.ui.panel.RightPanel;
@@ -12,14 +11,12 @@ import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public final class ATLauncherFrame
 extends JFrame
 implements MouseListener, MouseMotionListener{
-    private final BufferedImage background = Resources.makeImage("background");
     private final RightPanel rightPanel = new RightPanel();
     private final CenterPanel centerPanel = new CenterPanel();
     private final TopPanel topPanel = new TopPanel();

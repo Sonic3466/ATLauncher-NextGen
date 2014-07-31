@@ -6,12 +6,17 @@ import java.awt.image.BufferedImage;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.file.StandardOpenOption;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.text.html.StyleSheet;
 
 public final class Resources{
+    public static final EnumSet<StandardOpenOption> WRITE = EnumSet.of(StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+    public static final EnumSet<StandardOpenOption> READ = EnumSet.of(StandardOpenOption.READ);
+
     private static final Map<String, Object> resources = new HashMap<>();
     public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 

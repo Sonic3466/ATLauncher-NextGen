@@ -9,10 +9,16 @@ import javax.imageio.ImageIO;
 public final class Pack{
     public final String display_name;
     public final String description;
+    public final String version;
 
-    public Pack(String display_name, String description){
+    public Pack(String display_name, String description, String version){
         this.display_name = display_name;
         this.description = description;
+        this.version = version;
+    }
+
+    public Pack(String display_name, String desc){
+        this(display_name, desc, "0.0.0");
     }
 
     public BufferedImage getImage(){

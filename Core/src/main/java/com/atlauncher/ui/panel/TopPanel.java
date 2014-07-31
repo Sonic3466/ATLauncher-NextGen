@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public final class TopPanel
-extends JPanel{
+        extends JPanel{
     public TopPanel(){
         super(new GridBagLayout());
         this.setOpaque(false);
