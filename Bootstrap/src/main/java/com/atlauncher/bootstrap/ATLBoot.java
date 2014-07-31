@@ -24,6 +24,7 @@ public final class ATLBoot{
         try{
             Path core = Paths.get(System.getProperty("user.home"), ".atlauncher");
             checkDependencies(core.resolve("libs"));
+            System.out.println(System.getProperty("java.version"));
             launch(core);
         } catch(Exception ex){
             ex.printStackTrace(System.err);
@@ -32,12 +33,8 @@ public final class ATLBoot{
 
     private static void checkDependencies(Path parent)
     throws IOException{
-        try{
-            if(!Files.exists(parent)){
-                Files.createDirectories(parent);
-            }
-        } catch(Exception ex){
-            ex.printStackTrace(System.err);
+        if(!Files.exists(parent)){
+            Files.createDirectories(parent);
         }
 
         InputStream in = System.class.getResourceAsStream("/package.json");

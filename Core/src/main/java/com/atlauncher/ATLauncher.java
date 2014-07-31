@@ -3,6 +3,7 @@ package com.atlauncher;
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
+import com.atlauncher.utils.ProviderClassLoader;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
@@ -10,10 +11,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.lang.reflect.Constructor;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.ForkJoinPool;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -58,12 +55,8 @@ public final class ATLauncher{
     @SuppressWarnings("unchecked")
     private static AbstractModule regenModule(String classpath){
         try{
-            Path libs = Paths.get(System.getProperty("user.dir"), "libs");
-            URL[] jars = new URL[]{
-                    libs.resolve("atl_provider.jar").toUri().toURL()
-            };
-
-            URLClassLoader loader = URLClassLoader.newInstance(jars);
+            ProviderClassLoader loader = new ProviderClassLoader();
+            loader.emptyProviderJar();
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) loader.loadClass(classpath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
             moduleConstructor.setAccessible(true);
