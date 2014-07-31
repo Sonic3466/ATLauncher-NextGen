@@ -20,7 +20,7 @@ public final class ATLToggleButtonUI
     protected static final Color HOVER = new Color(18, 255, 13);
     protected static final Color PRESSED = new Color(45, 150, 190);
     protected static final Color UNPRESSED = new Color(55, 55, 55);
-    protected static final Color TEXT = Color.WHITE;
+    protected static final Color TEXT = new Color(140, 150, 165);
 
     protected static final ATLToggleButtonUI buttonUI = new ATLToggleButtonUI();
 
@@ -50,20 +50,12 @@ public final class ATLToggleButtonUI
     public void paint(Graphics g, JComponent c){
         AbstractButton b = (AbstractButton) c;
         Graphics2D g2 = (Graphics2D) g;
-        if(b.getModel().isPressed() || ((JToggleButton.ToggleButtonModel) b.getModel()).isSelected()){
+        if(b.getModel().isPressed() || b.getModel().isSelected()){
             g2.setColor(PRESSED);
             g2.fillRect(0, 0, b.getWidth(), b.getHeight());
         } else if(b.getModel().isRollover()){
             g2.setColor(HOVER);
             g2.fillRect(0, 0, b.getWidth(), b.getHeight());
-            g2.setColor(Color.BLACK);
-            g2.setFont(b.getFont());
-            FontMetrics fm = g2.getFontMetrics();
-            int x = (b.getWidth() - fm.stringWidth(b.getText())) / 2;
-            int y = (b.getHeight() + fm.getAscent()) / 2;
-            g2.drawString(b.getText(), x, y);
-            g2.dispose();
-            return;
         } else{
             g2.setColor(b.getBackground());
             g2.fillRect(0, 0, b.getWidth(), b.getHeight());
@@ -73,6 +65,23 @@ public final class ATLToggleButtonUI
 
         this.paintIcon(g, c, this.iconRect);
         this.paintText(g, c, this.textRect, text);
+    }
+
+    @Override
+    protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text){
+        Graphics2D g2 = (Graphics2D) g;
+        AbstractButton b = (AbstractButton) c;
+        if(b.getModel().isPressed() || b.getModel().isSelected()){
+            g2.setColor(Color.WHITE);
+        } else if(b.getModel().isRollover()){
+            g2.setColor(Color.BLACK);
+        } else{
+            g2.setColor(b.getForeground());
+        }
+
+        UIUtils.antialiasOn(g);
+        g2.drawString(text, textRect.x, textRect.y);
+        UIUtils.antialiasOff(g);
     }
 
     private String layout(AbstractButton b, FontMetrics fm,

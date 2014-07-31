@@ -7,7 +7,6 @@ import com.atlauncher.ui.comp.LightBarScrollPane;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.BorderFactory;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.text.html.HTMLEditorKit;
@@ -19,6 +18,7 @@ extends JPanel{
     }};
     private final JEditorPane NEWS_PANE = new JEditorPane("text/html", ""){{
         this.setEditable(false);
+        this.setForeground(Color.WHITE);
         this.setBackground(new Color(40, 45, 50));
         this.setEditorKit(HTML_KIT);
     }};
@@ -27,7 +27,7 @@ extends JPanel{
         super(new BorderLayout());
         this.add(new LightBarScrollPane(this.NEWS_PANE), BorderLayout.CENTER);
         this.reload();
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+        this.setBorder(null);
     }
 
     public void reload(){

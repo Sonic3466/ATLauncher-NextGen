@@ -8,6 +8,6 @@
 !/Core/
 !/Bootstrap/
 !/.gitignore
-!/LICENSE
+!/LICENSE.md
 !/README.md
 !/pom.xml

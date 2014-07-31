@@ -1,9 +1,15 @@
 package com.atlauncher.plaf;
 
+import com.atlauncher.Resources;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +20,23 @@ public final class UIUtils{
 
     private static Map<RenderingHints.Key, Object> hints;
     private static Map<RenderingHints.Key, Object> oldHints;
+
+    public static Image flip(BufferedImage image){
+        AffineTransform mirror = AffineTransform.getScaleInstance(-1, 1);
+        mirror.translate(-image.getWidth(null), 0);
+        AffineTransformOp op = new AffineTransformOp(mirror, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        image = op.filter(image, null);
+        return image;
+    }
+
+    public static BufferedImage createColoredBackground(Color c){
+        BufferedImage background = Resources.makeImage("background/scene");
+        BufferedImage b = new BufferedImage(background.getWidth(), background.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) b.getGraphics();
+        g.setColor(c);
+        g.fillRect(0, 0, b.getWidth(), b.getHeight());
+        return b;
+    }
 
     public static void antialiasOn(Graphics g){
         Graphics2D g2 = (Graphics2D) g;

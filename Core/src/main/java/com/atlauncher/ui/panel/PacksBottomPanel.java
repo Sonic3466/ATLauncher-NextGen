@@ -5,14 +5,14 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public final class BottomPanel
+public final class PacksBottomPanel
 extends JPanel{
     private final JButton openDirButton = new JButton("Open Dir");
     private final JButton texturesButton = new JButton("Textures");
     private final JButton modsButton = new JButton("Mods");
     private final JButton launchButton = new JButton("Launch");
 
-    public BottomPanel(){
+    public PacksBottomPanel(){
         super(new GridBagLayout());
         this.setOpaque(false);
 

@@ -2,6 +2,7 @@ package com.atlauncher.obj;
 
 import com.atlauncher.Resources;
 import com.atlauncher.Settings;
+import com.atlauncher.plaf.UIUtils;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -36,6 +37,25 @@ public final class Account{
         } catch(IOException e){
             throw new RuntimeException(e);
         }
+    }
+
+    public Image getBody(){
+        BufferedImage skin = this.getSkin();
+
+        BufferedImage head = skin.getSubimage(8, 8, 8, 8);
+        BufferedImage arm = skin.getSubimage(44, 20, 4, 12);
+        BufferedImage body = skin.getSubimage(20, 20, 8, 12);
+        BufferedImage leg = skin.getSubimage(4, 20, 4, 12);
+        BufferedImage s = new BufferedImage(16, 32, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = s.getGraphics();
+        g.drawImage(head, 4, 0, null);
+        g.drawImage(arm, 0, 8, null);
+        g.drawImage(UIUtils.flip(arm), 12, 8, null);
+        g.drawImage(body, 4, 8, null);
+        g.drawImage(leg, 4, 20, null);
+        g.drawImage(UIUtils.flip(leg), 8, 20, null);
+
+        return s.getScaledInstance(128, 256, Image.SCALE_SMOOTH);
     }
 
     public void updateSkin(){

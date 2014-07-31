@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public final class PackDisplayPanel
+public final class CardDisplayPanel
 extends JPanel{
     private final List<Card> cards = new LinkedList<>();
     private int ptr = 0;
@@ -33,7 +33,7 @@ extends JPanel{
         this.displayPanel.setOpaque(false);
     }
 
-    public PackDisplayPanel(){
+    public CardDisplayPanel(){
         super(new BorderLayout());
         this.setOpaque(false);
 

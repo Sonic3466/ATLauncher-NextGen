@@ -49,6 +49,10 @@ public final class ATLauncher{
         }
     }
 
+    public static ATLauncherFrame getFrame(){
+        return frame;
+    }
+
     public static Injector getInjector(){
         return injector;
     }

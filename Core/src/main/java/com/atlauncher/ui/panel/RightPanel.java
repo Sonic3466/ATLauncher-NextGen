@@ -16,8 +16,6 @@ import javax.swing.JToggleButton;
 
 public final class RightPanel
 extends JPanel{
-    private static final Color GRAY = new Color(140, 150, 165);
-
     private final JToggleButton newsButton = new JToggleButton("NEWS", true);
     private final JToggleButton modpacksButton = new JToggleButton("MODPACKS");
     private final JToggleButton instancesButton = new JToggleButton("INSTANCES");
@@ -37,15 +35,10 @@ extends JPanel{
         super(new GridBagLayout());
         this.setOpaque(false);
 
-        this.newsButton.setForeground(GRAY);
         this.newsButton.setBackground(Color.WHITE);
-        this.settingsButton.setForeground(GRAY);
         this.settingsButton.setBackground(Color.WHITE);
-        this.modpacksButton.setForeground(GRAY);
         this.modpacksButton.setBackground(Color.WHITE);
-        this.instancesButton.setForeground(GRAY);
         this.instancesButton.setBackground(Color.WHITE);
-        this.accountsButton.setForeground(GRAY);
         this.accountsButton.setBackground(Color.WHITE);
 
         this.newsButton.addItemListener(new ItemListener(){
@@ -53,6 +46,7 @@ extends JPanel{
             public void itemStateChanged(ItemEvent e){
                 if(newsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("news"));
+                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
                 }
             }
         });
@@ -61,6 +55,7 @@ extends JPanel{
             public void itemStateChanged(ItemEvent e){
                 if(settingsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("settings"));
+                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("white"));
                 }
             }
         });
@@ -86,7 +81,8 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(accountsButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("Accounts"));
+                    ATLauncher.EVENT_BUS.post(new ShowEvent("accounts"));
+                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
                 }
             }
         });

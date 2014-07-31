@@ -13,6 +13,7 @@ import com.google.common.eventbus.Subscribe;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public final class CenterPanel
 extends JPanel{
@@ -35,8 +36,14 @@ extends JPanel{
     }
 
     @Subscribe
-    public void onShow(ShowEvent event){
-        ((CardLayout) this.getLayout()).show(this, event.id);
+    public void onShow(final ShowEvent event){
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                ((CardLayout) getLayout()).show(CenterPanel.this, event.id);
+                revalidate();
+            }
+        });
     }
 
     public <T extends JPanel & Card> void register(T card){

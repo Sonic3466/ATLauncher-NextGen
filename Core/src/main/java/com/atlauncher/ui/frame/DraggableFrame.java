@@ -1,5 +1,7 @@
 package com.atlauncher.ui.frame;
 
+import com.atlauncher.Resources;
+
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,6 +17,7 @@ implements MouseListener, MouseMotionListener{
     public DraggableFrame(String title){
         super(title);
         this.setUndecorated(true);
+        this.setIconImage(Resources.makeImage("icons/icon"));
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }

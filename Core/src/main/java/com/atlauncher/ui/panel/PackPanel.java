@@ -37,8 +37,8 @@ implements Card{
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         BufferedImage background = this.pack.getImage();
-        int x = ((this.getWidth() - background.getWidth()) / 2) - 35;
-        int y = ((this.getHeight() - background.getHeight()) / 2) - 99;
+        int x = ((this.getWidth() - background.getWidth()) / 2) - 25;
+        int y = ((this.getHeight() - background.getHeight()) / 2) - 75;
         g2.setColor(BACK);
         g2.fillRect(x, y, 347, 182);
         g2.drawImage(background, x, y, 347, 182, null);

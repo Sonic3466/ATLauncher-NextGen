@@ -11,6 +11,10 @@ extends ButtonGroup{
             super.setSelected(model, selected);
         } else{
             clearSelection();
+
+            if(this.getSelection() == null){
+                super.setSelected(model, true);
+            }
         }
     }
 }
