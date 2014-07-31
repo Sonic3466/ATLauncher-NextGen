@@ -17,8 +17,8 @@ import javax.swing.plaf.basic.BasicToggleButtonUI;
 
 public final class ATLToggleButtonUI
         extends BasicToggleButtonUI{
-    protected static final Color HOVER = new Color(18, 255, 13);
-    protected static final Color PRESSED = new Color(45, 150, 190);
+    protected static final Color HOVER = new Color(45, 150, 190);
+    protected static final Color PRESSED = new Color(18, 255, 13);
     protected static final Color UNPRESSED = new Color(55, 55, 55);
     protected static final Color TEXT = new Color(140, 150, 165);
 

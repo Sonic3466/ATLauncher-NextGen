@@ -55,7 +55,7 @@ extends JPanel{
             public void itemStateChanged(ItemEvent e){
                 if(settingsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("settings"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("white"));
+                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
                 }
             }
         });
