@@ -10,9 +10,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +29,21 @@ public final class ATLBoot{
     throws IOException{
         try{
             Path core = Paths.get(System.getProperty("user.home"), ".atlauncher");
+
+            if(!Files.exists(core)){
+                Files.createDirectories(core);
+            }
+
+            Path c = core.resolve("atlauncher.jar");
+
+            try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-Core.jar").openStream();
+                FileChannel channel = FileChannel.open(c, EnumSet.of(
+                        StandardOpenOption.CREATE, StandardOpenOption.WRITE));
+                ReadableByteChannel rbc = Channels.newChannel(in)){
+
+                channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+
             checkDependencies(core.resolve("libs"));
             System.out.println(System.getProperty("java.version"));
             launch(core);
@@ -35,6 +56,17 @@ public final class ATLBoot{
     throws IOException{
         if(!Files.exists(parent)){
             Files.createDirectories(parent);
+        }
+
+        Path provider = parent.resolve("atl_provider.jar");
+        if(!Files.exists(provider)){
+            try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-DataProvider.jar").openStream();
+                FileChannel channel = FileChannel.open(provider, EnumSet.of(
+                        StandardOpenOption.CREATE, StandardOpenOption.WRITE));
+                ReadableByteChannel rbc = Channels.newChannel(in)){
+
+                channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
         }
 
         InputStream in = System.class.getResourceAsStream("/package.json");
