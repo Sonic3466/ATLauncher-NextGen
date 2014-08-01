@@ -71,10 +71,8 @@ public final class ATLToggleButtonUI
     protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text){
         Graphics2D g2 = (Graphics2D) g;
         AbstractButton b = (AbstractButton) c;
-        if(b.getModel().isPressed() || b.getModel().isSelected()){
-            g2.setColor(Color.WHITE);
-        } else if(b.getModel().isRollover()){
-            g2.setColor(Color.BLACK);
+        if(b.getModel().isPressed() || b.getModel().isSelected() || b.getModel().isRollover()){
+            g2.setColor(Color.black);
         } else{
             g2.setColor(b.getForeground());
         }
@@ -84,8 +82,7 @@ public final class ATLToggleButtonUI
         UIUtils.antialiasOff(g);
     }
 
-    private String layout(AbstractButton b, FontMetrics fm,
-                          int width, int height) {
+    private String layout(AbstractButton b, FontMetrics fm, int width, int height) {
         Insets i = b.getInsets();
         viewRect.x = i.left;
         viewRect.y = i.top;
@@ -95,7 +92,6 @@ public final class ATLToggleButtonUI
         textRect.x = textRect.y = textRect.width = textRect.height = 0;
         iconRect.x = iconRect.y = iconRect.width = iconRect.height = 0;
 
-        // layout the text and icon
         return SwingUtilities.layoutCompoundLabel(
                 b, fm, b.getText(), b.getIcon(),
                 b.getVerticalAlignment(), b.getHorizontalAlignment(),

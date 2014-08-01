@@ -1,6 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.obj.Account;
+import com.atlauncher.ui.frame.LoginFrame;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,7 +10,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public final class HeadPanel
 extends JPanel{
@@ -22,6 +26,19 @@ extends JPanel{
         this.head = account.getHead();
         this.setPreferredSize(new Dimension(this.scale, this.scale));
         this.setToolTipText(account.name);
+        this.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                if(e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 1){
+                    SwingUtilities.invokeLater(new Runnable(){
+                        @Override
+                        public void run(){
+                            new LoginFrame().setVisible(true);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override

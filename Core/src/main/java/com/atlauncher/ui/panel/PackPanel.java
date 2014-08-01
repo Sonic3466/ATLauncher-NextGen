@@ -57,10 +57,10 @@ implements Card{
         g2.setStroke(new BasicStroke(5));
         g2.drawRect(x - 2, y - 2, 349, 184);
         g2.setColor(Color.GREEN);
-        Rectangle rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.version) + 4,
+        Rectangle rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.versions[0].version) + 4,
                 g2.getFontMetrics().getHeight() + 4);
         g2.fill(rect);
         g2.setColor(Color.WHITE);
-        g2.drawString(this.pack.version, x - 23, y + 13 + g2.getFontMetrics().getHeight());
+        g2.drawString(this.pack.versions[0].version, x - 23, y + 13 + g2.getFontMetrics().getHeight());
     }
 }

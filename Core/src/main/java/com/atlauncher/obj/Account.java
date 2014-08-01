@@ -21,6 +21,8 @@ import javax.imageio.ImageIO;
 public final class Account{
     public final String name;
 
+    public static final Account DEFAULT = new Account("Default");
+
     public Account(String name){
         this.name = name;
     }

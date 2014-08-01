@@ -4,9 +4,9 @@
 
 # Except These
 !/src/
-!/macapp/
 !/Core/
 !/Bootstrap/
+!/repository/
 !/.gitignore
 !/LICENSE.md
 !/README.md

@@ -1,6 +1,5 @@
-package com.atlauncher.ui;
+package com.atlauncher.ui.frame;
 
-import com.atlauncher.ui.frame.DraggableFrame;
 import com.atlauncher.ui.panel.BackPanel;
 import com.atlauncher.ui.panel.CenterPanel;
 import com.atlauncher.ui.panel.RightPanel;

@@ -1,7 +1,7 @@
 package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
-import com.atlauncher.ui.ATLauncherFrame;
+import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
 
@@ -61,7 +61,6 @@ public final class ATLauncher{
     private static AbstractModule regenModule(String classpath){
         try{
             ProviderClassLoader loader = new ProviderClassLoader();
-            loader.emptyProviderJar();
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) loader.loadClass(classpath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
             moduleConstructor.setAccessible(true);
