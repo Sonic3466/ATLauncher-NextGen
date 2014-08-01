@@ -9,8 +9,8 @@
 
     <repositories>
         <repository>
-            <id>libs</id>
-            <name>libs</name>
+            <id>mojang</id>
+            <name>Mojang Libraries</name>
             <releases>
                 <enabled>true</enabled>
                 <checksumPolicy>ignore</checksumPolicy>
@@ -18,7 +18,7 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <url>file://${project.basedir}/repository</url>
+            <url>url://libraries.mojang.net</url>
         </repository>
     </repositories>
 
