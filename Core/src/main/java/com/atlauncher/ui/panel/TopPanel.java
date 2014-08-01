@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 public final class TopPanel
 extends JPanel{
     public TopPanel(){
-        super(new FlowLayout(FlowLayout.LEFT));
+        super(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         this.setOpaque(false);
-        this.add(new ExitButton());
         this.add(new MinimizeButton());
+        this.add(new ExitButton());
     }
 }

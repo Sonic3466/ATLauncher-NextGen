@@ -5,11 +5,13 @@ public final class Mod{
     public final String name;
     public final String download;
     public final boolean recommended;
+    public final boolean required;
 
-    public Mod(String description, String name, String download, boolean recommended){
+    public Mod(String description, String name, String download, boolean recommended, boolean required){
         this.description = description;
         this.name = name;
         this.download = download;
         this.recommended = recommended;
+        this.required = required;
     }
 }

@@ -4,8 +4,8 @@ import com.atlauncher.obj.Downloadable;
 import com.atlauncher.obj.FileHash;
 import com.atlauncher.obj.News;
 import com.atlauncher.obj.Server;
-
 import com.atlauncher.utils.OS;
+
 import com.google.gson.Gson;
 
 import java.io.FileInputStream;
@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public final class Settings{
@@ -70,7 +69,7 @@ public final class Settings{
     private static FileHash[] getFileHashes(){
         Path hashes = DATA.resolve("hashes.json");
         if(!Files.exists(hashes)){
-            new Downloadable("launcher/json/hashes.json", Settings.DATA).run();
+            new Downloadable("newlauncher/json/hashes.json", Settings.DATA).run();
         }
 
         try{

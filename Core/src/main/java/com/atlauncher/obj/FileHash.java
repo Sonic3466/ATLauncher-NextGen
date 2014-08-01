@@ -18,6 +18,6 @@ public final class FileHash{
     }
 
     public Downloadable getDownload(){
-        return new Downloadable("/launcher/" + this.folder.toLowerCase() + "/" + this.name, Settings.DATA.resolve(this.folder.toLowerCase()));
+        return new Downloadable("/newlauncher/" + this.folder.toLowerCase() + "/" + this.name, Settings.DATA.resolve(this.folder.toLowerCase()));
     }
 }
