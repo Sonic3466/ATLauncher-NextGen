@@ -2,6 +2,7 @@ package com.atlauncher.plaf;
 
 import com.atlauncher.Resources;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,6 +28,10 @@ public final class UIUtils{
         AffineTransformOp op = new AffineTransformOp(mirror, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
         image = op.filter(image, null);
         return image;
+    }
+
+    public static AlphaComposite alpha(float alpha){
+        return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
     }
 
     @Deprecated

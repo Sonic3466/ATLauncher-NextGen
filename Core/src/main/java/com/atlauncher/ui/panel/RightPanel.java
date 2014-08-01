@@ -1,9 +1,9 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.Accounts;
 import com.atlauncher.event.BackgroundChangeEvent;
 import com.atlauncher.event.ShowEvent;
-import com.atlauncher.obj.Account;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
 
 import java.awt.Color;
@@ -92,7 +92,7 @@ extends JPanel{
         c.weighty = 0.5;
         c.gridx = 0;
         c.gridy = 1;
-        this.add(new HeadPanel(new Account("Asyncronos")), c);
+        this.add(new HeadPanel(Accounts.instance.getCurrent()), c);
         c.gridy++;
         this.add(this.newsButton, c);
         c.gridy++;
