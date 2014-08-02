@@ -50,7 +50,9 @@ implements Card, MouseListener{
     @Override
     public void mouseClicked(MouseEvent e){
         if(e.getButton() == MouseEvent.BUTTON3){
-            this.menu.show(this, e.getX(), e.getY());
+            if(this.account != Account.DEFAULT){
+                this.menu.show(this, e.getX(), e.getY());
+            }
         }
     }
 

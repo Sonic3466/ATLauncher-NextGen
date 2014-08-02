@@ -21,8 +21,6 @@ implements Card{
 
     private final Pack pack;
 
-    private boolean hovering = false;
-
     public PackPanel(Pack pack){
         this.pack = pack;
         this.setOpaque(false);
@@ -40,7 +38,7 @@ implements Card{
         Graphics2D g2 = (Graphics2D) g;
         BufferedImage background = this.pack.getImage();
         int x = ((this.getWidth() - background.getWidth()) / 2) - 25;
-        int y = ((this.getHeight() - background.getHeight()) / 2) - 75;
+        int y = ((this.getHeight() - background.getHeight()) / 2) - 73;
         g2.setColor(BACK);
         g2.fillRect(x, y, 347, 182);
         g2.drawImage(background, x, y, 347, 182, null);

@@ -7,6 +7,7 @@ import com.atlauncher.obj.Server;
 import com.atlauncher.utils.OS;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -18,7 +19,7 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 public final class Settings{
-    public static final Gson GSON = new Gson();
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final Properties properties = new Properties();
 
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";

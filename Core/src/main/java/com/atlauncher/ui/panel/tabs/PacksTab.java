@@ -1,12 +1,16 @@
 package com.atlauncher.ui.panel.tabs;
 
+import com.atlauncher.Packs;
+import com.atlauncher.obj.Pack;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.panel.CardDisplayPanel;
 import com.atlauncher.ui.panel.CenterBottomPanel;
+import com.atlauncher.ui.panel.PackPanel;
 import com.atlauncher.ui.panel.PacksBottomPanel;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public final class PacksTab
 extends JPanel
@@ -27,6 +31,15 @@ implements Card{
 
         this.add(this.bottom, BorderLayout.SOUTH);
         this.add(this.packDisplayPanel, BorderLayout.CENTER);
+
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                for(Pack pack : Packs.instance.all()){
+                    packDisplayPanel.register(new PackPanel(pack));
+                }
+            }
+        });
     }
 
     @Override

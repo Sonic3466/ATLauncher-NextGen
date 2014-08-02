@@ -2,6 +2,7 @@ package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.frame.ATLauncherFrame;
+import com.atlauncher.ui.frame.LoginFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
 
@@ -49,6 +50,15 @@ public final class ATLauncher{
                     frame.setVisible(true);
                 }
             });
+
+            if(Settings.properties.getProperty("lastAccount") != null){
+                SwingUtilities.invokeLater(new Runnable(){
+                    @Override
+                    public void run(){
+                        new LoginFrame().setVisible(true);
+                    }
+                });
+            }
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }
