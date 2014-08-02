@@ -29,6 +29,7 @@ public final class Settings{
     public static final Path IMAGES = DATA.resolve("images");
     public static final Path SKINS = DATA.resolve("skins");
     public static final Path LANGUAGES = DATA.resolve("languages");
+    public static final Path ACCOUNTS = DATA.resolve("accounts");
 
     static
     {

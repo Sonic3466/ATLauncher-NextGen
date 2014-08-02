@@ -2,21 +2,31 @@ package com.atlauncher.ui.panel;
 
 import com.atlauncher.obj.Account;
 import com.atlauncher.ui.comp.Card;
+import com.atlauncher.ui.frame.LoginFrame;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 public final class UserPanel
 extends JPanel
-implements Card{
+implements Card, MouseListener{
     private final Account account;
+    private final ContextMenu menu = new ContextMenu();
 
     public UserPanel(Account account){
         this.account = account;
+        this.addMouseListener(this);
     }
 
     @Override
@@ -35,5 +45,50 @@ implements Card{
     @Override
     public String id(){
         return this.account.name;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e){
+        if(e.getButton() == MouseEvent.BUTTON3){
+            this.menu.show(this, e.getX(), e.getY());
+        }
+    }
+
+    @Override public void mousePressed(MouseEvent e){}
+    @Override public void mouseReleased(MouseEvent e){}
+    @Override public void mouseEntered(MouseEvent e){}
+    @Override public void mouseExited(MouseEvent e){}
+
+    private final class ContextMenu
+    extends JPopupMenu{
+        private final JMenuItem reloadItem = new JMenuItem("Reload Skin");
+        private final JMenuItem loginAsItem = new JMenuItem("Login As");
+
+        private ContextMenu(){
+            this.reloadItem.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    UserPanel.this.account.updateSkin();
+                }
+            });
+            this.loginAsItem.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    try{
+                        SwingUtilities.invokeLater(new Runnable(){
+                            @Override
+                            public void run(){
+                                new LoginFrame(account.username).setVisible(true);
+                            }
+                        });
+                    } catch(Exception ex){
+                        ex.printStackTrace(System.err);
+                    }
+                }
+            });
+
+            this.add(this.reloadItem);
+            this.add(this.loginAsItem);
+        }
     }
 }

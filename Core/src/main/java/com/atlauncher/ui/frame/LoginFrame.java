@@ -2,6 +2,7 @@ package com.atlauncher.ui.frame;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
+import com.atlauncher.Settings;
 import com.atlauncher.event.AccountRegisteredEvent;
 import com.atlauncher.event.UpdateHeadEvent;
 import com.atlauncher.obj.Account;
@@ -30,6 +31,10 @@ extends DraggableFrame{
     private final CenterPanel center_panel = new CenterPanel();
 
     public LoginFrame(){
+        this(Settings.properties.getProperty("lastAccount", ""));
+    }
+
+    public LoginFrame(String username){
         super("Login To Minecraft");
         this.setLocationRelativeTo(ATLauncher.getFrame());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -38,6 +43,7 @@ extends DraggableFrame{
         this.getContentPane().add(new BottomPanel(), BorderLayout.SOUTH);
         this.getContentPane().add(this.center_panel, BorderLayout.CENTER);
         this.pack();
+        this.center_panel.uField.setText(username);
     }
 
     private final class TopPanel
@@ -137,6 +143,7 @@ extends DraggableFrame{
                     Accounts.instance.setCurrent(acc);
                     ATLauncher.EVENT_BUS.post(new UpdateHeadEvent());
                     ATLauncher.EVENT_BUS.post(new AccountRegisteredEvent());
+                    Settings.properties.setProperty("lastAccount", center_panel.uField.getText());
                     dispose();
                 }
             });

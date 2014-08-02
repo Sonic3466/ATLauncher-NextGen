@@ -78,7 +78,7 @@ extends JPanel{
                 if(modpacksButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("modpacks"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("scene"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Nodpacks"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Modpacks"));
                 }
             }
         });

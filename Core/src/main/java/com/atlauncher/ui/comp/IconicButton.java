@@ -13,7 +13,7 @@ extends JButton{
     public IconicButton(Image image){
         super(new ImageIcon(image));
         this.setContentAreaFilled(false);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 0));
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         this.setMargin(new Insets(0, 0, 0, 0));
         this.setBorderPainted(false);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));

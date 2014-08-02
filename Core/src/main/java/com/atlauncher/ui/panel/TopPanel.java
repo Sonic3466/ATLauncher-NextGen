@@ -34,7 +34,7 @@ extends JPanel{
             this.setOpaque(false);
             for(SocialMedia sm : SocialMedia.values()){
                 JButton button = sm.button();
-                button.setBorder(BorderFactory.createEmptyBorder(0, 15, 2, 0));
+                button.setBorder(BorderFactory.createEmptyBorder(0, 25, 5, 0));
                 this.add(button);
             }
         }

@@ -40,8 +40,6 @@ public final class ATLauncher{
             }
             injector = Guice.createInjector(module);
 
-            System.out.println(System.getProperty("java.class.path"));
-
             Settings.updateLauncherFiles();
 
             frame = new ATLauncherFrame();

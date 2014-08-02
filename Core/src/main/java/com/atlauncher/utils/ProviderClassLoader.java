@@ -23,7 +23,6 @@ extends URLClassLoader{
             jars = new URL[files.length];
             for(int i = 0; i < files.length; i++){
                 jars[i] = files[i].toURI().toURL();
-                System.out.println(files[i]);
             }
         } catch(Exception ex){
             throw new RuntimeException(ex);

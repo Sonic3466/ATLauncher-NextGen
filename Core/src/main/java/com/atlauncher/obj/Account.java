@@ -20,11 +20,13 @@ import javax.imageio.ImageIO;
 
 public final class Account{
     public final String name;
+    public final String username;
 
-    public static final Account DEFAULT = new Account("Default");
+    public static final Account DEFAULT = new Account("Default", "");
 
-    public Account(String name){
+    public Account(String name, String username){
         this.name = name;
+        this.username = username;
     }
 
     public BufferedImage getSkin(){

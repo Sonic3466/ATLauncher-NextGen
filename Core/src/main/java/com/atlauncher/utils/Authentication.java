@@ -39,6 +39,6 @@ public final class Authentication{
     }
 
     public static Account get(String username, String password){
-        return (login(username, password) ? new Account(getDisplayName()).updateSkin() : null);
+        return (login(username, password) ? new Account(getDisplayName(), username).updateSkin() : null);
     }
 }
