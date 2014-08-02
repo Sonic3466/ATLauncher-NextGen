@@ -16,6 +16,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class ATLauncher{
+    static
+    {
+        Thread.currentThread().setContextClassLoader(new ProviderClassLoader());
+    }
+
     public static final ForkJoinPool TASKS = new ForkJoinPool();
     public static final EventBus EVENT_BUS = new EventBus();
 
@@ -34,6 +39,8 @@ public final class ATLauncher{
                 module = regenModule(pC);
             }
             injector = Guice.createInjector(module);
+
+            System.out.println(System.getProperty("java.class.path"));
 
             Settings.updateLauncherFiles();
 

@@ -12,6 +12,7 @@ extends BasicLookAndFeel{
                 "ButtonUI", get("ATLButtonUI"),
                 "ToggleButtonUI", get("ATLToggleButtonUI"),
                 "TabbedPaneUI", get("ATLTabbedPaneUI"),
+                "LabelUI", get("ATLLabelUI")
         };
         table.putDefaults(def);
     }

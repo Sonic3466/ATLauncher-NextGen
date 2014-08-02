@@ -56,6 +56,12 @@ extends JPanel{
         this.add(this.nextButton, BorderLayout.EAST);
     }
 
+    public void unregisterAll(){
+        for(Card card : this.cards){
+            this.displayPanel.removeAll();
+        }
+    }
+
     private void next(){
         if(this.ptr++ >= this.cards.size() - 1){
             this.ptr = this.cards.size() - 1;

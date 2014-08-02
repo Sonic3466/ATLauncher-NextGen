@@ -68,6 +68,7 @@ extends JPanel{
     public void updateHead(UpdateHeadEvent event){
         this.account = Accounts.instance.getCurrent();
         this.head = this.account.getHead();
+        this.updateUI();
     }
 
     @Override

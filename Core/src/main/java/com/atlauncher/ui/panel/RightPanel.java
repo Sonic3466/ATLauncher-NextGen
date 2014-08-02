@@ -4,6 +4,7 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
 import com.atlauncher.event.BackgroundChangeEvent;
 import com.atlauncher.event.ShowEvent;
+import com.atlauncher.event.TitleChangeEvent;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
 
 import java.awt.Color;
@@ -47,6 +48,7 @@ extends JPanel{
                 if(newsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("news"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("News"));
                 }
             }
         });
@@ -56,6 +58,7 @@ extends JPanel{
                 if(settingsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("settings"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Settings"));
                 }
             }
         });
@@ -65,6 +68,7 @@ extends JPanel{
                 if(instancesButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("instances"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("scene"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Instances"));
                 }
             }
         });
@@ -74,6 +78,7 @@ extends JPanel{
                 if(modpacksButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("modpacks"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("scene"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Nodpacks"));
                 }
             }
         });
@@ -83,6 +88,7 @@ extends JPanel{
                 if(accountsButton.isSelected()){
                     ATLauncher.EVENT_BUS.post(new ShowEvent("accounts"));
                     ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
+                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Accounts"));
                 }
             }
         });

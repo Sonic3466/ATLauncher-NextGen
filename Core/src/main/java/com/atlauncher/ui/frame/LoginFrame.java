@@ -1,6 +1,11 @@
 package com.atlauncher.ui.frame;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.Accounts;
+import com.atlauncher.event.AccountRegisteredEvent;
+import com.atlauncher.event.UpdateHeadEvent;
+import com.atlauncher.obj.Account;
+import com.atlauncher.utils.Authentication;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,6 +27,8 @@ import javax.swing.text.Document;
 
 public final class LoginFrame
 extends DraggableFrame{
+    private final CenterPanel center_panel = new CenterPanel();
+
     public LoginFrame(){
         super("Login To Minecraft");
         this.setLocationRelativeTo(ATLauncher.getFrame());
@@ -29,7 +36,7 @@ extends DraggableFrame{
         this.setContentPane(new BackPanel());
         this.getContentPane().add(new TopPanel(), BorderLayout.NORTH);
         this.getContentPane().add(new BottomPanel(), BorderLayout.SOUTH);
-        this.getContentPane().add(new CenterPanel(), BorderLayout.CENTER);
+        this.getContentPane().add(this.center_panel, BorderLayout.CENTER);
         this.pack();
     }
 
@@ -56,6 +63,9 @@ extends DraggableFrame{
 
     private final class CenterPanel
     extends JPanel{
+        private final JTextField uField = new JTextField(16);
+        private final JTextField pField = new JTextField(16);
+
         public CenterPanel(){
             super();
             this.setOpaque(false);
@@ -65,10 +75,9 @@ extends DraggableFrame{
             uLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             uLabel.setForeground(Color.white);
             this.add(uLabel);
-            final JTextField uField = new JTextField(16);
-            uField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-            uField.setAlignmentX(Component.LEFT_ALIGNMENT);
-            uField.addKeyListener(new KeyAdapter(){
+            this.uField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+            this.uField.setAlignmentX(Component.LEFT_ALIGNMENT);
+            this.uField.addKeyListener(new KeyAdapter(){
                 @Override
                 public void keyPressed(KeyEvent e){
                     if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
@@ -83,16 +92,15 @@ extends DraggableFrame{
                     }
                 }
             });
-            this.add(uField);
+            this.add(this.uField);
             JLabel pLabel = new JLabel("Password: ", JLabel.LEFT);
             pLabel.setForeground(Color.white);
             pLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             pLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             this.add(pLabel);
-            final JTextField pField = new JTextField(16);
-            pField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-            pField.setAlignmentX(Component.LEFT_ALIGNMENT);
-            pField.addKeyListener(new KeyAdapter(){
+            this.pField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+            this.pField.setAlignmentX(Component.LEFT_ALIGNMENT);
+            this.pField.addKeyListener(new KeyAdapter(){
                 @Override
                 public void keyPressed(KeyEvent e){
                     if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
@@ -107,7 +115,7 @@ extends DraggableFrame{
                     }
                 }
             });
-            this.add(pField);
+            this.add(this.pField);
         }
     }
 
@@ -122,7 +130,14 @@ extends DraggableFrame{
             this.loginButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    //TODO: Write login logic
+                    Account acc = Authentication.get(center_panel.uField.getText(), center_panel.pField.getText());
+                    if(acc == null){
+                        throw new RuntimeException("Cannot Login");
+                    }
+                    Accounts.instance.setCurrent(acc);
+                    ATLauncher.EVENT_BUS.post(new UpdateHeadEvent());
+                    ATLauncher.EVENT_BUS.post(new AccountRegisteredEvent());
+                    dispose();
                 }
             });
             this.cancelButton.addActionListener(new ActionListener(){

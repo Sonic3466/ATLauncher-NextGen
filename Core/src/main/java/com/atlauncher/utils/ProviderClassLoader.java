@@ -1,13 +1,10 @@
 package com.atlauncher.utils;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 public final class ProviderClassLoader
 extends URLClassLoader{
@@ -17,9 +14,17 @@ extends URLClassLoader{
     static
     {
         try{
-            jars = new URL[]{
-                    libs.resolve("ATLauncher-DataProvider.jar").toUri().toURL()
-            };
+            File[] files = libs.toFile().listFiles(new FilenameFilter(){
+                @Override
+                public boolean accept(File dir, String name){
+                    return name.endsWith(".jar");
+                }
+            });
+            jars = new URL[files.length];
+            for(int i = 0; i < files.length; i++){
+                jars[i] = files[i].toURI().toURL();
+                System.out.println(files[i]);
+            }
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }
@@ -27,15 +32,5 @@ extends URLClassLoader{
 
     public ProviderClassLoader(){
         super(ProviderClassLoader.jars, URLClassLoader.getSystemClassLoader());
-    }
-
-    public void emptyProviderJar()
-    throws IOException{
-        JarFile jarFile = new JarFile(libs.resolve("ATLauncher-DataProvider.jar").toFile());
-        Enumeration<JarEntry> entries = jarFile.entries();
-        while(entries.hasMoreElements()){
-            JarEntry entry = entries.nextElement();
-            System.out.println(entry.getName());
-        }
     }
 }

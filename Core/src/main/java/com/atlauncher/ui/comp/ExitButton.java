@@ -2,27 +2,13 @@ package com.atlauncher.ui.comp;
 
 import com.atlauncher.Resources;
 
-import java.awt.Cursor;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 
 public final class ExitButton
-extends JButton{
+extends IconicButton{
     public ExitButton(){
-        super(new ImageIcon(Resources.makeImage("icons/button_close")));
-        this.setContentAreaFilled(false);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 12, 0, 0));
-        this.setMargin(new Insets(0, 0, 0, 0));
-        this.setBorderPainted(false);
-        this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        this.setVerticalAlignment(SwingConstants.TOP);
-        this.setFocusPainted(false);
-        this.setOpaque(false);
+        super(Resources.makeImage("icons/button_close"));
         this.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){

@@ -36,16 +36,17 @@ public final class ATLBoot{
 
             Path c = core.resolve("ATLauncher-Core.jar");
 
-            try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-Core.jar").openStream();
-                FileChannel channel = FileChannel.open(c, EnumSet.of(
-                        StandardOpenOption.CREATE, StandardOpenOption.WRITE));
-                ReadableByteChannel rbc = Channels.newChannel(in)){
+            if(!Files.exists(c)){
+                try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-Core.jar").openStream();
+                    FileChannel channel = FileChannel.open(c, EnumSet.of(
+                            StandardOpenOption.CREATE, StandardOpenOption.WRITE));
+                    ReadableByteChannel rbc = Channels.newChannel(in)){
 
-                channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+                    channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+                }
             }
 
             checkDependencies(core.resolve("libs"));
-            System.out.println(System.getProperty("java.version"));
             launch(core);
         } catch(Exception ex){
             ex.printStackTrace(System.err);
@@ -62,6 +63,17 @@ public final class ATLBoot{
         if(!Files.exists(provider)){
             try(InputStream in = new URL("http://www.creeperrepo.net/ATL/newlauncher/modules/ATLauncher-DataProvider.jar").openStream();
                 FileChannel channel = FileChannel.open(provider, EnumSet.of(
+                        StandardOpenOption.CREATE, StandardOpenOption.WRITE));
+                ReadableByteChannel rbc = Channels.newChannel(in)){
+
+                channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+        }
+
+        Path authLib = parent.resolve("authlib-1.5.16.jar");
+        if(!Files.exists(authLib)){
+            try(InputStream in = new URL("https://libraries.minecraft.net/com/mojang/authlib/1.5.16/authlib-1.5.16.jar").openStream();
+                FileChannel channel = FileChannel.open(authLib, EnumSet.of(
                         StandardOpenOption.CREATE, StandardOpenOption.WRITE));
                 ReadableByteChannel rbc = Channels.newChannel(in)){
 

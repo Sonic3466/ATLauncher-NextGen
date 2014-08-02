@@ -1,5 +1,7 @@
 package com.atlauncher;
 
+import com.atlauncher.plaf.UIUtils;
+
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -53,6 +55,10 @@ public final class Resources{
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    public static BufferedImage makeImage(String name, int scale){
+        return UIUtils.resize(makeImage(name), scale, scale);
     }
 
     public static BufferedImage makeImage(String name){

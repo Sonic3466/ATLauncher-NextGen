@@ -30,6 +30,18 @@ public final class UIUtils{
         return image;
     }
 
+    public static <T extends Image> BufferedImage resize(T img, int len, int height){
+        BufferedImage i = new BufferedImage(len, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = i.createGraphics();
+        g.drawImage(img, 0, 0, len, height, null);
+        g.dispose();
+        g.setComposite(AlphaComposite.Src);
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        return i;
+    }
+
     public static AlphaComposite alpha(float alpha){
         return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
     }

@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>1.3</version>
+            <version>1.5.16</version>
         </dependency>
 
         <dependency>
@@ -42,7 +42,6 @@
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                         <index>true</index>
                         <manifest>
-                            <addClasspath>true</addClasspath>
                             <mainClass>com.atlauncher.ATLauncher</mainClass>
                         </manifest>
                         <manifestEntries>

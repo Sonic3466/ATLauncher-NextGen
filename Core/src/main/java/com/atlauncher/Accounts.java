@@ -2,20 +2,31 @@ package com.atlauncher;
 
 import com.atlauncher.obj.Account;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public enum Accounts{
     instance;
 
-    private final List<Account> loaded = Arrays.asList(Account.DEFAULT);
+    private final List<Account> loaded = new LinkedList<>(Arrays.asList(Account.DEFAULT));
     private Account current = Account.DEFAULT;
 
     public Account getCurrent(){
         return this.current;
     }
 
-    public void signIn(String email, String password){
-        
+    public void setCurrent(Account acc){
+        if(!this.loaded.contains(acc)){
+            this.loaded.add(acc);
+        }
+
+        this.current = acc;
+    }
+
+    public List<Account> all(){
+        return ImmutableList.copyOf(this.loaded);
     }
 }

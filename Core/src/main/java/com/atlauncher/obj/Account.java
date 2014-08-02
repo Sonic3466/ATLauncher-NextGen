@@ -60,7 +60,7 @@ public final class Account{
         return s.getScaledInstance(128, 256, Image.SCALE_SMOOTH);
     }
 
-    public void updateSkin(){
+    public Account updateSkin(){
         try{
             Path path = Settings.SKINS.resolve(this.name.toLowerCase() + ".png");
 
@@ -78,6 +78,7 @@ public final class Account{
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }
+        return this;
     }
 
     public Image getHead(){

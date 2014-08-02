@@ -1,8 +1,5 @@
 Manifest-Version: 1.0
 Implementation-Version: 4.0.0
-Build-Jdk: 1.7.0_55
-Class-Path: libs/guice-4.0-beta4.jar libs/javax.inject-1.jar libs/aopalliance-1.0.jar libs/guava-16.0.1.jar libs/toast-1.0.1.jar libs/ATLauncher_DataProvider.jar libs/gson-2.2.4.jar
-Implementation-Vender: ATLauncher Team
+Class-Path: libs/guice-4.0-beta4.jar libs/javax.inject-1.jar libs/aopalliance-1.0.jar libs/guava-16.0.1.jar libs/toast-1.0.1.jar libs/ATLauncher_DataProvider.jar libs/gson-2.2.4.jar libs/authlib-1.5.16.jar
 Created-By: Apache Maven 3.0.5
 Main-Class: com.atlauncher.ATLauncher
-Archiver-Version: Plexus Archiver
