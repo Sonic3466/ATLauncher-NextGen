@@ -30,7 +30,7 @@ implements Card{
 
     @Override
     public String id(){
-        return this.pack.display_name.toLowerCase().replace(" ", "");
+        return this.pack.getSafeName();
     }
 
     @Override
@@ -44,10 +44,10 @@ implements Card{
         g2.drawImage(background, x, y, 347, 182, null);
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
-        g2.drawString(this.pack.display_name, x + 230 - this.pack.display_name.length(), y + 210);
-        int wrap = 50;
+        g2.drawString(this.pack.name, x + ((347 - g2.getFontMetrics().stringWidth(this.pack.name)) / 2), y + 210);
+        int wrap = 75;
         String wrapped = Strings.wrap(this.pack.description, wrap);
-        int dX = x;
+        int dX = 25;
         int dY = y + 235;
         for(String str : wrapped.split("\n")){
             g2.drawString(str, dX, dY += g2.getFontMetrics().getHeight());
@@ -55,7 +55,7 @@ implements Card{
         g2.setStroke(new BasicStroke(5));
         g2.drawRect(x - 2, y - 2, 349, 184);
         g2.setColor(Color.GREEN);
-        Rectangle rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.versions[0].version) + 4,
+        Rectangle rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.getLatest().version) + 4,
                 g2.getFontMetrics().getHeight() + 4);
         g2.fill(rect);
         g2.setColor(Color.WHITE);

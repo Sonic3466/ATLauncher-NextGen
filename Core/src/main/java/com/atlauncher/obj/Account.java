@@ -64,6 +64,31 @@ public final class Account{
 
     public Account updateSkin(){
         try{
+            if(this.name.toLowerCase().equalsIgnoreCase("default")){
+                return this;
+            }
+
+            Path path = Settings.SKINS.resolve(this.name.toLowerCase() + ".png");
+
+            HttpURLConnection conn = (HttpURLConnection) new URL("http://s3.amazonaws.com/MinecraftSkins/" + this.name + ".png").openConnection();
+            try(InputStream in = conn.getInputStream();
+                ReadableByteChannel rbc = Channels.newChannel(in);
+                FileChannel channel = FileChannel.open(path, Resources.WRITE)){
+
+                channel.transferFrom(rbc, 0, Long.MAX_VALUE);
+            }
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+        return this;
+    }
+
+    public Account forceUpdate(){
+        try{
+            if(this.name.toLowerCase().equalsIgnoreCase("default")){
+                return this;
+            }
+
             Path path = Settings.SKINS.resolve(this.name.toLowerCase() + ".png");
 
             if(Files.exists(path)){

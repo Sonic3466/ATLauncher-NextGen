@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 
 public final class PacksBottomPanel
 extends JPanel{
-    private final JButton openDirButton = new JButton("Open Dir");
-    private final JButton texturesButton = new JButton("Textures");
-    private final JButton modsButton = new JButton("Mods");
-    private final JButton launchButton = new JButton("Launch");
+    private final JButton newInstanceButton = new JButton("New Instance");
+    private final JButton newServerButton = new JButton("New Server");
+    private final JButton supportButton = new JButton("Support");
+    private final JButton websiteButton = new JButton("Website");
 
     public PacksBottomPanel(){
         super(new GridBagLayout());
@@ -22,13 +22,13 @@ extends JPanel{
         c.gridx = 1;
         c.gridy = 0;
         c.insets.set(0, 0, 0, 3);
-        this.add(this.openDirButton, c);
+        this.add(this.newInstanceButton, c);
         c.gridx++;
-        this.add(this.texturesButton, c);
+        this.add(this.newServerButton, c);
         c.gridx++;
-        this.add(this.modsButton, c);
+        this.add(this.supportButton, c);
         c.gridx++;
         c.insets.set(0, 0, 0, 0);
-        this.add(this.launchButton, c);
+        this.add(this.websiteButton, c);
     }
 }

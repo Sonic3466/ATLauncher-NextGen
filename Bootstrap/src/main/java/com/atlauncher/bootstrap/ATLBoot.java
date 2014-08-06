@@ -25,8 +25,7 @@ import java.util.List;
 public final class ATLBoot{
     public static final Gson GSON = new Gson();
 
-    public static void main(String... args)
-    throws IOException{
+    public static void main(String... args){
         try{
             Path core = OS.getStorageLocation();
 
@@ -49,7 +48,7 @@ public final class ATLBoot{
             checkDependencies(core.resolve("libs"));
             launch(core);
         } catch(Exception ex){
-            ex.printStackTrace(System.err);
+            ex.printStackTrace(System.out);
         }
     }
 

@@ -5,6 +5,7 @@ import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
 import com.atlauncher.event.AccountRegisteredEvent;
 import com.atlauncher.event.UpdateHeadEvent;
+import com.atlauncher.event.UpdatePacksEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.utils.Authentication;
 
@@ -143,6 +144,7 @@ extends DraggableFrame{
                     Accounts.instance.setCurrent(acc);
                     ATLauncher.EVENT_BUS.post(new UpdateHeadEvent());
                     ATLauncher.EVENT_BUS.post(new AccountRegisteredEvent());
+                    ATLauncher.EVENT_BUS.post(new UpdatePacksEvent());
                     Settings.properties.setProperty("lastAccount", center_panel.uField.getText());
                     dispose();
                 }

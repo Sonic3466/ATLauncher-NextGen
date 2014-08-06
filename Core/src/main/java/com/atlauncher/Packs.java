@@ -1,30 +1,32 @@
 package com.atlauncher;
 
 import com.atlauncher.obj.Pack;
+import com.atlauncher.thread.LoadPacksThread;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public enum Packs{
     instance;
 
-    private final Set<Pack> loaded = new HashSet<>();
+    private final Set<Pack> loaded = new TreeSet<>();
 
     private Packs(){
         try{
-            InputStream in = System.class.getResourceAsStream("/packs.json");
-            Pack[] packs = Settings.GSON.fromJson(new InputStreamReader(in), Pack[].class);
-            for(Pack pack : packs){
-                this.loaded.add(pack);
-            }
+            loaded.addAll(ATLauncher.TASKS.submit(new LoadPacksThread()).get());
         } catch(Exception ex){
             ex.printStackTrace(System.err);
         }
     }
 
     public Set<Pack> all(){
-        return this.loaded;
+        try{
+            this.loaded.clear();
+            this.loaded.addAll(ATLauncher.TASKS.submit(new LoadPacksThread()).get());
+            return this.loaded;
+        } catch(Exception ex){
+            ex.printStackTrace(System.err);
+            return new TreeSet<>();
+        }
     }
 }

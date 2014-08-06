@@ -40,6 +40,7 @@ implements Runnable{
     private HttpURLConnection getConnection(){
         if(this.conn == null){
             try{
+                System.out.println(Settings.SERVERS.get(0).getFileURL(this.endpoint));
                 this.conn = (HttpURLConnection) new URL(Settings.SERVERS.get(0).getFileURL(this.endpoint)).openConnection();
 
                 this.conn.setUseCaches(false);
@@ -50,12 +51,8 @@ implements Runnable{
                 this.conn.setRequestProperty("Expires", "0");
                 this.conn.setRequestProperty("Pragma", "no-cache");
                 this.conn.connect();
-
-                if(this.conn.getResponseCode() / 100 != 2){
-                    throw new IOException(this.endpoint + " returned response code " + this.conn.getResponseCode());
-                }
             } catch(Exception ex){
-                throw new RuntimeException(ex);
+                ex.printStackTrace(System.err);
             }
         }
 
@@ -64,13 +61,17 @@ implements Runnable{
 
     @Override
     public void run(){
+        if(Files.exists(this.output) && !this.endpoint.contains("json")){
+            return;
+        }
+
         try(InputStream stream = this.getStream();
             FileChannel channel = this.getChannel();
             ReadableByteChannel rbc = Channels.newChannel(stream)){
 
             channel.transferFrom(rbc, 0, Long.MAX_VALUE);
         } catch(Exception ex){
-            throw new RuntimeException(ex);
+            ex.printStackTrace(System.out);
         }
     }
 
@@ -79,8 +80,12 @@ implements Runnable{
         return FileChannel.open(this.output, EnumSet.of(StandardOpenOption.CREATE, StandardOpenOption.WRITE));
     }
 
-    private InputStream getStream()
-    throws IOException{
-        return (this.isGzip() ? new GZIPInputStream(this.getConnection().getInputStream()) : this.getConnection().getInputStream());
+    private InputStream getStream(){
+        try{
+            return (this.isGzip() ? new GZIPInputStream(this.getConnection().getInputStream()) : this.getConnection().getInputStream());
+        } catch(Exception ex){
+            ex.printStackTrace(System.err);
+            return this.getConnection().getErrorStream();
+        }
     }
 }

@@ -32,6 +32,7 @@ extends JComponent{
     private final JScrollBar horizontalScrollBar;
 
     public LightBarScrollPane(JComponent component) {
+        this.setOpaque(false);
         scrollPane = new JScrollPane(component);
         verticalScrollBar = scrollPane.getVerticalScrollBar();
         verticalScrollBar.setVisible(false);
@@ -88,7 +89,6 @@ extends JComponent{
             }
         });
         add(layeredPane, BorderLayout.CENTER);
-        layeredPane.setBackground(Color.BLUE);
     }
 
     private void displayScrollBarsIfNecessary(JViewport viewPort) {

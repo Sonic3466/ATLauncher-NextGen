@@ -95,7 +95,7 @@ extends JPanel{
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.weighty = 0.5;
+        c.weighty = 0.1;
         c.gridx = 0;
         c.gridy = 1;
         this.add(new HeadPanel(Accounts.instance.getCurrent()), c);

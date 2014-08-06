@@ -27,8 +27,8 @@ public final class Settings{
     public static final Path CORE = OS.getStorageLocation();
     public static final Path DATA = CORE.resolve("data");
     public static final Path JSON = DATA.resolve("json");
-    public static final Path IMAGES = DATA.resolve("images");
-    public static final Path SKINS = DATA.resolve("skins");
+    public static final Path IMAGES = DATA.resolve("image");
+    public static final Path SKINS = DATA.resolve("skin");
     public static final Path LANGUAGES = DATA.resolve("languages");
     public static final Path ACCOUNTS = DATA.resolve("accounts");
 
@@ -71,7 +71,7 @@ public final class Settings{
     private static FileHash[] getFileHashes(){
         Path hashes = DATA.resolve("hashes.json");
         if(!Files.exists(hashes)){
-            new Downloadable("newlauncher/json/hashes.json", Settings.DATA).run();
+            new Downloadable("newlauncher/hashes.json", Settings.DATA).run();
         }
 
         try{

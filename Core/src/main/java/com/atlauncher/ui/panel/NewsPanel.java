@@ -18,7 +18,7 @@ extends JPanel{
     }};
     private final JEditorPane NEWS_PANE = new JEditorPane("text/html", ""){{
         this.setEditable(false);
-        this.setForeground(Color.WHITE);
+        this.setForeground(Color.white);
         this.setBackground(new Color(40, 45, 50));
         this.setEditorKit(HTML_KIT);
     }};

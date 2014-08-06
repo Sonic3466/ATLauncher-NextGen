@@ -82,7 +82,7 @@ extends JPanel{
         Rectangle border = new Rectangle(x, y, this.scale, this.scale);
         g2.draw(border);
         int sX = (this.getWidth() - g2.getFontMetrics().stringWidth(this.account.name)) / 2;
-        g2.drawString(this.account.name, sX - 5, y + scale + 5 + g2.getFontMetrics().getHeight());
+        g2.drawString(this.account.name, sX, y + scale + 5 + g2.getFontMetrics().getHeight());
 
         if(this.hovering){
             g2.setComposite(UIUtils.alpha(0.50F));
