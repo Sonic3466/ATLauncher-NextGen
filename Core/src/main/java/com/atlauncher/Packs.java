@@ -1,7 +1,7 @@
 package com.atlauncher;
 
 import com.atlauncher.obj.Pack;
-import com.atlauncher.thread.LoadPacksThread;
+import com.atlauncher.thread.CollectPacksWorker;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,21 +12,19 @@ public enum Packs{
     private final Set<Pack> loaded = new TreeSet<>();
 
     private Packs(){
-        try{
-            loaded.addAll(ATLauncher.TASKS.submit(new LoadPacksThread()).get());
-        } catch(Exception ex){
-            ex.printStackTrace(System.err);
-        }
+
     }
 
     public Set<Pack> all(){
+        return this.loaded;
+    }
+
+    public void load(){
+        this.loaded.clear();
         try{
-            this.loaded.clear();
-            this.loaded.addAll(ATLauncher.TASKS.submit(new LoadPacksThread()).get());
-            return this.loaded;
+            this.loaded.addAll(ATLauncher.TASKS.submit(new CollectPacksWorker()).get());
         } catch(Exception ex){
-            ex.printStackTrace(System.err);
-            return new TreeSet<>();
+            throw new RuntimeException(ex);
         }
     }
 }

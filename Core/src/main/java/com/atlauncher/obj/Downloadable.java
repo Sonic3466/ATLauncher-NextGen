@@ -40,7 +40,6 @@ implements Runnable{
     private HttpURLConnection getConnection(){
         if(this.conn == null){
             try{
-                System.out.println(Settings.SERVERS.get(0).getFileURL(this.endpoint));
                 this.conn = (HttpURLConnection) new URL(Settings.SERVERS.get(0).getFileURL(this.endpoint)).openConnection();
 
                 this.conn.setUseCaches(false);

@@ -2,9 +2,7 @@ package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
-import com.atlauncher.event.BackgroundChangeEvent;
-import com.atlauncher.event.ShowEvent;
-import com.atlauncher.event.TitleChangeEvent;
+import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
 
 import java.awt.Color;
@@ -46,9 +44,7 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(newsButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("news"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("News"));
+                    ATLauncher.EVENT_BUS.post(new UpdateCentralEvent("News", "news", "gray"));
                 }
             }
         });
@@ -56,9 +52,7 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(settingsButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("settings"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Settings"));
+                    ATLauncher.EVENT_BUS.post(new UpdateCentralEvent("Settings", "settings", "gray"));
                 }
             }
         });
@@ -66,9 +60,7 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(instancesButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("instances"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("scene"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Instances"));
+                    ATLauncher.EVENT_BUS.post(new UpdateCentralEvent("Instances", "instances", "scene"));
                 }
             }
         });
@@ -76,9 +68,7 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(modpacksButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("modpacks"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("scene"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Modpacks"));
+                    ATLauncher.EVENT_BUS.post(new UpdateCentralEvent("Modpacks", "modpacks", "scene"));
                 }
             }
         });
@@ -86,9 +76,7 @@ extends JPanel{
             @Override
             public void itemStateChanged(ItemEvent e){
                 if(accountsButton.isSelected()){
-                    ATLauncher.EVENT_BUS.post(new ShowEvent("accounts"));
-                    ATLauncher.EVENT_BUS.post(new BackgroundChangeEvent("gray"));
-                    ATLauncher.EVENT_BUS.post(new TitleChangeEvent("Accounts"));
+                    ATLauncher.EVENT_BUS.post(new UpdateCentralEvent("Accounts", "accounts", "gray"));
                 }
             }
         });

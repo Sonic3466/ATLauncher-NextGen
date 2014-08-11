@@ -1,8 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.Accounts;
-import com.atlauncher.event.UpdateHeadEvent;
+import com.atlauncher.event.UpdateAccountsEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.frame.LoginFrame;
@@ -51,13 +50,13 @@ extends JPanel{
             @Override
             public void mouseEntered(MouseEvent e){
                 hovering = true;
-                updateUI();
+                repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e){
                 hovering = false;
-                updateUI();
+                repaint();
             }
         });
         ATLauncher.EVENT_BUS.register(this);
@@ -65,15 +64,17 @@ extends JPanel{
     }
 
     @Subscribe
-    public void updateHead(UpdateHeadEvent event){
-        this.account = Accounts.instance.getCurrent();
+    public void updateHead(UpdateAccountsEvent event){
+        this.account = event.account;
         this.head = this.account.getHead();
-        this.updateUI();
+        this.repaint();
     }
 
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D) g.create();
+        g2.setColor(Color.white);
+        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
         int x = ((this.getWidth() - this.scale) / 2);
         int y = ((this.getHeight() - this.scale) / 2) - 15;
         g2.drawImage(this.head, x, y, this.scale, this.scale, null);

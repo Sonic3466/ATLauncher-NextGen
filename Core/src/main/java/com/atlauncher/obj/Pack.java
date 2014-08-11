@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.imageio.ImageIO;
 
 public final class Pack
@@ -24,8 +24,9 @@ implements Comparable<Pack>{
     public final int position;
     public final Type type;
     public final Version[] versions;
-    public final List<String> allowed_players = new LinkedList<>();
-    public final List<String> testers = new LinkedList<>();
+
+    public final transient Set<String> allowed_players;
+    public final transient Set<String> testers;
 
     private Pack(String display_name, String description, String support_url, String website_url, boolean can_create_server, boolean is_leaderboards_enabled, Type type, Version[] versions, Version[] devVersions, String code, boolean is_logging_enabled, int position){
         this.name = display_name;
@@ -39,6 +40,8 @@ implements Comparable<Pack>{
         this.code = code;
         this.is_logging_enabled = is_logging_enabled;
         this.position = position;
+        this.allowed_players = new TreeSet<>();
+        this.testers = new TreeSet<>();
     }
 
     public BufferedImage getImage(){
@@ -61,11 +64,14 @@ implements Comparable<Pack>{
             return false;
         }
 
-        for(String tester : this.testers){
-            if(tester.equalsIgnoreCase(acc.name)){
-                return true;
+        if(this.testers != null){
+            for(String tester : this.testers){
+                if(tester.equalsIgnoreCase(acc.name)){
+                    return true;
+                }
             }
         }
+
         return false;
     }
 

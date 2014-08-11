@@ -12,7 +12,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.lang.reflect.Constructor;
-import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -22,7 +23,7 @@ public final class ATLauncher{
         Thread.currentThread().setContextClassLoader(new ProviderClassLoader());
     }
 
-    public static final ForkJoinPool TASKS = new ForkJoinPool();
+    public static final ExecutorService TASKS = Executors.newFixedThreadPool(3);
     public static final EventBus EVENT_BUS = new EventBus();
 
     private static Injector injector;

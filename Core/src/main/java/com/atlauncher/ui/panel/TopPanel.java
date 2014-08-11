@@ -1,7 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.event.TitleChangeEvent;
+import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.ui.comp.ExitButton;
 import com.atlauncher.ui.comp.MinimizeButton;
 import com.atlauncher.ui.comp.SocialMedia;
@@ -57,7 +57,7 @@ extends JPanel{
         }
 
         @Subscribe
-        public void onTitleChange(TitleChangeEvent e){
+        public void onTitleChange(UpdateCentralEvent e){
             this.header.setText("ATLauncher - " + e.title);
         }
     }

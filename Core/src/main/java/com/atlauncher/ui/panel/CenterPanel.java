@@ -1,7 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.event.ShowEvent;
+import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.panel.tabs.AccountsTab;
 import com.atlauncher.ui.panel.tabs.InstancesTab;
@@ -36,11 +36,11 @@ extends JPanel{
     }
 
     @Subscribe
-    public void onShow(final ShowEvent event){
+    public void onShow(final UpdateCentralEvent event){
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-                ((CardLayout) getLayout()).show(CenterPanel.this, event.id);
+                ((CardLayout) getLayout()).show(CenterPanel.this, event.panel);
                 revalidate();
             }
         });

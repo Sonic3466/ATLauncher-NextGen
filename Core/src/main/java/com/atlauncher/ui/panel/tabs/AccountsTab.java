@@ -2,7 +2,7 @@ package com.atlauncher.ui.panel.tabs;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
-import com.atlauncher.event.AccountRegisteredEvent;
+import com.atlauncher.event.UpdateAccountsEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.panel.CardDisplayPanel;
@@ -27,7 +27,7 @@ implements Card{
     }
 
     @Subscribe
-    public void onAccountRegistered(AccountRegisteredEvent e){
+    public void onAccountRegistered(UpdateAccountsEvent e){
         this.loadAccounts();
     }
 
@@ -36,6 +36,7 @@ implements Card{
         for(Account account : Accounts.instance.all()){
             this.accountsDisplayPanel.register(new UserPanel(account));
         }
+        this.repaint();
     }
 
     @Override

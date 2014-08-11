@@ -2,7 +2,7 @@ package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Resources;
-import com.atlauncher.event.BackgroundChangeEvent;
+import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.plaf.UIUtils;
 
 import com.google.common.eventbus.Subscribe;
@@ -37,11 +37,11 @@ extends JPanel{
     }
 
     @Subscribe
-    public void onBackgroundChange(final BackgroundChangeEvent event){
+    public void onBackgroundChange(final UpdateCentralEvent event){
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
-                b = backgrounds.get(event.id);
+                b = backgrounds.get(event.background);
                 repaint();
             }
         });

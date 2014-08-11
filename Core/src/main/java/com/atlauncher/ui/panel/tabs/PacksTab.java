@@ -14,7 +14,6 @@ import com.google.common.eventbus.Subscribe;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public final class PacksTab
 extends JPanel
@@ -40,16 +39,12 @@ implements Card{
     }
 
     @Subscribe
-    public void onUpdatePacks(UpdatePacksEvent event){
+    public void onUpdatePacks(UpdatePacksEvent e){
         this.packDisplayPanel.unregisterAll();
-        SwingUtilities.invokeLater(new Runnable(){
-            @Override
-            public void run(){
-                for(Pack pack : Packs.instance.all()){
-                    packDisplayPanel.register(new PackPanel(pack));
-                }
-            }
-        });
+        for(Pack pack : Packs.instance.all()){
+            this.packDisplayPanel.add(new PackPanel(pack));
+        }
+        this.updateUI();
     }
 
     @Override

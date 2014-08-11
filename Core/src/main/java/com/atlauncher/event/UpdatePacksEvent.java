@@ -1,5 +1,4 @@
 package com.atlauncher.event;
 
-public final class UpdatePacksEvent{
-
+public class UpdatePacksEvent{
 }
