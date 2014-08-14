@@ -1,6 +1,7 @@
 package com.atlauncher.obj;
 
 import com.atlauncher.Settings;
+import com.atlauncher.utils.Digester;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,11 +20,15 @@ public final class Downloadable
 implements Runnable{
     public final String endpoint;
     public final Path output;
+    public final String hash;
+    public final boolean md5;
 
     private HttpURLConnection conn;
 
-    public Downloadable(String endpoint, Path output){
+    public Downloadable(String endpoint, Path output, String hash, boolean md5){
         this.endpoint = endpoint;
+        this.hash = hash;
+        this.md5 = md5;
         this.output = output.resolve(endpoint.substring(endpoint.lastIndexOf('/') + 1));
 
         try{
@@ -58,10 +63,34 @@ implements Runnable{
         return this.conn;
     }
 
+    public boolean needsUpdate(){
+        if(this.hash == null){
+            return true;
+        }
+
+        if(Files.exists(this.output)){
+            if(this.md5){
+                return !Digester.getMD5(this.output).equalsIgnoreCase(this.hash);
+            } else{
+                return !Digester.getSHA1(this.output).equalsIgnoreCase(this.hash);
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public void run(){
-        if(Files.exists(this.output) && !this.endpoint.contains("json")){
-            return;
+        if(Files.exists(this.output)){
+            if(this.needsUpdate()){
+                try{
+                    Files.delete(this.output);
+                } catch(IOException e){
+                    e.printStackTrace();
+                }
+            } else{
+                return;
+            }
         }
 
         try(InputStream stream = this.getStream();

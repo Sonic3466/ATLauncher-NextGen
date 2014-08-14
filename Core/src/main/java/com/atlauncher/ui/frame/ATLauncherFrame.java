@@ -1,5 +1,6 @@
 package com.atlauncher.ui.frame;
 
+import com.atlauncher.ui.Screen;
 import com.atlauncher.ui.panel.BackPanel;
 import com.atlauncher.ui.panel.CenterPanel;
 import com.atlauncher.ui.panel.RightPanel;
@@ -26,5 +27,6 @@ extends DraggableFrame{
         this.getContentPane().add(this.rightPanel, BorderLayout.EAST);
         this.getContentPane().add(this.centerPanel, BorderLayout.CENTER);
         this.getContentPane().add(this.topPanel, BorderLayout.NORTH);
+        this.setLocation((int) (Screen.SIZE.getWidth() - this.getWidth()) / 2, (int) (Screen.SIZE.getHeight() - this.getHeight()) / 2);
     }
 }

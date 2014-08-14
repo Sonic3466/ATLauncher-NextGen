@@ -4,6 +4,7 @@ import com.atlauncher.obj.Downloadable;
 import com.atlauncher.obj.FileHash;
 import com.atlauncher.obj.News;
 import com.atlauncher.obj.Server;
+import com.atlauncher.ui.frame.ProgressFrame;
 import com.atlauncher.utils.OS;
 
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
+import javax.swing.SwingUtilities;
 
 public final class Settings{
     public static final Gson GSON = new GsonBuilder()
@@ -73,7 +75,7 @@ public final class Settings{
     private static FileHash[] getFileHashes(){
         Path hashes = DATA.resolve("hashes.json");
         if(!Files.exists(hashes)){
-            new Downloadable("newlauncher/hashes.json", Settings.DATA).run();
+            new Downloadable("newlauncher/hashes.json", Settings.DATA, null, false).run();
         }
 
         try{
@@ -104,11 +106,24 @@ public final class Settings{
     }
 
     public static void updateLauncherFiles(){
-        FileHash[] hashes = Settings.getFileHashes();
-        for(FileHash hash : hashes){
-            if(hash.size != 0){
-                ATLauncher.TASKS.execute(hash.getDownload());
+        final ProgressFrame frame = new ProgressFrame("Downloading");
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                frame.setVisible(true);
             }
+        });
+        FileHash[] hashes = Settings.getFileHashes();
+        for(int i = 0; i < hashes.length; i++){
+            frame.title.setText(hashes[i].name);
+            frame.bar.setValue((i * 100) / hashes.length);
+            hashes[i].getDownload().run();
         }
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                frame.dispose();
+            }
+        });
     }
 }

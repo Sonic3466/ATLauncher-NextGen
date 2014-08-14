@@ -12,7 +12,8 @@ extends BasicLookAndFeel{
                 "ButtonUI", get("ATLButtonUI"),
                 "ToggleButtonUI", get("ATLToggleButtonUI"),
                 "TabbedPaneUI", get("ATLTabbedPaneUI"),
-                "LabelUI", get("ATLLabelUI")
+                "LabelUI", get("ATLLabelUI"),
+                "ProgressBarUI", this.get("ATLProgressBarUI")
         };
         table.putDefaults(def);
     }

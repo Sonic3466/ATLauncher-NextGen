@@ -21,10 +21,12 @@ public final class FileHash{
         switch(type)
         {
             case "json":{
-                return new Downloadable("newlauncher/" + this.name, Settings.DATA.resolve(this.type.toLowerCase()));
+                return new Downloadable("newlauncher/" + this.name, Settings.DATA.resolve(this.type.toLowerCase()),
+                        md5, true);
             }
             default:{
-                return new Downloadable("launcher/" + this.type.toLowerCase() + "s" + "/" + this.name, Settings.DATA.resolve(this.type.toLowerCase()));
+                return new Downloadable("launcher/" + this.type.toLowerCase() + "s" + "/" + this.name, Settings.DATA.resolve(this.type.toLowerCase()),
+                        md5, true);
             }
         }
     }

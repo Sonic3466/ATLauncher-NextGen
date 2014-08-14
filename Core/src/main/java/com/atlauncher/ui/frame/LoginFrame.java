@@ -21,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.text.Document;
@@ -69,7 +70,7 @@ extends DraggableFrame{
     private final class CenterPanel
     extends JPanel{
         private final JTextField uField = new JTextField(16);
-        private final JTextField pField = new JTextField(16);
+        private final JPasswordField pField = new JPasswordField(16);
 
         public CenterPanel(){
             super();
@@ -135,15 +136,20 @@ extends DraggableFrame{
             this.loginButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    Account acc = Authentication.get(center_panel.uField.getText(), center_panel.pField.getText());
+                    ATLauncher.TASKS.execute(new Runnable(){
+                        @Override
+                        public void run(){
+                            Account acc = Authentication.get(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
 
-                    if(acc == null){
-                        throw new RuntimeException("Cannot Login");
-                    }
+                            if(acc == null){
+                                throw new RuntimeException("Cannot Login");
+                            }
 
-                    Accounts.instance.setCurrent(acc);
-                    ATLauncher.EVENT_BUS.post(new UpdateAccountsEvent(acc));
-                    Settings.properties.setProperty("lastAccount", center_panel.uField.getText());
+                            Accounts.instance.setCurrent(acc);
+                            ATLauncher.EVENT_BUS.post(new UpdateAccountsEvent(acc));
+                            Settings.properties.setProperty("lastAccount", center_panel.uField.getText());
+                        }
+                    });
                     dispose();
                 }
             });
