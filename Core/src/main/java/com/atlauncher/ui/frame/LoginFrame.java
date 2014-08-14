@@ -51,7 +51,7 @@ extends DraggableFrame{
         public TopPanel(){
             super(new FlowLayout(FlowLayout.LEFT));
             this.setOpaque(false);
-            JLabel label = new JLabel("Login To Minecraft.net");
+            JLabel label = new JLabel("Login To Minecraft");
             label.setForeground(Color.white);
             label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
             this.add(label);

@@ -22,7 +22,7 @@ extends DraggableFrame{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(new BorderLayout());
-        this.setMinimumSize(new Dimension(830, 510));
+        this.setMinimumSize(new Dimension(830, 500));
         this.setContentPane(new BackPanel());
         this.getContentPane().add(this.rightPanel, BorderLayout.EAST);
         this.getContentPane().add(this.centerPanel, BorderLayout.CENTER);
