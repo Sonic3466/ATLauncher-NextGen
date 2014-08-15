@@ -39,9 +39,10 @@
                 <configuration>
                     <finalName>atlauncher</finalName>
                     <archive>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                         <index>true</index>
                         <manifest>
+                            <classpathPrefix>libs/</classpathPrefix>
+                            <addClasspath>true</addClasspath>
                             <mainClass>com.atlauncher.ATLauncher</mainClass>
                         </manifest>
                         <manifestEntries>

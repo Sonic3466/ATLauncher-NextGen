@@ -1,23 +1,42 @@
 package com.atlauncher.thread;
 
+import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
+import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.PackUser;
+import com.atlauncher.ui.diag.LoadingDialog;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.Callable;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 public final class CollectPacksWorker
-implements Callable<Set<Pack>>{
+extends SwingWorker<Void, Void>{
+    private final LoadingDialog diag;
+
+    public CollectPacksWorker(LoadingDialog diag){
+        this.diag = diag;
+    }
+
     @Override
-    public Set<Pack> call()
+    public void done(){
+        super.done();
+        this.diag.dispose();
+    }
+
+    @Override
+    public Void doInBackground()
     throws Exception{
-        Set<Pack> loaded = new TreeSet<>();
+        SwingUtilities.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                diag.setVisible(true);
+            }
+        });
 
         InputStream in = new FileInputStream(Settings.JSON.resolve("packs.json").toFile());
         Pack[] packs = Settings.GSON.fromJson(new InputStreamReader(in), Pack[].class);
@@ -42,28 +61,27 @@ implements Callable<Set<Pack>>{
             }
         }
 
-        for(Pack pack : packs){
+        for(int i = 0; i < packs.length; i++){
+            Pack pack = packs[i];
             switch(pack.type)
             {
                 case PUBLIC:{
-                    System.out.println("Adding Public Pack: " + pack.name);
-                    loaded.add(pack);
+                    ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
                     break;
                 }
                 case PRIVATE:{
-                    System.out.println("Adding Private Pack: " + pack.name);
                     if(pack.isAllowed()){
-                        loaded.add(pack);
+                        ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
                     }
                     break;
                 }
                 default:{
-                    System.out.println("Invalid Pack: " + pack.name);
                     break;
                 }
             }
+            this.diag.bar.setValue((i * 100) / packs.length);
         }
 
-        return loaded;
+        return null;
     }
 }

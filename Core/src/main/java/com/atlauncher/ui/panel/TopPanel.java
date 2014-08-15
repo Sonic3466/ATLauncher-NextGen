@@ -2,6 +2,7 @@ package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.event.UpdateCentralEvent;
+import com.atlauncher.event.UpdateSettingsEvent;
 import com.atlauncher.ui.comp.ExitButton;
 import com.atlauncher.ui.comp.MinimizeButton;
 import com.atlauncher.ui.comp.SocialMedia;
@@ -59,6 +60,11 @@ extends JPanel{
         @Subscribe
         public void onTitleChange(UpdateCentralEvent e){
             this.header.setText("ATLauncher - " + e.title);
+        }
+
+        @Subscribe
+        public void onSettingsChanged(UpdateSettingsEvent e){
+            this.header.setText("ATLauncher - Settings - " + e.id);
         }
     }
 

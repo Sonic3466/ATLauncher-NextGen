@@ -1,9 +1,9 @@
 package com.atlauncher.event;
 
-public final class ShowEvent{
+public final class UpdateSettingsEvent{
     public final String id;
 
-    public ShowEvent(String id){
+    public UpdateSettingsEvent(String id){
         this.id = id;
     }
 }

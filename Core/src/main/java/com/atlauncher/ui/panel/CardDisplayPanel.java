@@ -34,32 +34,35 @@ extends JPanel{
     }
 
     public CardDisplayPanel(){
+        this(true);
+    }
+
+    public CardDisplayPanel(boolean buttons){
         super(new BorderLayout());
         this.setOpaque(false);
 
-        this.nextButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                next();
-            }
-        });
+        if(buttons){
+            this.nextButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    next();
+                }
+            });
+            this.backButton.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    back();
+                }
+            });
+            this.add(this.backButton, BorderLayout.WEST);
+            this.add(this.nextButton, BorderLayout.EAST);
+        }
 
-        this.backButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                back();
-            }
-        });
-
-        this.add(this.backButton, BorderLayout.WEST);
         this.add(this.displayPanel, BorderLayout.CENTER);
-        this.add(this.nextButton, BorderLayout.EAST);
     }
 
     public void unregisterAll(){
-        for(Card card : this.cards){
-            this.displayPanel.removeAll();
-        }
+        this.displayPanel.removeAll();
     }
 
     private void next(){

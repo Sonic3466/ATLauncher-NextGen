@@ -1,28 +1,20 @@
 package com.atlauncher;
 
-import com.atlauncher.obj.Pack;
+import com.atlauncher.event.PacksFlushEvent;
 import com.atlauncher.thread.CollectPacksWorker;
-
-import java.util.Set;
-import java.util.TreeSet;
+import com.atlauncher.ui.diag.LoadingDialog;
 
 public enum Packs{
     instance;
 
-    private final Set<Pack> loaded = new TreeSet<>();
-
-    private Packs(){
-
-    }
-
-    public Set<Pack> all(){
-        return this.loaded;
-    }
+    private Packs(){}
 
     public void load(){
-        this.loaded.clear();
         try{
-            this.loaded.addAll(ATLauncher.TASKS.submit(new CollectPacksWorker()).get());
+            ATLauncher.EVENT_BUS.post(new PacksFlushEvent());
+            LoadingDialog diag = new LoadingDialog("Loading Packs");
+            CollectPacksWorker worker = new CollectPacksWorker(diag);
+            worker.execute();
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }

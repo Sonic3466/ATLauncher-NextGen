@@ -55,10 +55,19 @@ implements Card{
         g2.setStroke(new BasicStroke(5));
         g2.drawRect(x - 2, y - 2, 349, 184);
         g2.setColor(Color.GREEN);
-        Rectangle rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.getLatest().version) + 4,
-                g2.getFontMetrics().getHeight() + 4);
+        Rectangle rect;
+        try{
+            rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth(this.pack.getLatest().version) + 4,
+                    g2.getFontMetrics().getHeight() + 4);
+        } catch(NullPointerException e){
+            rect = new Rectangle(x - 25, y + 15, g2.getFontMetrics().stringWidth("0.0.0"), g2.getFontMetrics().getHeight() + 4);
+        }
         g2.fill(rect);
         g2.setColor(Color.WHITE);
-        g2.drawString(this.pack.versions[0].version, x - 23, y + 13 + g2.getFontMetrics().getHeight());
+        try{
+            g2.drawString(this.pack.getLatest().version, x - 23, y + 13 + g2.getFontMetrics().getHeight());
+        } catch(NullPointerException e){
+            g2.drawString("0.0.0", x - 24, y + 13 + g2.getFontMetrics().getHeight());
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.atlauncher.plaf;
 
-import sun.swing.SwingUtilities2;
-
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -60,10 +58,21 @@ extends BasicButtonUI{
             }
         }
 
-        String text = this.layout(b, SwingUtilities2.getFontMetrics(b, g2), b.getWidth(), b.getHeight());
-
+        String text = this.layout(b, g2.getFontMetrics(), b.getWidth(), b.getHeight());
         this.paintIcon(g, c, this.iconRect);
         this.paintText(g, c, this.textRect, text);
+    }
+
+    @Override
+    protected void paintText(Graphics g, JComponent comp, Rectangle rect, String text){
+        Graphics2D g2 = (Graphics2D) g;
+        AbstractButton b = (AbstractButton) comp;
+
+        g2.setColor(b.getModel().isPressed() ? Color.black : Color.white);
+        g2.setFont(comp.getFont());
+        UIUtils.antialiasOn(g2);
+        g2.drawString(text, rect.x, rect.y + g2.getFontMetrics().getAscent());
+        UIUtils.antialiasOff(g2);
     }
 
     private AlphaComposite alpha(float alpha){

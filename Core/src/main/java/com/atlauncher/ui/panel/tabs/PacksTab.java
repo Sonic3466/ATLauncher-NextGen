@@ -1,9 +1,7 @@
 package com.atlauncher.ui.panel.tabs;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.Packs;
-import com.atlauncher.event.UpdatePacksEvent;
-import com.atlauncher.obj.Pack;
+import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.panel.CardDisplayPanel;
 import com.atlauncher.ui.panel.CenterBottomPanel;
@@ -39,12 +37,8 @@ implements Card{
     }
 
     @Subscribe
-    public void onUpdatePacks(UpdatePacksEvent e){
-        this.packDisplayPanel.unregisterAll();
-        for(Pack pack : Packs.instance.all()){
-            this.packDisplayPanel.add(new PackPanel(pack));
-        }
-        this.updateUI();
+    public void onPackLoaded(PackLoadedEvent e){
+        this.packDisplayPanel.register(new PackPanel(e.pack));
     }
 
     @Override

@@ -6,13 +6,13 @@ import com.atlauncher.Settings;
 import com.google.gson.annotations.SerializedName;
 
 import java.awt.image.BufferedImage;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
 
-public final class Pack
-implements Comparable<Pack>{
+public final class Pack{
     public final String name;
     public final String description;
     public final String code;
@@ -47,9 +47,12 @@ implements Comparable<Pack>{
     public BufferedImage getImage(){
         Path path = Settings.IMAGES.resolve(this.getSafeName() + ".png");
         try{
-            return ImageIO.read(path.toFile());
+            if(!Files.exists(path)){
+                return ImageIO.read(Settings.IMAGES.resolve("vanillaminecraft.png").toFile());
+            } else{
+                return ImageIO.read(path.toFile());
+            }
         } catch(Exception ex){
-            System.err.println("Cant find pack image: " + path);
             return null;
         }
     }
@@ -124,10 +127,5 @@ implements Comparable<Pack>{
             this.minecraft_version = minecraft_version;
             this.is_developer = isDeveloper;
         }
-    }
-
-    @Override
-    public int compareTo(Pack o){
-        return Integer.compare(this.position, o.position);
     }
 }

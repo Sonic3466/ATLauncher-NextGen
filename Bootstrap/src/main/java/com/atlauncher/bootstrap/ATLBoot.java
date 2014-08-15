@@ -115,6 +115,8 @@ public final class ATLBoot{
                 a.add("com.atlauncher.ATLModule");
             }
 
+            System.out.println(a);
+
             Process process = new ProcessBuilder().command(a).start();
             try(BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))){
                 String line;

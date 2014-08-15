@@ -18,11 +18,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public final class ATLauncher{
-    static
-    {
-        Thread.currentThread().setContextClassLoader(new ProviderClassLoader());
-    }
-
     public static final ExecutorService TASKS = Executors.newFixedThreadPool(3);
     public static final EventBus EVENT_BUS = new EventBus();
 
@@ -51,6 +46,7 @@ public final class ATLauncher{
                     frame.setVisible(true);
                 }
             });
+            Packs.instance.load();
 
             if(Settings.properties.getProperty("lastAccount") != null){
                 SwingUtilities.invokeLater(new Runnable(){
@@ -76,6 +72,7 @@ public final class ATLauncher{
     @SuppressWarnings("unchecked")
     private static AbstractModule regenModule(String classpath){
         try{
+            System.out.println("Regenerating Module");
             ProviderClassLoader loader = new ProviderClassLoader();
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) loader.loadClass(classpath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
@@ -89,6 +86,7 @@ public final class ATLauncher{
     @SuppressWarnings("unchecked")
     private static AbstractModule genModule(String classPath){
         try{
+            System.out.println("Generating Module");
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) Class.forName(classPath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
             moduleConstructor.setAccessible(true);
