@@ -1,5 +1,6 @@
 package com.atlauncher.plaf;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JComponent;
@@ -13,6 +14,12 @@ extends BasicLabelUI{
 
     public static ComponentUI createUI(JComponent comp){
         return instance;
+    }
+
+    @Override
+    public void installUI(JComponent comp){
+        super.installUI(comp);
+        comp.setForeground(Color.white);
     }
 
     @Override

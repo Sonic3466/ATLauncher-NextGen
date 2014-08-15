@@ -10,7 +10,6 @@ import com.atlauncher.ui.comp.SocialMedia;
 import com.google.common.eventbus.Subscribe;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -46,7 +45,6 @@ extends JPanel{
         private final JLabel header = new JLabel("ATLauncher - News", JLabel.LEFT);
         {
             this.header.setFont(new Font(Font.SANS_SERIF, Font.BOLD|Font.ITALIC, 24));
-            this.header.setForeground(Color.white);
             this.header.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 5));
         }
 
@@ -64,7 +62,7 @@ extends JPanel{
 
         @Subscribe
         public void onSettingsChanged(UpdateSettingsEvent e){
-            this.header.setText("ATLauncher - Settings - " + e.id);
+            this.header.setText("ATLauncher - Settings - " + e.title);
         }
     }
 

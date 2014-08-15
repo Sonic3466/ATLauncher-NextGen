@@ -7,11 +7,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 
 import java.net.Proxy;
-import java.util.UUID;
 
 public final class Authentication{
-    private static final UUID client_id = UUID.randomUUID();
-    private static final YggdrasilAuthenticationService y = new YggdrasilAuthenticationService(Proxy.NO_PROXY, null);
     private static final YggdrasilUserAuthentication user_auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "1").createUserAuthentication(Agent.MINECRAFT);
 
     private Authentication(){}

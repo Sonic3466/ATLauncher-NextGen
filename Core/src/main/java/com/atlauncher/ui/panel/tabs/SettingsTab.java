@@ -5,7 +5,6 @@ import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.event.UpdateSettingsEvent;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
-import com.atlauncher.ui.panel.CardDisplayPanel;
 import com.atlauncher.ui.panel.tabs.settings.CreditsTab;
 import com.atlauncher.ui.panel.tabs.settings.GeneralTab;
 import com.atlauncher.ui.panel.tabs.settings.JavaTab;
@@ -15,6 +14,7 @@ import com.atlauncher.ui.panel.tabs.settings.NetworkTab;
 import com.google.common.eventbus.Subscribe;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -26,13 +26,13 @@ import javax.swing.JToggleButton;
 public final class SettingsTab
 extends JPanel
 implements Card{
-    private final CardDisplayPanel center = new CardDisplayPanel(false);
+    private final JPanel center = new JPanel(new CardLayout());
     {
-        this.center.register(new GeneralTab());
-        this.center.register(new JavaTab());
-        this.center.register(new NetworkTab());
-        this.center.register(new LoggingTab());
-        this.center.register(new CreditsTab());
+        this.register(new GeneralTab());
+        this.register(new JavaTab());
+        this.register(new LoggingTab());
+        this.register(new NetworkTab());
+        this.register(new CreditsTab());
     }
 
     private final JToggleButton generalButton = new JToggleButton("General", true);
@@ -72,6 +72,7 @@ implements Card{
     public SettingsTab(){
         super(new BorderLayout());
         this.setOpaque(false);
+        this.center.setOpaque(false);
         this.top.setOpaque(false);
 
         this.generalButton.setBackground(Color.white);
@@ -83,31 +84,31 @@ implements Card{
         this.generalButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("General"));
+                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("general", "General"));
             }
         });
         this.javaButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("Java"));
+                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("java", "Java"));
             }
         });
         this.networkButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("Network"));
+                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("network", "Network"));
             }
         });
         this.loggingButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("Logging"));
+                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("logging", "Logging"));
             }
         });
         this.creditsButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("Credits"));
+                ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("credits", "Credits"));
             }
         });
 
@@ -121,8 +122,17 @@ implements Card{
     public void onTitleChange(UpdateCentralEvent e){
         if(e.title.equalsIgnoreCase("settings")){
             this.tbg.setSelected(this.generalButton.getModel(), true);
-            ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("General"));
+            ATLauncher.EVENT_BUS.post(new UpdateSettingsEvent("general", "General"));
         }
+    }
+
+    @Subscribe
+    public void onUpdateSettins(UpdateSettingsEvent e){
+        ((CardLayout) this.center.getLayout()).show(this.center, e.id);
+    }
+
+    public <T extends JPanel & Card> void register(T card){
+        this.center.add(card, card.id());
     }
 
     @Override

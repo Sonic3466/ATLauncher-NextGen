@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 import javax.swing.SwingUtilities;
 
@@ -35,6 +36,8 @@ public final class Settings{
     public static final Path SKINS = DATA.resolve("skin");
     public static final Path LANGUAGES = DATA.resolve("languages");
     public static final Path ACCOUNTS = DATA.resolve("accounts");
+
+    private static final Path DEFAULT_DOWNLOADS = CORE.resolve("Downloads");
 
     static
     {
@@ -68,9 +71,15 @@ public final class Settings{
         }));
     }
 
+    public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", DEFAULT_DOWNLOADS.toString()));
+
     public static final Server.Servers SERVERS = ATLauncher.getInjector().getInstance(Server.Servers.class);
 
     private Settings(){}
+
+    public static void load(){
+
+    }
 
     private static FileHash[] getFileHashes(){
         Path hashes = DATA.resolve("hashes.json");

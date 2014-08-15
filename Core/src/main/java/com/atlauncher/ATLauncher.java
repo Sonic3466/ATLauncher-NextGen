@@ -72,7 +72,6 @@ public final class ATLauncher{
     @SuppressWarnings("unchecked")
     private static AbstractModule regenModule(String classpath){
         try{
-            System.out.println("Regenerating Module");
             ProviderClassLoader loader = new ProviderClassLoader();
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) loader.loadClass(classpath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
@@ -86,7 +85,6 @@ public final class ATLauncher{
     @SuppressWarnings("unchecked")
     private static AbstractModule genModule(String classPath){
         try{
-            System.out.println("Generating Module");
             Class<AbstractModule> moduleClass = (Class<AbstractModule>) Class.forName(classPath);
             Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
             moduleConstructor.setAccessible(true);
