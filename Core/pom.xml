@@ -37,7 +37,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <finalName>atlauncher</finalName>
+                    <finalName>ATLauncher-Core</finalName>
                     <archive>
                         <index>true</index>
                         <manifest>
