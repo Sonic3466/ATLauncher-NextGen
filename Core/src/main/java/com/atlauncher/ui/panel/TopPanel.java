@@ -27,7 +27,7 @@ extends JPanel{
         this.add(new BottomPanel(), BorderLayout.SOUTH);
     }
 
-    private final class BottomPanel
+    private static final class BottomPanel
     extends JPanel{
         private BottomPanel(){
             super(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -40,7 +40,7 @@ extends JPanel{
         }
     }
 
-    private final class LeftPanel
+    private static final class LeftPanel
     extends JPanel{
         private final JLabel header = new JLabel("ATLauncher - News", JLabel.LEFT);
         {
@@ -66,7 +66,7 @@ extends JPanel{
         }
     }
 
-    private final class RightPanel
+    private static final class RightPanel
     extends JPanel{
         private RightPanel(){
             super(new FlowLayout(FlowLayout.RIGHT, 0, 0));

@@ -23,7 +23,7 @@ import javax.swing.SwingUtilities;
 
 public final class HeadPanel
 extends JPanel{
-    private final int scale = 64;
+    private static final int scale = 64;
     private boolean hovering = false;
     private Image head;
     private Account account;
@@ -31,7 +31,7 @@ extends JPanel{
     public HeadPanel(Account account){
         this.account = account;
         this.head = account.getHead();
-        this.setPreferredSize(new Dimension(this.scale, this.scale));
+        this.setPreferredSize(new Dimension(scale, scale));
         this.setToolTipText(account.name);
         this.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.addMouseListener(new MouseAdapter(){
@@ -75,12 +75,12 @@ extends JPanel{
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setColor(Color.white);
         g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-        int x = ((this.getWidth() - this.scale) / 2);
-        int y = ((this.getHeight() - this.scale) / 2) - 15;
-        g2.drawImage(this.head, x, y, this.scale, this.scale, null);
+        int x = ((this.getWidth() - scale) / 2);
+        int y = ((this.getHeight() - scale) / 2) - 15;
+        g2.drawImage(this.head, x, y, scale, scale, null);
         g2.setColor(Color.black);
         g2.setStroke(new BasicStroke(2));
-        Rectangle border = new Rectangle(x, y, this.scale, this.scale);
+        Rectangle border = new Rectangle(x, y, scale, scale);
         g2.draw(border);
         int sX = (this.getWidth() - g2.getFontMetrics().stringWidth(this.account.name)) / 2;
         g2.drawString(this.account.name, sX, y + scale + 5 + g2.getFontMetrics().getHeight());
@@ -88,7 +88,7 @@ extends JPanel{
         if(this.hovering){
             g2.setComposite(UIUtils.alpha(0.50F));
             g2.setColor(new Color(45, 150, 190));
-            g2.fillRect(x, y, this.scale, this.scale);
+            g2.fillRect(x, y, scale, scale);
         }
     }
 }

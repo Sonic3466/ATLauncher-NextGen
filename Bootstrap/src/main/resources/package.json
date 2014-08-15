@@ -23,5 +23,25 @@
         "group":"javax.inject",
         "artifact":"javax.inject",
         "version":"1"
+    },
+    {
+        "group":"org.apache.commons",
+        "artifact":"commons-lang3",
+        "version":"3.3.2"
+    },
+    {
+        "group":"org.apache.logging.log4j",
+        "artifact":"log4j-core",
+        "version": "2.0-beta9"
+    },
+    {
+        "group":"commons-codec",
+        "artifact":"commons-codec",
+        "version":"1.9"
+    },
+    {
+        "group":"org.apache.logging.log4j",
+        "artifact":"log4j-api",
+        "version":"2.0-beta9"
     }
 ]

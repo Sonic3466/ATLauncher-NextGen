@@ -102,6 +102,10 @@ public final class Pack{
             return false;
         }
 
+        if(this.allowed_players == null){
+            return false;
+        }
+
         for(String player : this.allowed_players){
             if(player.equalsIgnoreCase(acc.name)){
                 return true;

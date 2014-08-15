@@ -14,8 +14,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.text.Document;
 
 public final class LoginFrame
 extends DraggableFrame{
@@ -46,7 +43,7 @@ extends DraggableFrame{
         this.center_panel.uField.setText(username);
     }
 
-    private final class TopPanel
+    private static final class TopPanel
     extends JPanel{
         public TopPanel(){
             super(new FlowLayout(FlowLayout.LEFT));
@@ -58,7 +55,7 @@ extends DraggableFrame{
         }
     }
 
-    private final class BackPanel
+    private static final class BackPanel
     extends JPanel{
         public BackPanel(){
             super(new BorderLayout());
@@ -67,7 +64,7 @@ extends DraggableFrame{
         }
     }
 
-    private final class CenterPanel
+    private static final class CenterPanel
     extends JPanel{
         private final JTextField uField = new JTextField(16);
         private final JPasswordField pField = new JPasswordField(16);
@@ -83,21 +80,6 @@ extends DraggableFrame{
             this.add(uLabel);
             this.uField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             this.uField.setAlignmentX(Component.LEFT_ALIGNMENT);
-            this.uField.addKeyListener(new KeyAdapter(){
-                @Override
-                public void keyPressed(KeyEvent e){
-                    if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
-                        Document doc = uField.getDocument();
-                        try{
-                            if(doc.getLength() > 0){
-                                doc.remove(doc.getLength() - 1, 1);
-                            }
-                        } catch(Exception ex){
-                            ex.printStackTrace(System.err);
-                        }
-                    }
-                }
-            });
             this.add(this.uField);
             JLabel pLabel = new JLabel("Password: ", JLabel.LEFT);
             pLabel.setForeground(Color.white);
@@ -106,21 +88,6 @@ extends DraggableFrame{
             this.add(pLabel);
             this.pField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             this.pField.setAlignmentX(Component.LEFT_ALIGNMENT);
-            this.pField.addKeyListener(new KeyAdapter(){
-                @Override
-                public void keyPressed(KeyEvent e){
-                    if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE){
-                        Document doc = pField.getDocument();
-                        try{
-                            if(doc.getLength() > 0){
-                                doc.remove(doc.getLength() - 1, 1);
-                            }
-                        } catch(Exception ex){
-                            ex.printStackTrace(System.err);
-                        }
-                    }
-                }
-            });
             this.add(this.pField);
         }
     }

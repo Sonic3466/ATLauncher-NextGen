@@ -26,8 +26,6 @@
                 <version>2.4</version>
                 <configuration>
                     <archive>
-                        <finalName>ATLauncher</finalName>
-                        <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>com.atlauncher.bootstrap.ATLBoot</mainClass>

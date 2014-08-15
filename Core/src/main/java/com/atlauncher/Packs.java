@@ -14,7 +14,7 @@ public enum Packs{
             ATLauncher.EVENT_BUS.post(new PacksFlushEvent());
             LoadingDialog diag = new LoadingDialog("Loading Packs");
             CollectPacksWorker worker = new CollectPacksWorker(diag);
-            worker.execute();
+            ATLauncher.TASKS.execute(worker);
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }

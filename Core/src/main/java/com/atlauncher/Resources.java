@@ -20,7 +20,7 @@ public final class Resources{
     public static final EnumSet<StandardOpenOption> READ = EnumSet.of(StandardOpenOption.READ);
 
     private static final Map<String, Object> resources = new HashMap<>();
-    public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    private static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
     private Resources(){}
 

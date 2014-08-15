@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -29,7 +30,9 @@ public enum Language {
             if (!langFile.exists()) {
                 return; // Silently exit if the file doesn't exist
             }
-            props.load(new FileInputStream(langFile));
+            try(InputStream in = new FileInputStream(langFile)){
+                props.load(new FileInputStream(langFile));
+            }
             this.langs.put(lang, props);
         }
 
@@ -42,8 +45,9 @@ public enum Language {
         }
 
         Properties props = new Properties();
-        props.load(new FileInputStream(new File(Settings.LANGUAGES.toFile(), lang.toLowerCase()
-                + ".lang")));
+        try(InputStream in = new FileInputStream(Settings.LANGUAGES.resolve(lang.toLowerCase()).toFile())){
+            props.load(in);
+        }
         this.langs.put(lang, props);
 
         this.current = lang;

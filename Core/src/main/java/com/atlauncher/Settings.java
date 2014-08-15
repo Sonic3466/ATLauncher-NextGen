@@ -48,9 +48,10 @@ public final class Settings{
                 Files.createFile(path);
             }
 
-            InputStream in = new FileInputStream(path.toFile());
-            properties.load(in);
-            in.close();
+            try(InputStream in = new FileInputStream(path.toFile())){
+                properties.load(in);
+
+            }
         } catch(Exception ex){
             ex.printStackTrace(System.err);
         }
@@ -61,9 +62,9 @@ public final class Settings{
                 try{
                     Path path = CORE.resolve("atlauncher.cfg");
 
-                    OutputStream out = new FileOutputStream(path.toFile());
-                    properties.store(out, "Don't Edit This File");
-                    out.close();
+                    try(OutputStream out = new FileOutputStream(path.toFile())){
+                        properties.store(out, "Don't Edit This File");
+                    }
                 } catch(Exception ex){
                     ex.printStackTrace(System.err);
                 }

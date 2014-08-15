@@ -46,7 +46,6 @@ public final class ATLauncher{
                     frame.setVisible(true);
                 }
             });
-            Packs.instance.load();
 
             if(Settings.properties.getProperty("lastAccount") != null){
                 SwingUtilities.invokeLater(new Runnable(){
