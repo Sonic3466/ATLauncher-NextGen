@@ -37,7 +37,7 @@ public final class ATLauncher{
             }
             injector = Guice.createInjector(module);
 
-            Settings.updateLauncherFiles();
+            // Settings.updateLauncherFiles();
 
             frame = new ATLauncherFrame();
             SwingUtilities.invokeLater(new Runnable(){

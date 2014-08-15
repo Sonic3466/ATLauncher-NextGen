@@ -19,10 +19,9 @@ extends BasicButtonUI{
     protected static final Color PRESSED = new Color(45, 150, 190);
     protected static final Color UNPRESSED = new Color(55, 55, 55);
     protected static final Color TEXT = Color.WHITE;
-    protected static final ATLButtonUI buttonUI = new ATLButtonUI();
 
     public static ComponentUI createUI(JComponent comp){
-        return buttonUI;
+        return new ATLButtonUI();
     }
 
     private Rectangle viewRect = new Rectangle();

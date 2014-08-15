@@ -19,7 +19,7 @@ extends JPanel
 implements Card{
     private static final Color BACK = new Color(55, 55, 55);
 
-    private final Pack pack;
+    public final Pack pack;
 
     public PackPanel(Pack pack){
         this.pack = pack;

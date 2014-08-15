@@ -3,8 +3,8 @@ package com.atlauncher.ui.panel.tabs;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.ui.comp.Card;
-import com.atlauncher.ui.panel.CardDisplayPanel;
 import com.atlauncher.ui.panel.CenterBottomPanel;
+import com.atlauncher.ui.panel.PackDisplayPanel;
 import com.atlauncher.ui.panel.PackPanel;
 import com.atlauncher.ui.panel.PacksBottomPanel;
 
@@ -17,7 +17,7 @@ public final class PacksTab
 extends JPanel
 implements Card{
     private final PacksBottomPanel bottomPanel = new PacksBottomPanel();
-    private final CardDisplayPanel packDisplayPanel = new CardDisplayPanel();
+    private final PackDisplayPanel packDisplayPanel = new PackDisplayPanel();
 
     private final JPanel bottom = new JPanel(new BorderLayout());
     {

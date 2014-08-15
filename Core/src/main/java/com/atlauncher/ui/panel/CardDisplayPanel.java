@@ -13,10 +13,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public final class CardDisplayPanel
+public class CardDisplayPanel
 extends JPanel{
-    private final List<Card> cards = new LinkedList<>();
-    private int ptr = 0;
+    protected final List<Card> cards = new LinkedList<>();
+    protected int ptr = 0;
 
     private final JButton nextButton = new JButton(new ImageIcon(Resources.makeImage("icons/arrow_right")));
     {
