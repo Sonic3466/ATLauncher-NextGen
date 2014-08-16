@@ -25,8 +25,8 @@ public final class Pack{
     public final Type type;
     public final Version[] versions;
 
-    public final transient Set<String> allowed_players;
-    public final transient Set<String> testers;
+    private transient Set<String> allowed_players;
+    private transient Set<String> testers;
 
     private Pack(String display_name, String description, String support_url, String website_url, boolean can_create_server, boolean is_leaderboards_enabled, Type type, Version[] versions, Version[] devVersions, String code, boolean is_logging_enabled, int position){
         this.name = display_name;
@@ -42,6 +42,22 @@ public final class Pack{
         this.position = position;
         this.allowed_players = new TreeSet<>();
         this.testers = new TreeSet<>();
+    }
+
+    public void allow(String player){
+        if(this.allowed_players == null){
+            this.allowed_players = new TreeSet<>();
+        }
+
+        this.allowed_players.add(player);
+    }
+
+    public void allowTester(String player){
+        if(this.testers == null){
+            this.testers = new TreeSet<>();
+        }
+
+        this.testers.add(player);
     }
 
     public BufferedImage getImage(){

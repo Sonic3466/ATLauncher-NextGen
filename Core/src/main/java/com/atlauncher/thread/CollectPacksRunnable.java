@@ -1,14 +1,18 @@
 package com.atlauncher.thread;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
 import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.obj.Pack;
+import com.atlauncher.obj.UserMeta;
 import com.atlauncher.ui.diag.LoadingDialog;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -17,11 +21,11 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.SwingUtilities;
 
-public final class CollectPacksWorker
+public final class CollectPacksRunnable
 implements Runnable{
     private final LoadingDialog diag;
 
-    public CollectPacksWorker(LoadingDialog diag){
+    public CollectPacksRunnable(LoadingDialog diag){
         this.diag = diag;
     }
 
@@ -38,6 +42,19 @@ implements Runnable{
             InputStream in = new FileInputStream(Settings.JSON.resolve("packs.json").toFile());
             Pack[] packs = Settings.GSON.fromJson(new InputStreamReader(in), Pack[].class);
             in.close();
+            URL url = new URL(Accounts.instance.getCurrent().getUserMetaURL());
+            UserMeta meta = null;
+            try{
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                if(conn.getResponseCode() != 404){
+                    try(InputStream stream = conn.getInputStream()){
+                        meta = Settings.GSON.fromJson(new InputStreamReader(stream), UserMeta.class);
+                        System.out.println("Meta loaded");
+                    }
+                }
+            } catch(Exception ex){
+                ex.printStackTrace(System.err);
+            }
 
             Set<Pack> loaded = new TreeSet<>(new Comparator<Pack>(){
                 @Override
@@ -56,19 +73,32 @@ implements Runnable{
                     return false;
                 }
             });
+
             loaded.addAll(Arrays.asList(packs));
 
             List<Pack> p = new LinkedList<>(loaded);
 
             for(int i = 0; i < p.size(); i++){
                 Pack pack = p.get(i);
+                if(meta != null){
+                    if(meta.allowed_player.contains(pack.name)){
+                        pack.allow(Accounts.instance.getCurrent().name);
+                    }
+
+                    if(meta.tester.contains(pack.name)){
+                        pack.allowTester(Accounts.instance.getCurrent().name);
+                    }
+                }
+
                 switch(pack.type){
                     case PUBLIC:{
                         ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
                         break;
                     }
                     case PRIVATE:{
-                        //TODO: Write user retrieval system
+                        if(pack.isAllowed()){
+                            ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
+                        }
                         break;
                     }
                     case SEMI_PUBLIC:{

@@ -62,6 +62,10 @@ public final class Account{
         return s.getScaledInstance(128, 256, Image.SCALE_SMOOTH);
     }
 
+    public String getUserMetaURL(){
+        return Settings.SERVERS.get(0).getFileURL("users/" + this.name + ".json");
+    }
+
     public Account updateSkin(){
         try{
             if(this.name.toLowerCase().equalsIgnoreCase("default")){
