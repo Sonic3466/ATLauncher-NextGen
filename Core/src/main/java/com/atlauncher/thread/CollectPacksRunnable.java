@@ -80,13 +80,18 @@ implements Runnable{
 
             for(int i = 0; i < p.size(); i++){
                 Pack pack = p.get(i);
+
                 if(meta != null){
-                    if(meta.allowed_player.contains(pack.name)){
-                        pack.allow(Accounts.instance.getCurrent().name);
+                    for(String str : meta.allowed_player){
+                        if(str.equalsIgnoreCase(pack.name)){
+                            pack.allow(Accounts.instance.getCurrent().name);
+                        }
                     }
 
-                    if(meta.tester.contains(pack.name)){
-                        pack.allowTester(Accounts.instance.getCurrent().name);
+                    for(String str : meta.tester){
+                        if(str.equalsIgnoreCase(pack.name)){
+                            pack.allowTester(Accounts.instance.getCurrent().name);
+                        }
                     }
                 }
 
@@ -100,9 +105,6 @@ implements Runnable{
                             ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
                         }
                         break;
-                    }
-                    case SEMI_PUBLIC:{
-                        //TODO: Write semipublic system
                     }
                     default:{
                         break;

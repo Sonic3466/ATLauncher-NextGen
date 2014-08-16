@@ -63,7 +63,7 @@ public final class Account{
     }
 
     public String getUserMetaURL(){
-        return Settings.SERVERS.get(0).getFileURL("users/" + this.name + ".json");
+        return Settings.SERVERS.get(0).getFileURL("newlauncher/users/" + this.name.toLowerCase() + ".json");
     }
 
     public Account updateSkin(){

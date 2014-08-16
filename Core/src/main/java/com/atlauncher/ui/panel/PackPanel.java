@@ -44,7 +44,10 @@ implements Card{
         g2.drawImage(background, x, y, 347, 182, null);
         g2.setColor(Color.WHITE);
         g2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
-        g2.drawString(this.pack.name, x + ((347 - g2.getFontMetrics().stringWidth(this.pack.name)) / 2), y + 210);
+        int curr = ((PackDisplayPanel) this.getParent().getParent()).curr() + 1;
+        int max = ((PackDisplayPanel) this.getParent().getParent()).max();
+        String disp = this.pack.name + " " + curr + "/" + max;
+        g2.drawString(disp, x + ((347 - g2.getFontMetrics().stringWidth(disp)) / 2), y + 210);
         int wrap = 75;
         String wrapped = Strings.wrap(this.pack.description, wrap);
         int dX = 25;
