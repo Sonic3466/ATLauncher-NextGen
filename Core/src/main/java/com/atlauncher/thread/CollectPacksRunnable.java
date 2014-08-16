@@ -49,7 +49,6 @@ implements Runnable{
                 if(conn.getResponseCode() != 404){
                     try(InputStream stream = conn.getInputStream()){
                         meta = Settings.GSON.fromJson(new InputStreamReader(stream), UserMeta.class);
-                        System.out.println("Meta loaded");
                     }
                 }
             } catch(Exception ex){

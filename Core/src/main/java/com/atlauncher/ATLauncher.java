@@ -2,6 +2,7 @@ package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.diag.LoginDialog;
+import com.atlauncher.ui.frame.ATLauncherConsoleFrame;
 import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
@@ -23,6 +24,7 @@ public final class ATLauncher{
 
     private static Injector injector;
     private static ATLauncherFrame frame;
+    private static ATLauncherConsoleFrame console;
 
     public static void main(String... args)
     throws Exception{
@@ -37,9 +39,10 @@ public final class ATLauncher{
             }
             injector = Guice.createInjector(module);
 
-           //  Settings.updateLauncherFiles();
+            Settings.updateLauncherFiles();
 
             frame = new ATLauncherFrame();
+            console = new ATLauncherConsoleFrame();
             SwingUtilities.invokeLater(new Runnable(){
                 @Override
                 public void run(){
@@ -58,6 +61,21 @@ public final class ATLauncher{
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }
+    }
+
+    private static void loadSettings(){
+        if(Boolean.valueOf(Settings.properties.getProperty("console", "false"))){
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run(){
+                    console.setVisible(true);
+                }
+            });
+        }
+    }
+
+    public static ATLauncherConsoleFrame getConsole(){
+        return console;
     }
 
     public static ATLauncherFrame getFrame(){

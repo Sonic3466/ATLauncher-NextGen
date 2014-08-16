@@ -78,10 +78,6 @@ public final class Settings{
 
     private Settings(){}
 
-    public static void load(){
-
-    }
-
     private static FileHash[] getFileHashes(){
         Path hashes = DATA.resolve("hashes.json");
         if(!Files.exists(hashes)){
