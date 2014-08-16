@@ -1,4 +1,4 @@
-package com.atlauncher.ui.frame;
+package com.atlauncher.ui.diag;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
@@ -17,22 +17,24 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public final class LoginFrame
-extends DraggableFrame{
+public final class LoginDialog
+extends JDialog{
     private final CenterPanel center_panel = new CenterPanel();
 
-    public LoginFrame(){
+    public LoginDialog(){
         this(Settings.properties.getProperty("lastAccount", ""));
     }
 
-    public LoginFrame(String username){
-        super("Login To Minecraft");
+    public LoginDialog(String username){
+        super(ATLauncher.getFrame(), username, ModalityType.APPLICATION_MODAL);
+        this.setUndecorated(true);
         this.setLocationRelativeTo(ATLauncher.getFrame());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setContentPane(new BackPanel());
@@ -41,6 +43,7 @@ extends DraggableFrame{
         this.getContentPane().add(this.center_panel, BorderLayout.CENTER);
         this.pack();
         this.center_panel.uField.setText(username);
+        this.center_panel.pField.requestFocus();
     }
 
     private static final class TopPanel
@@ -106,7 +109,8 @@ extends DraggableFrame{
                     ATLauncher.TASKS.execute(new Runnable(){
                         @Override
                         public void run(){
-                            Account acc = Authentication.get(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
+                            Account acc = Authentication.get(center_panel.uField.getText(),
+                                    new String(center_panel.pField.getPassword()));
 
                             if(acc == null){
                                 throw new RuntimeException("Cannot Login");
@@ -123,7 +127,7 @@ extends DraggableFrame{
             this.cancelButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    LoginFrame.this.dispose();
+                    LoginDialog.this.dispose();
                 }
             });
             this.add(this.cancelButton);

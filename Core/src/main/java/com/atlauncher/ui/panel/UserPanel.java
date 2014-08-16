@@ -1,8 +1,9 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.obj.Account;
+import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.comp.Card;
-import com.atlauncher.ui.frame.LoginFrame;
+import com.atlauncher.ui.diag.LoginDialog;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -27,6 +28,7 @@ implements Card, MouseListener{
     public UserPanel(Account account){
         this.account = account;
         this.addMouseListener(this);
+        this.setBackground(UIUtils.GRAY);
     }
 
     @Override
@@ -52,6 +54,17 @@ implements Card, MouseListener{
         if(e.getButton() == MouseEvent.BUTTON3){
             if(this.account != Account.DEFAULT){
                 this.menu.show(this, e.getX(), e.getY());
+            }
+        } else if(e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() >= 2){
+            try{
+                SwingUtilities.invokeLater(new Runnable(){
+                    @Override
+                    public void run(){
+                        new LoginDialog(account.username).setVisible(true);
+                    }
+                });
+            } catch(Exception ex){
+                ex.printStackTrace(System.err);
             }
         }
     }
@@ -80,7 +93,7 @@ implements Card, MouseListener{
                         SwingUtilities.invokeLater(new Runnable(){
                             @Override
                             public void run(){
-                                new LoginFrame(account.username).setVisible(true);
+                                new LoginDialog(account.username).setVisible(true);
                             }
                         });
                     } catch(Exception ex){

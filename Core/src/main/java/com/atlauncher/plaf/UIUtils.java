@@ -18,6 +18,7 @@ public final class UIUtils{
     private UIUtils(){}
 
     public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+    public static final Color GRAY = new Color(40, 45, 50);
 
     private static Map<RenderingHints.Key, Object> hints;
     private static Map<RenderingHints.Key, Object> oldHints;

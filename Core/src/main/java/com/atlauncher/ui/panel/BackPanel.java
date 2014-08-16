@@ -24,10 +24,10 @@ extends JPanel{
     {
         this.backgrounds.put("scene", Resources.makeImage("background/scene"));
         this.backgrounds.put("white", UIUtils.createColoredBackground(Color.WHITE));
-        this.backgrounds.put("gray", UIUtils.createColoredBackground(new Color(40, 45, 50)));
+        this.backgrounds.put("gray", UIUtils.createColoredBackground(UIUtils.GRAY));
     }
 
-    private volatile BufferedImage b = UIUtils.createColoredBackground(new Color(40, 45, 50));
+    private volatile BufferedImage b = UIUtils.createColoredBackground(UIUtils.GRAY);
 
     public BackPanel(){
         super(new BorderLayout());

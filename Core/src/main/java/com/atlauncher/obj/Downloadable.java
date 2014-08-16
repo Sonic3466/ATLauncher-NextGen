@@ -19,8 +19,8 @@ import java.util.zip.GZIPInputStream;
 public final class Downloadable
 implements Runnable{
     public final String endpoint;
-    public final Path output;
     public final String hash;
+    public final Path output;
     public final boolean md5;
 
     private HttpURLConnection conn;

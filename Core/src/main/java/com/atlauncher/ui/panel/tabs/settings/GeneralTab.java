@@ -1,6 +1,7 @@
 package com.atlauncher.ui.panel.tabs.settings;
 
 import com.atlauncher.Settings;
+import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.comp.Card;
 
 import java.awt.GridBagConstraints;
@@ -22,7 +23,7 @@ implements Card{
 
     public GeneralTab(){
         this.setLayout(new GridBagLayout());
-        this.setOpaque(false);
+        this.setBackground(UIUtils.GRAY);
 
         this.downloadsField.setEditable(false);
 

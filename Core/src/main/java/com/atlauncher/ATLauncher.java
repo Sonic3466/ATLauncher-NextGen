@@ -1,8 +1,8 @@
 package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
+import com.atlauncher.ui.diag.LoginDialog;
 import com.atlauncher.ui.frame.ATLauncherFrame;
-import com.atlauncher.ui.frame.LoginFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
 
@@ -37,7 +37,7 @@ public final class ATLauncher{
             }
             injector = Guice.createInjector(module);
 
-            // Settings.updateLauncherFiles();
+            Settings.updateLauncherFiles();
 
             frame = new ATLauncherFrame();
             SwingUtilities.invokeLater(new Runnable(){
@@ -51,7 +51,7 @@ public final class ATLauncher{
                 SwingUtilities.invokeLater(new Runnable(){
                     @Override
                     public void run(){
-                        new LoginFrame().setVisible(true);
+                        new LoginDialog().setVisible(true);
                     }
                 });
             }

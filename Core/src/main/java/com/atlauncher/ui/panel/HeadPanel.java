@@ -4,7 +4,7 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.event.UpdateAccountsEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.plaf.UIUtils;
-import com.atlauncher.ui.frame.LoginFrame;
+import com.atlauncher.ui.diag.LoginDialog;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -41,7 +41,7 @@ extends JPanel{
                     SwingUtilities.invokeLater(new Runnable(){
                         @Override
                         public void run(){
-                            new LoginFrame().setVisible(true);
+                            new LoginDialog().setVisible(true);
                         }
                     });
                 }

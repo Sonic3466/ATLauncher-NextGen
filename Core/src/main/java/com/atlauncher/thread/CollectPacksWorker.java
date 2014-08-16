@@ -68,10 +68,11 @@ implements Runnable{
                         break;
                     }
                     case PRIVATE:{
-                        if(pack.isAllowed()){
-                            ATLauncher.EVENT_BUS.post(new PackLoadedEvent(pack));
-                        }
+                        //TODO: Write user retrieval system
                         break;
+                    }
+                    case SEMI_PUBLIC:{
+                        //TODO: Write semipublic system
                     }
                     default:{
                         break;

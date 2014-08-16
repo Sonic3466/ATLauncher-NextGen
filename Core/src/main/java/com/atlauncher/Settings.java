@@ -4,7 +4,7 @@ import com.atlauncher.obj.Downloadable;
 import com.atlauncher.obj.FileHash;
 import com.atlauncher.obj.News;
 import com.atlauncher.obj.Server;
-import com.atlauncher.ui.frame.ProgressFrame;
+import com.atlauncher.ui.diag.LoadingDialog;
 import com.atlauncher.utils.OS;
 
 import com.google.gson.Gson;
@@ -116,7 +116,7 @@ public final class Settings{
     }
 
     public static void updateLauncherFiles(){
-        final ProgressFrame frame = new ProgressFrame("Downloading");
+        final LoadingDialog frame = new LoadingDialog("Downloading");
         SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run(){
