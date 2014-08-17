@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+//TODO: Add improvements
 public final class UserPanel
 extends JPanel
 implements Card, MouseListener{

@@ -43,7 +43,7 @@ extends CardDisplayPanel{
 
     @Subscribe
     public void onPackInstall(CurrentPackInstallEvent e){
-
+        System.out.println(this.current().getJson(this.current().getLatest().version));
     }
 
     @Subscribe

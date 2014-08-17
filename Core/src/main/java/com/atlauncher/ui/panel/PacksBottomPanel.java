@@ -1,6 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.event.CurrentPackInstallEvent;
 import com.atlauncher.event.CurrentPackSupportEvent;
 import com.atlauncher.event.CurrentPackWebsiteEvent;
 
@@ -51,6 +52,12 @@ extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e){
                 ATLauncher.EVENT_BUS.post(new CurrentPackWebsiteEvent());
+            }
+        });
+        this.newInstanceButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ATLauncher.EVENT_BUS.post(new CurrentPackInstallEvent());
             }
         });
     }

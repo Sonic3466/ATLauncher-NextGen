@@ -2,7 +2,6 @@ package com.atlauncher;
 
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.diag.LoginDialog;
-import com.atlauncher.ui.frame.ATLauncherConsoleFrame;
 import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
@@ -18,13 +17,13 @@ import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+//TODO: Improve boot time?
 public final class ATLauncher{
-    public static final ExecutorService TASKS = Executors.newFixedThreadPool(3);
+    public static final ExecutorService TASKS = Executors.newCachedThreadPool();
     public static final EventBus EVENT_BUS = new EventBus();
 
     private static Injector injector;
     private static ATLauncherFrame frame;
-    private static ATLauncherConsoleFrame console;
 
     public static void main(String... args)
     throws Exception{
@@ -39,10 +38,13 @@ public final class ATLauncher{
             }
             injector = Guice.createInjector(module);
 
-            Settings.updateLauncherFiles();
+            if(!Boolean.valueOf(parser.get("developer"))){
+                Settings.updateLauncherFiles();
+            } else{
+                System.out.println("In developer mode");
+            }
 
             frame = new ATLauncherFrame();
-            console = new ATLauncherConsoleFrame();
             SwingUtilities.invokeLater(new Runnable(){
                 @Override
                 public void run(){
@@ -61,21 +63,6 @@ public final class ATLauncher{
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }
-    }
-
-    private static void loadSettings(){
-        if(Boolean.valueOf(Settings.properties.getProperty("console", "false"))){
-            SwingUtilities.invokeLater(new Runnable(){
-                @Override
-                public void run(){
-                    console.setVisible(true);
-                }
-            });
-        }
-    }
-
-    public static ATLauncherConsoleFrame getConsole(){
-        return console;
     }
 
     public static ATLauncherFrame getFrame(){
@@ -99,6 +86,7 @@ public final class ATLauncher{
         }
     }
 
+    //TODO: Remove this
     @SuppressWarnings("unchecked")
     private static AbstractModule genModule(String classPath){
         try{

@@ -1,17 +1,26 @@
 package com.atlauncher.obj;
 
+import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
+import com.atlauncher.annot.Json;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.imageio.ImageIO;
 
+@Json
 public final class Pack{
     public final String name;
     public final String description;
@@ -58,6 +67,26 @@ public final class Pack{
         }
 
         this.testers.add(player);
+    }
+
+    public String getJson(String version){
+        Path json = Settings.PACK.resolve(this.getSafeName()).resolve(version).resolve("Configs.json");
+        if(Files.exists(json)){
+            try(ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                FileChannel channel = FileChannel.open(json, StandardOpenOption.READ);
+                WritableByteChannel wbc = Channels.newChannel(bos)){
+
+                channel.transferTo(0, Long.MAX_VALUE, wbc);
+
+                return new String(bos.toByteArray());
+            } catch(IOException e){
+                throw new RuntimeException(e);
+            }
+        } else{
+            Downloadable dl = new Downloadable("packs/" + this.getSafeName() + "/versions/" + version + "/Configs.json", json, null, false);
+            ATLauncher.TASKS.submit(dl);
+            return this.getJson(version);
+        }
     }
 
     public BufferedImage getImage(){

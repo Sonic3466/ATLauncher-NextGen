@@ -4,6 +4,7 @@ import com.atlauncher.event.PacksFlushEvent;
 import com.atlauncher.thread.CollectPacksRunnable;
 import com.atlauncher.ui.diag.LoadingDialog;
 
+//TODO: Really need this?
 public enum Packs{
     instance;
 

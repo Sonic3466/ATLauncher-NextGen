@@ -1,5 +1,8 @@
 package com.atlauncher.obj;
 
+import com.atlauncher.annot.Json;
+
+@Json
 public final class News{
     public final String title;
     public final String link;

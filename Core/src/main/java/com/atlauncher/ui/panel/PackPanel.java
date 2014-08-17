@@ -14,6 +14,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
+//TODO: Rewrite
 public final class PackPanel
 extends JPanel
 implements Card{

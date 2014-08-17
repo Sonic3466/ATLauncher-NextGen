@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import javax.swing.SwingUtilities;
 
+//TODO: Optimize
 public final class CollectPacksRunnable
 implements Runnable{
     private final LoadingDialog diag;

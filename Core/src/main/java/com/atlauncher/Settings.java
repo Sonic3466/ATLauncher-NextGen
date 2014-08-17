@@ -30,6 +30,7 @@ public final class Settings{
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";
 
     public static final Path CORE = OS.getStorageLocation();
+    public static final Path PACK = CORE.resolve(".packs");
     public static final Path DATA = CORE.resolve("data");
     public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("image");

@@ -22,6 +22,9 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
+//TODO: Write loading Screen
+//TODO: Write packs.json retrieval
+//TODO: Write hash validation update system
 public final class ATLBoot{
     public static final Gson GSON = new Gson();
 
@@ -113,6 +116,8 @@ public final class ATLBoot{
                 a.add(parent.resolve("ATLauncher-Core.jar").toString());
                 a.add("--provider");
                 a.add("com.atlauncher.ATLModule");
+                a.add("--developer");
+                a.add("false");
             }
 
             System.out.println(a);

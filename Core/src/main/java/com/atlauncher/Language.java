@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+//TODO: Localize
+//TODO: Get localizers
 public enum Language {
     INSTANCE;
 

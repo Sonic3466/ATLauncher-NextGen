@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+//TODO: Rewrite & Optimize
 public final class BackPanel
 extends JPanel{
     private final Map<String, BufferedImage> backgrounds = new HashMap<>();

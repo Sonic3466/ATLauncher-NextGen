@@ -24,6 +24,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+//TODO: Optimize
 public final class LoginDialog
 extends JDialog{
     private final CenterPanel center_panel = new CenterPanel();

@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+//TODO: Generate beta settings
 public final class SettingsTab
 extends JPanel
 implements Card{
@@ -35,11 +36,11 @@ implements Card{
         this.register(new CreditsTab());
     }
 
-    private final JToggleButton generalButton = new JToggleButton("General", true);
-    private final JToggleButton javaButton = new JToggleButton("Java");
-    private final JToggleButton loggingButton = new JToggleButton("Logging");
-    private final JToggleButton networkButton = new JToggleButton("Network");
-    private final JToggleButton creditsButton = new JToggleButton("Credits");
+    private final JToggleButton generalButton = new JToggleButton("GENERAL", true);
+    private final JToggleButton javaButton = new JToggleButton("JAVA");
+    private final JToggleButton loggingButton = new JToggleButton("LOGGING");
+    private final JToggleButton networkButton = new JToggleButton("NETWORK");
+    private final JToggleButton creditsButton = new JToggleButton("CREDITS");
 
     private final ToggleButtonGroup tbg = new ToggleButtonGroup();
     {
