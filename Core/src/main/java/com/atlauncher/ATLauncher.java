@@ -32,10 +32,7 @@ public final class ATLauncher{
         try{
             CLIParser parser = new CLIParser(args);
             String pC = parser.get("provider");
-            AbstractModule module = genModule(pC);
-            if(module == null){
-                module = regenModule(pC);
-            }
+            AbstractModule module = regenModule(pC);
             injector = Guice.createInjector(module);
 
             if(!Boolean.valueOf(parser.get("developer"))){
@@ -83,19 +80,6 @@ public final class ATLauncher{
             return moduleConstructor.newInstance();
         } catch(Exception ex){
             throw new RuntimeException(ex);
-        }
-    }
-
-    //TODO: Remove this
-    @SuppressWarnings("unchecked")
-    private static AbstractModule genModule(String classPath){
-        try{
-            Class<AbstractModule> moduleClass = (Class<AbstractModule>) Class.forName(classPath);
-            Constructor<AbstractModule> moduleConstructor = moduleClass.getDeclaredConstructor();
-            moduleConstructor.setAccessible(true);
-            return moduleConstructor.newInstance();
-        } catch(Exception ex){
-            return null;
         }
     }
 }
