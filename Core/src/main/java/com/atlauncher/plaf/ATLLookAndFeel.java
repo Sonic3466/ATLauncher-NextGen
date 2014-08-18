@@ -1,5 +1,6 @@
 package com.atlauncher.plaf;
 
+import java.awt.Color;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
@@ -17,6 +18,20 @@ extends MetalLookAndFeel{
                 "ProgressBarUI", this.get("ATLProgressBarUI")
         };
         table.putDefaults(def);
+    }
+
+    @Override
+    protected void initComponentDefaults(UIDefaults table){
+        super.initComponentDefaults(table);
+        Object[] defs = {
+                "Label.font", UIUtils.DINPRO_BLACK.deriveFont(12.0F),
+                "ComboBox.selectionForeground", Color.black,
+                "ComboBox.selectionBackground", Color.green,
+                "ComboBox.foreground", Color.black,
+                "ComboBox.background", Color.white,
+                "Panel.background", UIUtils.GRAY
+        };
+        table.putDefaults(defs);
     }
 
     private String get(String s){

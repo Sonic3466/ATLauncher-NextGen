@@ -1,10 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.event.CurrentPackInstallEvent;
-import com.atlauncher.event.CurrentPackInstallServerEvent;
-import com.atlauncher.event.CurrentPackSupportEvent;
-import com.atlauncher.event.CurrentPackWebsiteEvent;
+import com.atlauncher.event.PackEvent;
 import com.atlauncher.obj.Pack;
 
 import com.google.common.eventbus.Subscribe;
@@ -24,30 +21,25 @@ extends CardDisplayPanel{
     }
 
     @Subscribe
-    public void onPackSupport(CurrentPackSupportEvent e){
-        try{
-            Desktop.getDesktop().browse(new URL(this.current().support_url).toURI());
-        } catch(Exception ex){
-            ex.printStackTrace(System.err);
+    public void onPack(PackEvent e){
+        if(e.id == PackEvent.OPEN_SUPPORT){
+            try{
+                Desktop.getDesktop().browse(new URL(this.current().support_url).toURI());
+            } catch(Exception ex){
+                ex.printStackTrace(System.err);
+            }
+        } else if(e.id == PackEvent.OPEN_WEBSITE){
+            try{
+                Desktop.getDesktop().browse(new URL(this.current().website_url).toURI());
+            } catch(Exception ex){
+                ex.printStackTrace(System.err);
+            }
+        } else if(e.id == PackEvent.INSTALL_CLIENT){
+            System.out.println(this.current().getJson(this.current().getLatest().version));
+        } else if(e.id == PackEvent.INSTALL_SERVER){
+
+        } else{
+            throw new IllegalArgumentException("PackEvent#id is invalid");
         }
-    }
-
-    @Subscribe
-    public void onPackWebsite(CurrentPackWebsiteEvent e){
-        try{
-            Desktop.getDesktop().browse(new URL(this.current().website_url).toURI());
-        } catch(Exception ex){
-            ex.printStackTrace(System.err);
-        }
-    }
-
-    @Subscribe
-    public void onPackInstall(CurrentPackInstallEvent e){
-        System.out.println(this.current().getJson(this.current().getLatest().version));
-    }
-
-    @Subscribe
-    public void onPackInstallServer(CurrentPackInstallServerEvent e){
-
     }
 }

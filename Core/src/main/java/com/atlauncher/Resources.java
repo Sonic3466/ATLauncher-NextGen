@@ -109,4 +109,19 @@ public final class Resources{
             throw new RuntimeException(ex);
         }
     }
+
+    public static Font makeFont0(String name){
+        try{
+            URL url = System.class.getResource("/assets/font/" + name + ".ttf");
+            if(url == null){
+                throw new NullPointerException("Cannot find font " + name);
+            } else{
+                Font f = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
+                resources.put(name, f);
+                return f;
+            }
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
 }

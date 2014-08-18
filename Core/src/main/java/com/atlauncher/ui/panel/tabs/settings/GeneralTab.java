@@ -55,10 +55,12 @@ implements Card{
             public void actionPerformed(ActionEvent e){
                 JFileChooser jfc = new JFileChooser();
                 jfc.setDialogTitle("Choose Downloads Directory");
+                jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int ret = jfc.showOpenDialog(GeneralTab.this);
                 if(ret == JFileChooser.APPROVE_OPTION){
                     downloadsField.setText(jfc.getSelectedFile().toString());
                     Settings.downloads = jfc.getSelectedFile().toPath();
+                    Settings.properties.setProperty("downloads", jfc.getSelectedFile().toString());
                 }
             }
         });

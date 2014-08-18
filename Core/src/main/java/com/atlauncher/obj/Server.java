@@ -19,6 +19,11 @@ public final class Server{
         return "http://" + this.url + "/" + endpoint;
     }
 
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
     public static interface Servers
     extends List<Server>{}
 }

@@ -1,9 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.event.CurrentPackInstallEvent;
-import com.atlauncher.event.CurrentPackSupportEvent;
-import com.atlauncher.event.CurrentPackWebsiteEvent;
+import com.atlauncher.event.PackEvent;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -45,19 +43,25 @@ extends JPanel{
         this.supportButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new CurrentPackSupportEvent());
+                ATLauncher.EVENT_BUS.post(new PackEvent(PackEvent.OPEN_SUPPORT));
             }
         });
         this.websiteButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new CurrentPackWebsiteEvent());
+                ATLauncher.EVENT_BUS.post(new PackEvent(PackEvent.OPEN_WEBSITE));
             }
         });
         this.newInstanceButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ATLauncher.EVENT_BUS.post(new CurrentPackInstallEvent());
+                ATLauncher.EVENT_BUS.post(new PackEvent(PackEvent.INSTALL_CLIENT));
+            }
+        });
+        this.newServerButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ATLauncher.EVENT_BUS.post(new PackEvent(PackEvent.INSTALL_SERVER));
             }
         });
     }

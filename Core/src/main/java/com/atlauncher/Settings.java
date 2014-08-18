@@ -75,7 +75,18 @@ public final class Settings{
 
     public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", DEFAULT_DOWNLOADS.toString()));
 
-    public static final Server.Servers SERVERS = ATLauncher.getInjector().getInstance(Server.Servers.class);
+    public static final Server[] SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
+    public static Server server = find(Settings.properties.getProperty("selectedServer", "Auto"));
+
+    public static Server find(String name){
+        for(Server server : SERVERS){
+            if(server.name.equalsIgnoreCase(name) && server.selectable){
+                return server;
+            }
+        }
+
+        return SERVERS[0];
+    }
 
     private Settings(){}
 

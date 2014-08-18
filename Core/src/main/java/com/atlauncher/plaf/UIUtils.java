@@ -4,6 +4,7 @@ import com.atlauncher.Resources;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,6 +20,8 @@ public final class UIUtils{
 
     public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
     public static final Color GRAY = new Color(40, 45, 50);
+
+    public static final Font DINPRO_BLACK = Resources.makeFont0("dinpro-black");
 
     private static Map<RenderingHints.Key, Object> hints;
     private static Map<RenderingHints.Key, Object> oldHints;

@@ -11,7 +11,6 @@ import com.google.common.eventbus.Subscribe;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -44,7 +43,7 @@ extends JPanel{
     extends JPanel{
         private final JLabel header = new JLabel("ATLauncher - News", JLabel.LEFT);
         {
-            this.header.setFont(new Font(Font.SANS_SERIF, Font.BOLD|Font.ITALIC, 24));
+            this.header.setFont(header.getFont().deriveFont(24.0F));
             this.header.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 5));
         }
 
