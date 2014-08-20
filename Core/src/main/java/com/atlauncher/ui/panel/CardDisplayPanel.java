@@ -73,7 +73,7 @@ extends JPanel{
         this.displayPanel.removeAll();
     }
 
-    private void next(){
+    protected void next(){
         if(this.ptr++ >= this.cards.size() - 1){
             this.ptr = this.cards.size() - 1;
         }
@@ -82,7 +82,7 @@ extends JPanel{
         layout.show(this.displayPanel, this.cards.get(this.ptr).id());
     }
 
-    private void back(){
+    protected void back(){
         if(this.ptr-- <= 0){
             this.ptr = 0;
         }
