@@ -35,7 +35,7 @@ public final class Settings{
     public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("image");
     public static final Path SKINS = DATA.resolve("skin");
-    public static final Path LANGUAGES = DATA.resolve("languages");
+    public static final Path LANGUAGES = DATA.resolve("language");
     public static final Path ACCOUNTS = DATA.resolve("accounts");
 
     private static final Path DEFAULT_DOWNLOADS = CORE.resolve("Downloads");
