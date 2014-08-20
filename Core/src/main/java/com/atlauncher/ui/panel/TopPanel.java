@@ -1,77 +1,62 @@
 package com.atlauncher.ui.panel;
 
-import com.atlauncher.ATLauncher;
-import com.atlauncher.event.UpdateCentralEvent;
-import com.atlauncher.event.UpdateSettingsEvent;
 import com.atlauncher.ui.comp.ExitButton;
 import com.atlauncher.ui.comp.MinimizeButton;
 import com.atlauncher.ui.comp.SocialMedia;
 
-import com.google.common.eventbus.Subscribe;
-
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public final class TopPanel
 extends JPanel{
+    private final GridBagConstraints gbc = new GridBagConstraints();
+    private final JLabel header =  new JLabel("ATLauncher - News", JLabel.LEFT);
+
     public TopPanel(){
-        super(new BorderLayout());
+        super(new GridBagLayout());
         this.setOpaque(false);
-        this.add(new RightPanel(), BorderLayout.EAST);
-        this.add(new LeftPanel(), BorderLayout.WEST);
-        this.add(new BottomPanel(), BorderLayout.SOUTH);
+
+        this.header.setFont(this.header.getFont().deriveFont(24.0F));
+        this.header.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 5));
+
+        this.gbc.gridx = 0;
+        this.gbc.gridy = 0;
+        this.gbc.weightx = 0.1;
+        this.gbc.weighty = 0.1;
+        this.gbc.anchor = GridBagConstraints.LINE_START;
+        this.add(this.header, this.gbc);
+        this.gbc.anchor = GridBagConstraints.FIRST_LINE_END;
+        this.gbc.gridx++;
+        this.add(Box.createRigidArea(new Dimension(389, 0)), this.gbc);
+        this.gbc.gridx++;
+        this.add(new MinimizeButton(), this.gbc);
+        this.gbc.gridx++;
+        this.add(new ExitButton(), this.gbc);
+
+        this.gbc.gridx = 0;
+        this.gbc.fill = GridBagConstraints.VERTICAL;
+        this.gbc.gridy++;
+        this.gbc.anchor = GridBagConstraints.LINE_START;
+        this.add(new BottomPanel(), this.gbc);
     }
 
-    private static final class BottomPanel
+    private final class BottomPanel
     extends JPanel{
-        private BottomPanel(){
-            super(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        public BottomPanel(){
+            super(new FlowLayout(FlowLayout.LEFT));
             this.setOpaque(false);
             for(SocialMedia sm : SocialMedia.values()){
                 JButton button = sm.button();
-                button.setBorder(BorderFactory.createEmptyBorder(0, 25, 5, 0));
+                button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 5));
                 this.add(button);
             }
-        }
-    }
-
-    private static final class LeftPanel
-    extends JPanel{
-        private final JLabel header = new JLabel("ATLauncher - News", JLabel.LEFT);
-        {
-            this.header.setFont(header.getFont().deriveFont(24.0F));
-            this.header.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 5));
-        }
-
-        private LeftPanel(){
-            super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-            this.setOpaque(false);
-            ATLauncher.EVENT_BUS.register(this);
-            this.add(this.header);
-        }
-
-        @Subscribe
-        public void onTitleChange(UpdateCentralEvent e){
-            this.header.setText("ATLauncher - " + e.title);
-        }
-
-        @Subscribe
-        public void onSettingsChanged(UpdateSettingsEvent e){
-            this.header.setText("ATLauncher - Settings - " + e.title);
-        }
-    }
-
-    private static final class RightPanel
-    extends JPanel{
-        private RightPanel(){
-            super(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-            this.setOpaque(false);
-            this.add(new MinimizeButton());
-            this.add(new ExitButton());
         }
     }
 }

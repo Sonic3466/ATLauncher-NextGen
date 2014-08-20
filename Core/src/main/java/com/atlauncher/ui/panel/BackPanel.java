@@ -51,9 +51,10 @@ extends JPanel{
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(this.b, 0, 0, this.getWidth() - 98, this.getHeight() - 26, null);
+        g2.drawImage(this.b, 0, 0, this.getWidth() - 100, this.getHeight() - 26, null);
         g2.setColor(Color.white);
-        g2.fillRect(this.getWidth() - 99, 0, 99, this.getHeight());
+        g2.fillRect(this.getWidth() - 117, 0, 117, this.getHeight());
+        g2.setColor(UIUtils.GRAY);
         g2.fillRect(0, this.getHeight() - 26, this.getWidth(), 26);
     }
 }

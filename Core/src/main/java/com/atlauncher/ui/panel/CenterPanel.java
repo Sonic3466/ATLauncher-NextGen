@@ -26,6 +26,7 @@ extends JPanel{
     public CenterPanel(){
         super(new CardLayout());
         this.setOpaque(false);
+
         ATLauncher.EVENT_BUS.register(this);
 
         this.register(this.news);
