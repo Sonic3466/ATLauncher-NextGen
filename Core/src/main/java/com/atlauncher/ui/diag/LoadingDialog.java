@@ -1,6 +1,6 @@
 package com.atlauncher.ui.diag;
 
-import com.atlauncher.ui.Screen;
+import com.atlauncher.plaf.UIUtils;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -32,6 +32,6 @@ extends JDialog{
         this.gbc.gridy++;
         this.add(this.bar, this.gbc);
         this.pack();
-        this.setLocation((int) (Screen.SIZE.getWidth() - this.getWidth()) / 2, (int) (Screen.SIZE.getHeight() - this.getHeight()) / 2);
+        this.setLocation((int) (UIUtils.SIZE.getWidth() - this.getWidth()) / 2, (int) (UIUtils.SIZE.getHeight() - this.getHeight()) / 2);
     }
 }

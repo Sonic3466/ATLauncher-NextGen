@@ -7,21 +7,19 @@ import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.UserMeta;
 import com.atlauncher.ui.diag.LoadingDialog;
+import com.atlauncher.utils.PacksComparator;
+
+import com.google.gson.reflect.TypeToken;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.swing.SwingUtilities;
 
-//TODO: Optimize
 public final class CollectPacksRunnable
 implements Runnable{
     private final LoadingDialog diag;
@@ -41,7 +39,7 @@ implements Runnable{
             });
 
             InputStream in = new FileInputStream(Settings.JSON.resolve("packs.json").toFile());
-            Pack[] packs = Settings.GSON.fromJson(new InputStreamReader(in), Pack[].class);
+            List<Pack> packs = Settings.GSON.fromJson(new InputStreamReader(in), new TypeToken<List<Pack>> (){}.getType());
             in.close();
             URL url = new URL(Accounts.instance.getCurrent().getUserMetaURL());
             UserMeta meta = null;
@@ -56,30 +54,10 @@ implements Runnable{
                 ex.printStackTrace(System.err);
             }
 
-            Set<Pack> loaded = new TreeSet<>(new Comparator<Pack>(){
-                @Override
-                public int compare(Pack o1, Pack o2){
-                    if(o1.position == o2.position){
-                        return 0;
-                    } else if(o1.position > o2.position){
-                        return 1;
-                    } else{
-                        return -1;
-                    }
-                }
+            Collections.sort(packs, new PacksComparator());
 
-                @Override
-                public boolean equals(Object obj){
-                    return false;
-                }
-            });
-
-            loaded.addAll(Arrays.asList(packs));
-
-            List<Pack> p = new LinkedList<>(loaded);
-
-            for(int i = 0; i < p.size(); i++){
-                Pack pack = p.get(i);
+            for(int i = 0; i < packs.size(); i++){
+                Pack pack = packs.get(i);
 
                 if(meta != null){
                     for(String str : meta.allowed_player){
@@ -110,7 +88,7 @@ implements Runnable{
                         break;
                     }
                 }
-                this.diag.bar.setValue((i * 100) / p.size());
+                this.diag.bar.setValue((i * 100) / packs.size());
             }
 
             SwingUtilities.invokeLater(new Runnable(){

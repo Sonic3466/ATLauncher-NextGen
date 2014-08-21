@@ -40,7 +40,7 @@ implements Card{
 
     @Subscribe
     public void onAccountUpdate(UpdateAccountsEvent e){
-        Packs.instance.load();
+        Packs.load();
     }
 
     @Subscribe
