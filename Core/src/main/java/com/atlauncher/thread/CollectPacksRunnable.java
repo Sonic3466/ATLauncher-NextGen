@@ -58,6 +58,7 @@ implements Runnable{
 
             for(int i = 0; i < packs.size(); i++){
                 Pack pack = packs.get(i);
+                this.diag.bar.setValue((i * 100) / packs.size());
 
                 if(meta != null){
                     for(String str : meta.allowed_player){
@@ -88,7 +89,6 @@ implements Runnable{
                         break;
                     }
                 }
-                this.diag.bar.setValue((i * 100) / packs.size());
             }
 
             SwingUtilities.invokeLater(new Runnable(){

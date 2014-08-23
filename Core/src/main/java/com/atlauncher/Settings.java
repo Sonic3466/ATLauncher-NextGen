@@ -30,15 +30,13 @@ public final class Settings{
     public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";
 
     public static final Path CORE = OS.getStorageLocation();
-    public static final Path PACK = CORE.resolve(".packs");
     public static final Path DATA = CORE.resolve("data");
     public static final Path JSON = DATA.resolve("json");
     public static final Path IMAGES = DATA.resolve("image");
     public static final Path SKINS = DATA.resolve("skin");
     public static final Path LANGUAGES = DATA.resolve("language");
     public static final Path ACCOUNTS = DATA.resolve("accounts");
-
-    private static final Path DEFAULT_DOWNLOADS = CORE.resolve("Downloads");
+    public static final Path TMP = com.google.common.io.Files.createTempDir().toPath();
 
     static
     {
@@ -51,7 +49,6 @@ public final class Settings{
 
             try(InputStream in = new FileInputStream(path.toFile())){
                 properties.load(in);
-
             }
         } catch(Exception ex){
             ex.printStackTrace(System.err);
@@ -73,7 +70,7 @@ public final class Settings{
         }));
     }
 
-    public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", DEFAULT_DOWNLOADS.toString()));
+    public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", CORE.resolve("downloads").toString()));
 
     public static final Server[] SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
     public static Server server = find(Settings.properties.getProperty("selectedServer", "Auto"));

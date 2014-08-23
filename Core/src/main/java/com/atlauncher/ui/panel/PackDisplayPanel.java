@@ -3,6 +3,7 @@ package com.atlauncher.ui.panel;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.event.PackEvent;
 import com.atlauncher.obj.Pack;
+import com.atlauncher.thread.InstanceInstallWorker;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -41,7 +42,7 @@ implements MouseWheelListener{
                 ex.printStackTrace(System.err);
             }
         } else if(e.id == PackEvent.INSTALL_CLIENT){
-            System.out.println(this.current().getJson(this.current().getLatest().version));
+            new InstanceInstallWorker(null, this.current(), this.current().getLatest()).execute();
         } else if(e.id == PackEvent.INSTALL_SERVER){
 
         } else{
