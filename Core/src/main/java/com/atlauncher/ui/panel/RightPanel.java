@@ -2,8 +2,12 @@ package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
+import com.atlauncher.Language;
 import com.atlauncher.event.UpdateCentralEvent;
+import com.atlauncher.event.UpdateI18NEvent;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
+
+import com.google.common.eventbus.Subscribe;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -16,7 +20,7 @@ import javax.swing.JToggleButton;
 public final class RightPanel
 extends JPanel{
     private final JToggleButton newsButton = new JToggleButton("NEWS", true);
-    private final JToggleButton modpacksButton = new JToggleButton("MODPACKS");
+    private final JToggleButton modpacksButton = new JToggleButton("PACKS");
     private final JToggleButton instancesButton = new JToggleButton("INSTANCES");
     private final JToggleButton accountsButton = new JToggleButton("ACCOUNTS");
     private final JToggleButton settingsButton = new JToggleButton("SETTINGS");
@@ -33,6 +37,8 @@ extends JPanel{
     public RightPanel(){
         super(new GridBagLayout());
         this.setOpaque(false);
+
+        ATLauncher.EVENT_BUS.register(this);
 
         this.newsButton.setBackground(Color.WHITE);
         this.settingsButton.setBackground(Color.WHITE);
@@ -97,5 +103,14 @@ extends JPanel{
         this.add(this.accountsButton, c);
         c.gridy++;
         this.add(this.settingsButton, c);
+    }
+
+    @Subscribe
+    public void onI18NUpdate(UpdateI18NEvent e){
+        this.newsButton.setText(Language.tr("tabs.news"));
+        this.modpacksButton.setText(Language.tr("tabs.packs"));
+        this.instancesButton.setText(Language.tr("tabs.instances"));
+        this.settingsButton.setText(Language.tr("tabs.settings"));
+        this.accountsButton.setText(Language.tr("tabs.account"));
     }
 }

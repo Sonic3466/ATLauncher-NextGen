@@ -34,7 +34,7 @@ extends JPanel{
         this.add(this.header, this.gbc);
         this.gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         this.gbc.gridx++;
-        this.add(Box.createRigidArea(new Dimension(389, 0)), this.gbc);
+        this.add(Box.createRigidArea(new Dimension(410, 0)), this.gbc);
         this.gbc.gridx++;
         this.add(new MinimizeButton(), this.gbc);
         this.gbc.gridx++;

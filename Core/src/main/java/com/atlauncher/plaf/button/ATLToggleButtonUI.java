@@ -1,6 +1,7 @@
-package com.atlauncher.plaf;
+package com.atlauncher.plaf.button;
 
-import java.awt.AlphaComposite;
+import com.atlauncher.plaf.UIUtils;
+
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -8,20 +9,23 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.plaf.basic.BasicToggleButtonUI;
 
-public final class ATLButtonUI
-extends BasicButtonUI{
-    protected static final Color PRESSED = new Color(45, 150, 190);
+public final class ATLToggleButtonUI
+        extends BasicToggleButtonUI{
+    protected static final Color HOVER = new Color(45, 150, 190);
+    protected static final Color PRESSED = new Color(18, 255, 13);
     protected static final Color UNPRESSED = new Color(55, 55, 55);
-    protected static final Color TEXT = Color.WHITE;
+    protected static final Color TEXT = new Color(140, 150, 165);
+
+    protected static final ATLToggleButtonUI buttonUI = new ATLToggleButtonUI();
 
     public static ComponentUI createUI(JComponent comp){
-        return new ATLButtonUI();
+        return buttonUI;
     }
 
     private Rectangle viewRect = new Rectangle();
@@ -32,12 +36,13 @@ extends BasicButtonUI{
     public void installUI(JComponent comp){
         super.installUI(comp);
 
-        if(comp instanceof JButton){
-            JButton button = (JButton) comp;
-            button.setFocusPainted(false);
-            button.setBorderPainted(false);
-            button.setForeground(TEXT);
-            button.setBackground(UNPRESSED);
+        if(comp instanceof JToggleButton){
+            JToggleButton b = (JToggleButton) comp;
+            b.setBorderPainted(false);
+            b.setFocusPainted(false);
+            b.setRolloverEnabled(true);
+            b.setForeground(TEXT);
+            b.setBackground(UNPRESSED);
         }
     }
 
@@ -45,16 +50,15 @@ extends BasicButtonUI{
     public void paint(Graphics g, JComponent c){
         AbstractButton b = (AbstractButton) c;
         Graphics2D g2 = (Graphics2D) g;
-        if(b.getModel().isPressed()){
-            if(b.isOpaque()){
-                g2.setPaint(PRESSED);
-                g2.fillRect(0, 0, b.getWidth(), b.getHeight());
-            }
+        if(b.getModel().isPressed() || b.getModel().isSelected()){
+            g2.setColor(PRESSED);
+            g2.fillRect(0, 0, b.getWidth(), b.getHeight());
+        } else if(b.getModel().isRollover()){
+            g2.setColor(HOVER);
+            g2.fillRect(0, 0, b.getWidth(), b.getHeight());
         } else{
-            if(b.isOpaque()){
-                g2.setColor(b.getBackground());
-                g2.fillRect(0, 0, b.getWidth(), b.getHeight());
-            }
+            g2.setColor(b.getBackground());
+            g2.fillRect(0, 0, b.getWidth(), b.getHeight());
         }
 
         String text = this.layout(b, g2.getFontMetrics(), b.getWidth(), b.getHeight());
@@ -67,19 +71,17 @@ extends BasicButtonUI{
         Graphics2D g2 = (Graphics2D) g;
         AbstractButton b = (AbstractButton) comp;
 
-        g2.setColor(b.getModel().isPressed() ? Color.black : Color.white);
-        g2.setFont(comp.getFont());
+        if(b.getModel().isPressed() || b.getModel().isSelected() || b.getModel().isRollover()){
+            g2.setColor(Color.black);
+        } else{
+            g2.setColor(b.getForeground());
+        }
         UIUtils.antialiasOn(g2);
         g2.drawString(text, rect.x, rect.y + g2.getFontMetrics().getAscent());
         UIUtils.antialiasOff(g2);
     }
 
-    private AlphaComposite alpha(float alpha){
-        return AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-    }
-
-    private String layout(AbstractButton b, FontMetrics fm,
-                          int width, int height) {
+    private String layout(AbstractButton b, FontMetrics fm, int width, int height) {
         Insets i = b.getInsets();
         viewRect.x = i.left;
         viewRect.y = i.top;
@@ -89,7 +91,6 @@ extends BasicButtonUI{
         textRect.x = textRect.y = textRect.width = textRect.height = 0;
         iconRect.x = iconRect.y = iconRect.width = iconRect.height = 0;
 
-        // layout the text and icon
         return SwingUtilities.layoutCompoundLabel(
                 b, fm, b.getText(), b.getIcon(),
                 b.getVerticalAlignment(), b.getHorizontalAlignment(),

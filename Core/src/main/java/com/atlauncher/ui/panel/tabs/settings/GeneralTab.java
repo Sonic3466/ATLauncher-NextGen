@@ -1,9 +1,7 @@
 package com.atlauncher.ui.panel.tabs.settings;
 
-import com.atlauncher.ATLauncher;
 import com.atlauncher.Language;
 import com.atlauncher.Settings;
-import com.atlauncher.event.RelocalizeEvent;
 import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.comp.Card;
 
@@ -87,7 +85,6 @@ implements Card{
             public void itemStateChanged(ItemEvent e){
                 try{
                     Language.INSTANCE.load((String) e.getItem());
-                    ATLauncher.EVENT_BUS.post(new RelocalizeEvent());
                 } catch(IOException e1){
                     throw new RuntimeException(e1);
                 }

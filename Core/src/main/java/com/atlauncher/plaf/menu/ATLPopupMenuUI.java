@@ -1,4 +1,4 @@
-package com.atlauncher.plaf;
+package com.atlauncher.plaf.menu;
 
 import java.awt.Color;
 import java.awt.Graphics;

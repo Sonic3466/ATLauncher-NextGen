@@ -1,5 +1,7 @@
 package com.atlauncher;
 
+import com.atlauncher.annot.UpdateI18N;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -25,6 +27,7 @@ public enum Language {
         }
     }
 
+    @UpdateI18N
     public synchronized void load(String lang) throws IOException {
         if (!this.langs.containsKey(lang)) {
             Properties props = new Properties();
@@ -74,6 +77,10 @@ public enum Language {
 
     public synchronized String localize(String tag) {
         return this.localize(this.current, tag);
+    }
+
+    public static synchronized String tr(String tag){
+        return INSTANCE.localize(tag);
     }
 
     public synchronized String getCurrent() {

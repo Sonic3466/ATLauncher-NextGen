@@ -1,5 +1,8 @@
 package com.atlauncher.plaf;
 
+import com.atlauncher.plaf.button.ATLButtonUI;
+import com.atlauncher.plaf.button.ATLToggleButtonUI;
+
 import java.awt.Color;
 import javax.swing.UIDefaults;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -9,9 +12,10 @@ extends MetalLookAndFeel{
     @Override
     protected void initClassDefaults(UIDefaults table){
         super.initClassDefaults(table);
+        // Button
+        table.put("ButtonUI", ATLButtonUI.class.getCanonicalName());
+        table.put("ToggleButtonUI", ATLToggleButtonUI.class.getCanonicalName());
         Object[] def = {
-                "ButtonUI", get("ATLButtonUI"),
-                "ToggleButtonUI", get("ATLToggleButtonUI"),
                 "TabbedPaneUI", get("ATLTabbedPaneUI"),
                 "LabelUI", get("ATLLabelUI"),
                 "TextFieldUI", this.get("ATLTextFieldUI"),

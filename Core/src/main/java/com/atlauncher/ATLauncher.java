@@ -1,5 +1,6 @@
 package com.atlauncher;
 
+import com.atlauncher.event.UpdateI18NEvent;
 import com.atlauncher.plaf.ATLLookAndFeel;
 import com.atlauncher.ui.diag.LoginDialog;
 import com.atlauncher.ui.frame.ATLauncherFrame;
@@ -48,6 +49,8 @@ public final class ATLauncher{
                     frame.setVisible(true);
                 }
             });
+
+            ATLauncher.EVENT_BUS.post(new UpdateI18NEvent());
 
             if(Settings.properties.getProperty("lastAccount") != null){
                 SwingUtilities.invokeLater(new Runnable(){

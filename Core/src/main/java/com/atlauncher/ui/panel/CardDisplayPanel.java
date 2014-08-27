@@ -71,6 +71,8 @@ extends JPanel{
 
     public void unregisterAll(){
         this.displayPanel.removeAll();
+        this.displayPanel.revalidate();
+        this.cards.clear();
     }
 
     protected void next(){

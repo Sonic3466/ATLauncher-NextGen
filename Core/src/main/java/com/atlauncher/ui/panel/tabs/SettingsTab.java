@@ -1,7 +1,9 @@
 package com.atlauncher.ui.panel.tabs;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.Language;
 import com.atlauncher.event.UpdateCentralEvent;
+import com.atlauncher.event.UpdateI18NEvent;
 import com.atlauncher.event.UpdateSettingsEvent;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.comp.ToggleButtonGroup;
@@ -128,8 +130,16 @@ implements Card{
     }
 
     @Subscribe
-    public void onUpdateSettins(UpdateSettingsEvent e){
+    public void onUpdateSettings(UpdateSettingsEvent e){
         ((CardLayout) this.center.getLayout()).show(this.center, e.id);
+    }
+
+    @Subscribe
+    public void onUpdateI18N(UpdateI18NEvent e){
+        this.generalButton.setText(Language.tr("settings.generaltab"));
+        this.javaButton.setText(Language.tr("settings.javatab"));
+        this.loggingButton.setText(Language.tr("settings.loggingtab"));
+        this.networkButton.setText(Language.tr("settings.networktab"));
     }
 
     public <T extends JPanel & Card> void register(T card){
