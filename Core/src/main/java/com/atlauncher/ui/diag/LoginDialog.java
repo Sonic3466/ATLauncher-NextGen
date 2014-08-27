@@ -74,7 +74,7 @@ extends JDialog{
             super();
             this.setOpaque(false);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            JLabel uLabel = new JLabel("Username / Email: ", JLabel.LEFT);
+            JLabel uLabel = new JLabel("Email: ", JLabel.LEFT);
             uLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             uLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             uLabel.setForeground(Color.white);

@@ -20,7 +20,9 @@ public final class FileHash{
     public Downloadable getDownload(){
         switch(type)
         {
-            case "library":
+            case "library":{
+                return null;
+            }
             case "json":{
                 return new Downloadable("newlauncher/" + this.name, Settings.DATA.resolve(this.type.toLowerCase()),
                         md5, true);

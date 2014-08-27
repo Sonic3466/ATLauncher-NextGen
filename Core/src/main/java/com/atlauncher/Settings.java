@@ -132,7 +132,10 @@ public final class Settings{
         for(int i = 0; i < hashes.length; i++){
             frame.title.setText(hashes[i].name);
             frame.bar.setValue((i * 100) / hashes.length);
-            hashes[i].getDownload().run();
+            Downloadable dl = hashes[i].getDownload();
+            if(dl != null){
+                dl.run();
+            }
         }
         SwingUtilities.invokeLater(new Runnable(){
             @Override
