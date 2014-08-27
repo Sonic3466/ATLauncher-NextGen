@@ -48,5 +48,10 @@
         "group":"commons-io",
         "artifact":"commons-io",
         "version":"2.4"
+    },
+    {
+        "group":"org.aspectj",
+        "artifact":"aspectjrt",
+        "version":"1.7.3"
     }
 ]

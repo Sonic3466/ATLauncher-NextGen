@@ -3,7 +3,7 @@ package com.atlauncher.ui.panel.tabs;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Packs;
 import com.atlauncher.event.PackLoadedEvent;
-import com.atlauncher.event.UpdateAccountsEvent;
+import com.atlauncher.event.UpdatePacksEvent;
 import com.atlauncher.ui.comp.Card;
 import com.atlauncher.ui.panel.CenterBottomPanel;
 import com.atlauncher.ui.panel.PackDisplayPanel;
@@ -39,7 +39,7 @@ implements Card{
     }
 
     @Subscribe
-    public void onAccountUpdate(UpdateAccountsEvent e){
+    public void onAccountUpdate(UpdatePacksEvent e){
         Packs.load();
     }
 

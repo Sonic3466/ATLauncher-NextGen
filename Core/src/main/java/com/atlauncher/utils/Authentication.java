@@ -1,17 +1,56 @@
 package com.atlauncher.utils;
 
+import com.atlauncher.ATLauncher;
+import com.atlauncher.Accounts;
+import com.atlauncher.annot.UpdateAccounts;
+import com.atlauncher.annot.UpdatePacks;
 import com.atlauncher.obj.Account;
+import com.atlauncher.ui.diag.LoadingDialog;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 
 import java.net.Proxy;
+import javax.swing.SwingUtilities;
 
 public final class Authentication{
     private static final YggdrasilUserAuthentication user_auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "1").createUserAuthentication(Agent.MINECRAFT);
 
     private Authentication(){}
+
+    @UpdatePacks
+    @UpdateAccounts
+    public static void create(final String u, final String p)
+    throws Exception{
+        final LoadingDialog diag = new LoadingDialog("Logging In");
+        ATLauncher.TASKS.execute(new Runnable(){
+            @Override
+            public void run(){
+                SwingUtilities.invokeLater(new Runnable(){
+                    @Override
+                    public void run(){
+                        diag.setVisible(true);
+                    }
+                });
+                Account acc = get(u, p);
+
+                if(acc == null){
+                    System.err.println("Cannot Login");
+                }
+
+                diag.bar.setValue(50);
+
+                Accounts.instance.setCurrent(acc);
+                SwingUtilities.invokeLater(new Runnable(){
+                    @Override
+                    public void run(){
+                        diag.dispose();
+                    }
+                });
+            }
+        });
+    }
 
     public static boolean login(String username, String password){
         user_auth.logOut();

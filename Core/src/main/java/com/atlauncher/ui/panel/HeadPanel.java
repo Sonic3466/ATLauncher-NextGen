@@ -1,6 +1,7 @@
 package com.atlauncher.ui.panel;
 
 import com.atlauncher.ATLauncher;
+import com.atlauncher.Accounts;
 import com.atlauncher.event.UpdateAccountsEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.plaf.UIUtils;
@@ -65,7 +66,7 @@ extends JPanel{
 
     @Subscribe
     public void updateHead(UpdateAccountsEvent event){
-        this.account = event.account;
+        this.account = Accounts.instance.getCurrent();
         this.head = this.account.getHead();
         this.repaint();
     }

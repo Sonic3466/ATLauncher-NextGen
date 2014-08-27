@@ -1,10 +1,7 @@
 package com.atlauncher.ui.diag;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
-import com.atlauncher.event.UpdateAccountsEvent;
-import com.atlauncher.obj.Account;
 import com.atlauncher.utils.Authentication;
 
 import java.awt.BorderLayout;
@@ -107,21 +104,11 @@ extends JDialog{
             this.loginButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    ATLauncher.TASKS.execute(new Runnable(){
-                        @Override
-                        public void run(){
-                            Account acc = Authentication.get(center_panel.uField.getText(),
-                                    new String(center_panel.pField.getPassword()));
-
-                            if(acc == null){
-                                throw new RuntimeException("Cannot Login");
-                            }
-
-                            Accounts.instance.setCurrent(acc);
-                            ATLauncher.EVENT_BUS.post(new UpdateAccountsEvent(acc));
-                            Settings.properties.setProperty("lastAccount", center_panel.uField.getText());
-                        }
-                    });
+                    try{
+                        Authentication.create(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
+                    } catch(Exception e1){
+                        e1.printStackTrace();
+                    }
                     dispose();
                 }
             });
