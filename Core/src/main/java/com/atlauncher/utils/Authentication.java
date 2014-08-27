@@ -12,7 +12,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
 
 import java.net.Proxy;
-import javax.swing.SwingUtilities;
+import java.util.concurrent.Callable;
 
 public final class Authentication{
     private static final YggdrasilUserAuthentication user_auth = (YggdrasilUserAuthentication) new YggdrasilAuthenticationService(Proxy.NO_PROXY, "1").createUserAuthentication(Agent.MINECRAFT);
@@ -24,32 +24,22 @@ public final class Authentication{
     public static void create(final String u, final String p)
     throws Exception{
         final LoadingDialog diag = new LoadingDialog("Logging In");
-        ATLauncher.TASKS.execute(new Runnable(){
+        final Account acc = ATLauncher.TASKS.submit(new Callable<Account>(){
             @Override
-            public void run(){
-                SwingUtilities.invokeLater(new Runnable(){
-                    @Override
-                    public void run(){
-                        diag.setVisible(true);
-                    }
-                });
-                Account acc = get(u, p);
-
-                if(acc == null){
-                    System.err.println("Cannot Login");
-                }
-
+            public Account call()
+            throws Exception{
+                diag.title.setText("Loggin In");
                 diag.bar.setValue(50);
-
-                Accounts.instance.setCurrent(acc);
-                SwingUtilities.invokeLater(new Runnable(){
-                    @Override
-                    public void run(){
-                        diag.dispose();
-                    }
-                });
+                return get(u, p);
             }
-        });
+        }).get();
+
+        if(acc == null){
+            System.out.println("Error Logging In");
+        }
+
+        diag.bar.setValue(100);
+        Accounts.instance.setCurrent(acc);
     }
 
     public static boolean login(String username, String password){

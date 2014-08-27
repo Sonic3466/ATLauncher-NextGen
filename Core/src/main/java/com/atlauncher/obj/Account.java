@@ -125,4 +125,9 @@ public final class Account{
             throw new RuntimeException(ex);
         }
     }
+
+    @Override
+    public boolean equals(Object obj){
+        return obj instanceof Account && ((Account) obj).username.equalsIgnoreCase(this.username);
+    }
 }

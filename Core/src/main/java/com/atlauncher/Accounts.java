@@ -18,7 +18,7 @@ public enum Accounts{
     instance;
 
     private final Set<Account> loaded = new HashSet<>();
-    private Account current = Account.DEFAULT;
+    private volatile Account current = Account.DEFAULT;
 
     private Accounts(){
         this.loaded.add(Account.DEFAULT);
@@ -77,11 +77,11 @@ public enum Accounts{
         };
     }
 
-    public Account getCurrent(){
+    public synchronized Account getCurrent(){
         return this.current;
     }
 
-    public void setCurrent(Account acc){
+    public synchronized void setCurrent(Account acc){
         if(!this.loaded.contains(acc)){
             this.loaded.add(acc);
         }
