@@ -1,5 +1,6 @@
 package com.atlauncher.obj;
 
+import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
 import com.atlauncher.utils.Digester;
 
@@ -32,7 +33,9 @@ implements Runnable{
         this.output = output.resolve(endpoint.substring(endpoint.lastIndexOf('/') + 1));
 
         try{
-            Files.createDirectories(output);
+            if(!Files.exists(output.getParent())){
+                Files.createDirectories(output.getParent());
+            }
         } catch(IOException e){
             e.printStackTrace(System.out);
         }
@@ -83,6 +86,7 @@ implements Runnable{
     public void run(){
         if(Files.exists(this.output)){
             if(this.needsUpdate()){
+                ATLauncher.LOGGER.info("Updating File " + this.output);
                 try{
                     Files.delete(this.output);
                 } catch(IOException e){

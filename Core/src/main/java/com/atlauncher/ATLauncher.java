@@ -6,6 +6,8 @@ import com.atlauncher.ui.diag.LoginDialog;
 import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.utils.CLIParser;
 import com.atlauncher.utils.ProviderClassLoader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.eventbus.EventBus;
 import com.google.inject.AbstractModule;
@@ -21,6 +23,7 @@ import javax.swing.UIManager;
 //TODO: Improve boot time?
 public final class ATLauncher{
     public static final ExecutorService TASKS = Executors.newCachedThreadPool();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final EventBus EVENT_BUS = new EventBus();
 
     private static Injector injector;
@@ -28,6 +31,7 @@ public final class ATLauncher{
 
     public static void main(String... args)
     throws Exception{
+        LOGGER.info("Setting LookAndFeel");
         UIManager.setLookAndFeel(ATLLookAndFeel.class.getName());
 
         try{
@@ -39,7 +43,7 @@ public final class ATLauncher{
             if(!Boolean.valueOf(parser.get("developer"))){
                 Settings.updateLauncherFiles();
             } else{
-                System.out.println("In developer mode");
+                LOGGER.debug("In developer mode");
             }
 
             frame = new ATLauncherFrame();

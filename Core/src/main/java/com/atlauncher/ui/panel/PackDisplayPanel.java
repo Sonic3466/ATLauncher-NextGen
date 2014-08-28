@@ -4,6 +4,7 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.event.PackEvent;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.thread.InstanceInstallWorker;
+import com.atlauncher.ui.diag.LoadingDialog;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -42,7 +43,8 @@ implements MouseWheelListener{
                 ex.printStackTrace(System.err);
             }
         } else if(e.id == PackEvent.INSTALL_CLIENT){
-            new InstanceInstallWorker(null, this.current(), this.current().getLatest()).execute();
+            LoadingDialog diag = new LoadingDialog("Installing Pack");
+            new InstanceInstallWorker(diag, this.current(), this.current().getLatest()).execute();
         } else if(e.id == PackEvent.INSTALL_SERVER){
 
         } else{

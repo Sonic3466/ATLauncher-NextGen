@@ -9,8 +9,8 @@ public final class Packs{
     public static void load(){
         try{
             LoadingDialog diag = new LoadingDialog("Loading Packs");
-            CollectPacksRunnable worker = new CollectPacksRunnable(diag);
-            ATLauncher.TASKS.execute(worker);
+            new CollectPacksRunnable(diag).execute();
+            diag.setVisible(true);
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }

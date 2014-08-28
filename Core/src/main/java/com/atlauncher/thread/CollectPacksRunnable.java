@@ -4,6 +4,7 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
 import com.atlauncher.event.PackLoadedEvent;
+import com.atlauncher.obj.Account;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.UserMeta;
 import com.atlauncher.ui.diag.LoadingDialog;
@@ -18,10 +19,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 public final class CollectPacksRunnable
-implements Runnable{
+extends SwingWorker<Void, Void>{
     private final LoadingDialog diag;
 
     public CollectPacksRunnable(LoadingDialog diag){
@@ -29,14 +30,13 @@ implements Runnable{
     }
 
     @Override
-    public void run(){
+    public Void doInBackground()
+    throws Exception{
         try{
-            SwingUtilities.invokeLater(new Runnable(){
-                @Override
-                public void run(){
-                    diag.setVisible(true);
-                }
-            });
+            if(Accounts.instance.getCurrent() == null || Accounts.instance.getCurrent() == Account.DEFAULT){
+                diag.dispose();
+                return null;
+            }
 
             InputStream in = new FileInputStream(Settings.JSON.resolve("packs.json").toFile());
             List<Pack> packs = Settings.GSON.fromJson(new InputStreamReader(in), new TypeToken<List<Pack>> (){}.getType());
@@ -91,12 +91,8 @@ implements Runnable{
                 }
             }
 
-            SwingUtilities.invokeLater(new Runnable(){
-                @Override
-                public void run(){
-                    diag.dispose();
-                }
-            });
+            diag.dispose();
+            return null;
         } catch(Exception ex){
             throw new RuntimeException(ex);
         }

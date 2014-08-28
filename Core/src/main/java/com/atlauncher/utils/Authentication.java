@@ -23,23 +23,28 @@ public final class Authentication{
     @UpdateAccounts
     public static void create(final String u, final String p)
     throws Exception{
-        final LoadingDialog diag = new LoadingDialog("Logging In");
-        final Account acc = ATLauncher.TASKS.submit(new Callable<Account>(){
-            @Override
-            public Account call()
-            throws Exception{
-                diag.title.setText("Loggin In");
-                diag.bar.setValue(50);
-                return get(u, p);
+        try{
+            final LoadingDialog diag = new LoadingDialog("Logging In");
+            final Account acc = ATLauncher.TASKS.submit(new Callable<Account>(){
+                @Override
+                public Account call()
+                throws Exception{
+                    diag.title.setText("Loggin In");
+                    diag.bar.setValue(50);
+                    return get(u, p);
+                }
+            }).get();
+
+            if(acc == null){
+                System.out.println("Error Logging In");
             }
-        }).get();
 
-        if(acc == null){
-            System.out.println("Error Logging In");
+            diag.bar.setValue(100);
+            Accounts.instance.setCurrent(acc);
+        } catch(Exception ex){
+            ATLauncher.LOGGER.error(ex);
+            return;
         }
-
-        diag.bar.setValue(100);
-        Accounts.instance.setCurrent(acc);
     }
 
     public static boolean login(String username, String password){

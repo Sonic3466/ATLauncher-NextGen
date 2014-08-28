@@ -36,7 +36,9 @@ public final class Settings{
     public static final Path SKINS = DATA.resolve("skin");
     public static final Path LANGUAGES = DATA.resolve("language");
     public static final Path ACCOUNTS = DATA.resolve("accounts");
-    public static final Path TMP = com.google.common.io.Files.createTempDir().toPath();
+    public static final Path INSTANCES = CORE.resolve("instances");
+    public static final Path RESOURCES = DATA.resolve("resources");
+    public static final Path TMP;
 
     static
     {
@@ -54,6 +56,13 @@ public final class Settings{
             ex.printStackTrace(System.err);
         }
 
+        try{
+            TMP = Files.createTempDirectory(CORE, "tmp");
+            TMP.toFile().deleteOnExit();
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
+
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
             @Override
             public void run(){
@@ -63,6 +72,7 @@ public final class Settings{
                     try(OutputStream out = new FileOutputStream(path.toFile())){
                         properties.store(out, "Don't Edit This File");
                     }
+
                 } catch(Exception ex){
                     ex.printStackTrace(System.err);
                 }

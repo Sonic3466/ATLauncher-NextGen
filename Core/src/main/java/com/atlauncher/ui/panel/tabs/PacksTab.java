@@ -40,6 +40,7 @@ implements Card{
 
     @Subscribe
     public void onAccountUpdate(UpdatePacksEvent e){
+        this.packDisplayPanel.unregisterAll();
         Packs.load();
     }
 
