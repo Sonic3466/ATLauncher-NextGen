@@ -21,6 +21,7 @@ public final class FileHash{
         switch(type)
         {
             case "library":{
+                // Don't download the .sh or .bat files
                 return null;
             }
             case "json":{
