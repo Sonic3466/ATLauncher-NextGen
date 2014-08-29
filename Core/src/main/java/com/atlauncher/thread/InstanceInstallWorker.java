@@ -3,7 +3,6 @@ package com.atlauncher.thread;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
 import com.atlauncher.obj.Downloadable;
-import com.atlauncher.obj.Mod;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.Pack.Version;
 import com.atlauncher.obj.PackMeta;
@@ -31,6 +30,8 @@ extends SwingWorker<Void, Void>{
 
     private final Path root;
 
+    private PackMeta meta;
+
     public InstanceInstallWorker(final LoadingDialog diag, Pack pack, Version version){
         this.diag = diag;
         this.pack = pack;
@@ -55,6 +56,8 @@ extends SwingWorker<Void, Void>{
         ATLauncher.LOGGER.info("Downloading Mods");
         this.downloadMods();
         ATLauncher.LOGGER.info("Done Downloading Mods");
+        this.downloadLibs();
+        ATLauncher.LOGGER.info("Done Downloading Libraries");
         return null;
     }
 
@@ -71,24 +74,46 @@ extends SwingWorker<Void, Void>{
         unzip(this.root, output);
     }
 
+    private void downloadLibs()
+    throws Exception{
+        this.diag.bar.setValue(0);
+        this.diag.title.setText("Downloading Libraries");
+
+        if(!Files.exists(Settings.LIBS)){
+            Files.createDirectories(Settings.LIBS);
+        }
+
+        for(int i = 0; i < this.meta.libraries.length; i++){
+            this.diag.bar.setValue(this.percent(i, this.meta.libraries.length));
+            ATLauncher.TASKS.submit(this.meta.libraries[i].getDownload(Settings.LIBS));
+        }
+    }
+
     private void downloadMods(){
         try{
+            this.diag.bar.setValue(0);
+            this.diag.title.setText("Downloading Mods");
             String path = String.format("packs/%s/versions/%s/Configs.json", this.pack.getSafeName(), this.version.version);
             Path output = Settings.TMP.resolve("Configs.json");
             System.out.println(path);
             Downloadable dl = new Downloadable(path, Settings.TMP, null, false);
             dl.run();
-            PackMeta meta = Settings.GSON.fromJson(new InputStreamReader(new FileInputStream(output.toFile())), PackMeta.class);
+            this.meta  = Settings.GSON.fromJson(new InputStreamReader(new FileInputStream(output.toFile())), PackMeta.class);
             Path mods = root.resolve("mods");
             if(!Files.exists(mods)){
                 Files.createDirectories(mods);
             }
-            for(Mod mod : meta.mods){
-                ATLauncher.TASKS.execute(mod.getDownload(mods));
+            for(int i = 0; i < this.meta.mods.length; i++){
+                this.diag.bar.setValue(this.percent(i, this.meta.mods.length));
+                ATLauncher.TASKS.submit(this.meta.mods[i].getDownload(mods));
             }
         } catch(Exception e){
             ATLauncher.LOGGER.error(e);
         }
+    }
+
+    private int percent(int i, int max){
+        return (i * 100) / max;
     }
 
     private void unzip(Path dir, Path file){

@@ -38,6 +38,7 @@ public final class Settings{
     public static final Path ACCOUNTS = DATA.resolve("accounts");
     public static final Path INSTANCES = CORE.resolve("instances");
     public static final Path RESOURCES = DATA.resolve("resources");
+    public static final Path LIBS = DATA.resolve("libs");
     public static final Path TMP;
 
     static
