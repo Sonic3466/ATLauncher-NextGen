@@ -12,7 +12,7 @@ import java.net.URL;
 import javax.swing.JButton;
 
 public enum SocialMedia{
-    GITHUB("https://github.com/ATLauncher/ATLauncher"),
+    GITHUB("https://github.com/ATLauncher/ATLauncher-NextGen"),
     CREEPERHOST("http://billing.creeperhost.net/link.php?id=7"),
     FACEBOOK("http://www.facebook.com/ATLauncher"),
     TWITTER("http://www.twitter.com/ATLauncher"),

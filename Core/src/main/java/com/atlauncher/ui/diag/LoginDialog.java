@@ -2,6 +2,7 @@ package com.atlauncher.ui.diag;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
+import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.utils.Authentication;
 
 import java.awt.BorderLayout;
@@ -11,6 +12,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,7 +24,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-//TODO: Optimize
 public final class LoginDialog
 extends JDialog{
     private final CenterPanel center_panel = new CenterPanel();
@@ -33,15 +35,23 @@ extends JDialog{
     public LoginDialog(String username){
         super(ATLauncher.getFrame(), username, ModalityType.APPLICATION_MODAL);
         this.setUndecorated(true);
-        this.setLocationRelativeTo(ATLauncher.getFrame());
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setContentPane(new BackPanel());
         this.getContentPane().add(new TopPanel(), BorderLayout.NORTH);
         this.getContentPane().add(new BottomPanel(), BorderLayout.SOUTH);
         this.getContentPane().add(this.center_panel, BorderLayout.CENTER);
-        this.pack();
         this.center_panel.uField.setText(username);
         this.center_panel.pField.requestFocus();
+        this.pack();
+        ATLauncherFrame parent = ATLauncher.getFrame();
+        parent.blur();
+        this.setLocation(parent.getX() + ((parent.getWidth() - this.getWidth()) / 2), parent.getY() + ((parent.getHeight() - this.getHeight()) / 2));
+    }
+
+    @Override
+    public void dispose(){
+        ATLauncher.getFrame().clear();
+        super.dispose();
     }
 
     private static final class TopPanel
@@ -65,7 +75,7 @@ extends JDialog{
         }
     }
 
-    private static final class CenterPanel
+    private final class CenterPanel
     extends JPanel{
         private final JTextField uField = new JTextField(16);
         private final JPasswordField pField = new JPasswordField(16);
@@ -89,6 +99,19 @@ extends JDialog{
             this.add(pLabel);
             this.pField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             this.pField.setAlignmentX(Component.LEFT_ALIGNMENT);
+            this.pField.addKeyListener(new KeyAdapter(){
+                @Override
+                public void keyPressed(KeyEvent e){
+                    if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                        dispose();
+                        try{
+                            Authentication.create(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
+                        } catch(Exception e1){
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            });
             this.add(this.pField);
         }
     }
@@ -104,18 +127,18 @@ extends JDialog{
             this.loginButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
+                    dispose();
                     try{
                         Authentication.create(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
                     } catch(Exception e1){
                         e1.printStackTrace();
                     }
-                    dispose();
                 }
             });
             this.cancelButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    LoginDialog.this.dispose();
+                    dispose();
                 }
             });
             this.add(this.cancelButton);

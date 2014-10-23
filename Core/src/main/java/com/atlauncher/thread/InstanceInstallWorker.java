@@ -95,7 +95,6 @@ extends SwingWorker<Void, Void>{
             this.diag.title.setText("Downloading Mods");
             String path = String.format("packs/%s/versions/%s/Configs.json", this.pack.getSafeName(), this.version.version);
             Path output = Settings.TMP.resolve("Configs.json");
-            System.out.println(path);
             Downloadable dl = new Downloadable(path, Settings.TMP, null, false);
             dl.run();
             this.meta  = Settings.GSON.fromJson(new InputStreamReader(new FileInputStream(output.toFile())), PackMeta.class);

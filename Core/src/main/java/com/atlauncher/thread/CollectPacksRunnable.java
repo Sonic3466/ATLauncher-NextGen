@@ -7,7 +7,6 @@ import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.UserMeta;
-import com.atlauncher.ui.diag.LoadingDialog;
 import com.atlauncher.utils.PacksComparator;
 
 import com.google.gson.reflect.TypeToken;
@@ -23,18 +22,11 @@ import javax.swing.SwingWorker;
 
 public final class CollectPacksRunnable
 extends SwingWorker<Void, Void>{
-    private final LoadingDialog diag;
-
-    public CollectPacksRunnable(LoadingDialog diag){
-        this.diag = diag;
-    }
-
     @Override
     public Void doInBackground()
     throws Exception{
         try{
             if(Accounts.instance.getCurrent() == null || Accounts.instance.getCurrent() == Account.DEFAULT){
-                diag.dispose();
                 return null;
             }
 
@@ -56,20 +48,19 @@ extends SwingWorker<Void, Void>{
 
             Collections.sort(packs, new PacksComparator());
 
-            for(int i = 0; i < packs.size(); i++){
-                Pack pack = packs.get(i);
-                this.diag.bar.setValue((i * 100) / packs.size());
-
+            for(Pack pack : packs){
                 if(meta != null){
                     for(String str : meta.allowed_player){
                         if(str.equalsIgnoreCase(pack.name)){
                             pack.allow(Accounts.instance.getCurrent().name);
+                            break;
                         }
                     }
 
                     for(String str : meta.tester){
                         if(str.equalsIgnoreCase(pack.name)){
                             pack.allowTester(Accounts.instance.getCurrent().name);
+                            break;
                         }
                     }
                 }
@@ -91,7 +82,6 @@ extends SwingWorker<Void, Void>{
                 }
             }
 
-            diag.dispose();
             return null;
         } catch(Exception ex){
             throw new RuntimeException(ex);
