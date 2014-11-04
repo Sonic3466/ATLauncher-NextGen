@@ -58,7 +58,6 @@ public final class Settings{
     public static final Path RESOURCES = DATA.resolve("resources");
     public static final Path LIBS = DATA.resolve("libs");
     public static final Path TMP;
-    public static PackUI packUI = PackUI.SLIDER;
 
     static
     {
@@ -71,6 +70,7 @@ public final class Settings{
 
             try(InputStream in = new FileInputStream(path.toFile())){
                 properties.load(in);
+                Language.INSTANCE.load(Settings.properties.getProperty("language", "English"));
             }
         } catch(Exception ex){
             ex.printStackTrace(System.err);
@@ -88,11 +88,10 @@ public final class Settings{
             public void run(){
                 try{
                     Path path = CORE.resolve("atlauncher.cfg");
-
+                    ATLauncher.LOGGER.debug("Saving Settings");
                     try(OutputStream out = new FileOutputStream(path.toFile())){
                         properties.store(out, "Don't Edit This File");
                     }
-
                 } catch(Exception ex){
                     ex.printStackTrace(System.err);
                 }
@@ -101,7 +100,7 @@ public final class Settings{
     }
 
     public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", CORE.resolve("downloads").toString()));
-
+    public static PackUI packUI = PackUI.valueOf(Settings.properties.getProperty("packUI", "SLIDER"));
     public static final Server[] SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
     public static Server server = find(Settings.properties.getProperty("selectedServer", "Auto"));
 

@@ -53,8 +53,8 @@ implements Card{
         this.setBackground(UIUtils.GRAY);
 
         this.downloadsField.setEditable(false);
-
         this.languageBox.setSelectedItem(Language.current());
+        this.packUIBox.setSelectedItem(Settings.packUI);
 
         this.gbc.gridx = 0;
         this.gbc.gridy = 0;
@@ -110,6 +110,7 @@ implements Card{
             public void itemStateChanged(ItemEvent e){
                 try{
                     Language.INSTANCE.load((String) e.getItem());
+                    Settings.properties.setProperty("language", (String) e.getItem());
                 } catch(IOException e1){
                     throw new RuntimeException(e1);
                 }
@@ -119,6 +120,8 @@ implements Card{
             @Override
             public void itemStateChanged(ItemEvent e){
                 ATLauncher.EVENT_BUS.post(new ChangePackUIEvent((PackUI) e.getItem()));
+                Settings.properties.setProperty("packUI", ((PackUI) e.getItem()).name());
+                ATLauncher.LOGGER.debug("Chaning PackUI to: " + ((PackUI) e.getItem()).name());
             }
         });
     }

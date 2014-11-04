@@ -65,7 +65,7 @@ implements Runnable{
     private HttpURLConnection getConnection(){
         if(this.conn == null){
             try{
-                this.conn = (HttpURLConnection) new URL(Settings.SERVERS[0].getFileURL(this.endpoint)).openConnection();
+                this.conn = (HttpURLConnection) new URL(Settings.server.getFileURL(this.endpoint)).openConnection();
 
                 this.conn.setUseCaches(false);
                 this.conn.setDefaultUseCaches(false);

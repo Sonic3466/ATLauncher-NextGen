@@ -1,6 +1,5 @@
 package com.atlauncher.ui.panel.pack;
 
-import com.atlauncher.ATLauncher;
 import com.atlauncher.Resources;
 import com.atlauncher.event.PackLoadedEvent;
 import com.atlauncher.obj.Pack;
@@ -18,11 +17,12 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JPanel;
 
+/**
+ * Stack based slider panel, similar to TechnicLauncher's UI
+ */
 public final class PackSliderPane
 extends JPanel
 implements MouseWheelListener{
-    private static final Color BACK = new Color(55, 55, 55);
-
     private final List<Pack> packs = new LinkedList<>();
     private int ptr = 0;
 
@@ -55,11 +55,11 @@ implements MouseWheelListener{
     }
 
     @Subscribe
+    @SuppressWarnings("unused")
     public void onPackLoad(PackLoadedEvent e){
         this.packs.add(e.pack);
         this.repaint();
         this.revalidate();
-        ATLauncher.LOGGER.info("Adding Pack: " + e.pack.name);
     }
 
     @Override
@@ -69,16 +69,19 @@ implements MouseWheelListener{
         Pack pack = this.current();
         int y = 0;
         if(pack != null){
+            // Draw Image
             BufferedImage background = pack.getImage();
             int x = ((this.getWidth() - background.getWidth()) / 2) - 20;
             y = ((this.getHeight() - background.getHeight()) / 2) - 80;
             g2.drawImage(background, x, y, 347, 182, null);
 
+            // Draw Name
             g2.setFont(Resources.makeFont0("dinpro-black").deriveFont(32.0F));
             g2.setColor(Color.white);
             g2.drawString(pack.name, x + ((347 - g2.getFontMetrics().stringWidth(pack.name)) / 2), y + 182 + g2.getFontMetrics().getHeight() * 2);
 
             try{
+                // Draw Version
                 String version = pack.getLatest().version;
                 g2.drawString(version, x + ((347 - g2.getFontMetrics().stringWidth(version)) / 2), y + 182 + g2.getFontMetrics().getHeight() * 3);
             } catch(Exception e){
@@ -88,12 +91,14 @@ implements MouseWheelListener{
 
         pack = this.lastPack();
         if(pack != null){
+            // Draw Last Pack Image
             Image image = pack.getImage();
             g2.drawImage(pack.getImage(), 0 - image.getWidth(null) / 2 - 50, y, 347, 182, null);
         }
 
         pack = this.nextPack();
         if(pack != null){
+            // Draw Next Pack Image
             Image image = pack.getImage();
             g2.drawImage(image, this.getWidth() - image.getWidth(null) / 2, y, 347, 182, null);
         }

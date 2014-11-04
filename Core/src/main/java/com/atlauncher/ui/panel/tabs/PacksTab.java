@@ -37,9 +37,7 @@ implements Card{
     public PacksTab(){
         super(new BorderLayout());
         this.setOpaque(false);
-
         ATLauncher.EVENT_BUS.register(this);
-
         this.add(currentUI, BorderLayout.CENTER);
     }
 
