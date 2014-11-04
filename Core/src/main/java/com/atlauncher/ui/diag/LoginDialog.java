@@ -20,6 +20,7 @@ package com.atlauncher.ui.diag;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
 import com.atlauncher.ui.frame.ATLauncherFrame;
+import com.atlauncher.ui.panel.DialogBackPanel;
 import com.atlauncher.utils.Authentication;
 
 import java.awt.BorderLayout;
@@ -53,7 +54,7 @@ extends JDialog{
         super(ATLauncher.getFrame(), username, ModalityType.APPLICATION_MODAL);
         this.setUndecorated(true);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setContentPane(new BackPanel());
+        this.setContentPane(new DialogBackPanel());
         this.getContentPane().add(new TopPanel(), BorderLayout.NORTH);
         this.getContentPane().add(new BottomPanel(), BorderLayout.SOUTH);
         this.getContentPane().add(this.center_panel, BorderLayout.CENTER);
@@ -80,15 +81,6 @@ extends JDialog{
             label.setForeground(Color.white);
             label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
             this.add(label);
-        }
-    }
-
-    private static final class BackPanel
-    extends JPanel{
-        public BackPanel(){
-            super(new BorderLayout());
-            this.setBackground(new Color(40, 45, 50));
-            this.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         }
     }
 
