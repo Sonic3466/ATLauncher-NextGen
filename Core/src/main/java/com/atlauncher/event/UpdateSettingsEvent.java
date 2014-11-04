@@ -1,5 +1,8 @@
 package com.atlauncher.event;
 
+/**
+ * Fired to change the settings sub menu
+ */
 public final class UpdateSettingsEvent{
     public final String id;
     public final String title;

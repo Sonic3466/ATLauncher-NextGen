@@ -36,7 +36,7 @@ public enum Language {
                 return; // Silently exit if the file doesn't exist
             }
             try(InputStream in = new FileInputStream(langFile)){
-                props.load(new FileInputStream(langFile));
+                props.load(in);
             }
             this.langs.put(lang, props);
         }

@@ -7,10 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({
-        ElementType.TYPE
+        ElementType.METHOD
 })
-public @interface Json{
-    /**
-     * Used to mark which objects are de/serialized by GSON
-     */
+public @interface Revalidate{
+
 }

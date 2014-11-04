@@ -4,6 +4,9 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.annot.UpdateI18N;
 import com.atlauncher.event.UpdateI18NEvent;
 
+/**
+ * Advice on how to update localization
+ */
 public aspect UpdateI18NAspect{
     pointcut publicMethod()
             : execution(public * * (..));

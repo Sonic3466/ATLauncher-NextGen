@@ -4,6 +4,9 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.annot.UpdateAccounts;
 import com.atlauncher.event.UpdateAccountsEvent;
 
+/**
+ * Advice on how to update accounts
+ */
 public aspect UpdateAccountsAspect{
     pointcut publicMethod()
             : execution(public * * (..));

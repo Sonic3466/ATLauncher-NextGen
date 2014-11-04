@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.SwingWorker;
 
-public final class CollectPacksRunnable
+public final class CollectPacksWorker
 extends SwingWorker<Void, Void>{
     @Override
     public Void doInBackground()
@@ -46,6 +46,7 @@ extends SwingWorker<Void, Void>{
                 ex.printStackTrace(System.err);
             }
 
+            ATLauncher.LOGGER.debug("Sorting Packs");
             Collections.sort(packs, new PacksComparator());
 
             for(Pack pack : packs){

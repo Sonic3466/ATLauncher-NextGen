@@ -1,8 +1,12 @@
 package com.atlauncher.ui.panel;
 
+import com.atlauncher.ATLauncher;
+import com.atlauncher.event.UpdateCentralEvent;
 import com.atlauncher.ui.comp.ExitButton;
 import com.atlauncher.ui.comp.MinimizeButton;
 import com.atlauncher.ui.comp.SocialMedia;
+
+import com.google.common.eventbus.Subscribe;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,6 +27,8 @@ extends JPanel{
         super(new GridBagLayout());
         this.setOpaque(false);
 
+        ATLauncher.EVENT_BUS.register(this);
+
         this.header.setFont(this.header.getFont().deriveFont(24.0F));
         this.header.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 5));
 
@@ -34,7 +40,7 @@ extends JPanel{
         this.add(this.header, this.gbc);
         this.gbc.anchor = GridBagConstraints.FIRST_LINE_END;
         this.gbc.gridx++;
-        this.add(Box.createRigidArea(new Dimension(410, 0)), this.gbc);
+        this.add(Box.createRigidArea(new Dimension(400, 0)), this.gbc);
         this.gbc.gridx++;
         this.add(new MinimizeButton(), this.gbc);
         this.gbc.gridx++;
@@ -45,6 +51,11 @@ extends JPanel{
         this.gbc.gridy++;
         this.gbc.anchor = GridBagConstraints.LINE_START;
         this.add(new BottomPanel(), this.gbc);
+    }
+
+    @Subscribe
+    public void onChange(UpdateCentralEvent e){
+        this.header.setText("ATLauncher - " + e.title);
     }
 
     private final class BottomPanel

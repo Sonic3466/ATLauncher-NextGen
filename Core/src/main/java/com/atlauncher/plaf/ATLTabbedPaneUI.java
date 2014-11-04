@@ -14,10 +14,14 @@ extends BasicTabbedPaneUI{
     protected static final Color ACTIVE = new Color(45, 150, 190);
     protected static final Color NON_ACTIVE = Color.white;
 
-    private static final ATLTabbedPaneUI instance = new ATLTabbedPaneUI();
-
     public static ComponentUI createUI(JComponent comp){
-        return instance;
+        return new ATLTabbedPaneUI();
+    }
+
+    @Override
+    public void installUI(JComponent comp){
+        super.installUI(comp);
+        this.contentBorderInsets.set(0, 0, 0, 0);
     }
 
     @Override
@@ -36,13 +40,23 @@ extends BasicTabbedPaneUI{
     }
 
     @Override
+    protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected ) {
+
+    }
+
+    @Override
+    protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
+
+    }
+
+    @Override
     protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
-        return 21;
+        return 75;
     }
 
     @Override
     protected int calculateMaxTabHeight(int tabPlacement) {
-        return 21;
+        return 75;
     }
 
     @Override protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {}

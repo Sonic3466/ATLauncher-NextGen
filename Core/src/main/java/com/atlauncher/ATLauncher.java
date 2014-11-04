@@ -32,7 +32,7 @@ public final class ATLauncher{
     public static void main(String... args)
     throws Exception{
         LOGGER.info("Setting LookAndFeel");
-        UIManager.setLookAndFeel(ATLLookAndFeel.class.getName());
+        UIManager.setLookAndFeel(new ATLLookAndFeel());
 
         try{
             CLIParser parser = new CLIParser(args);

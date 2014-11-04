@@ -4,6 +4,7 @@ import com.atlauncher.obj.Downloadable;
 import com.atlauncher.obj.FileHash;
 import com.atlauncher.obj.News;
 import com.atlauncher.obj.Server;
+import com.atlauncher.ui.PackUI;
 import com.atlauncher.ui.diag.LoadingDialog;
 import com.atlauncher.utils.OS;
 
@@ -40,6 +41,7 @@ public final class Settings{
     public static final Path RESOURCES = DATA.resolve("resources");
     public static final Path LIBS = DATA.resolve("libs");
     public static final Path TMP;
+    public static PackUI packUI = PackUI.SLIDER;
 
     static
     {

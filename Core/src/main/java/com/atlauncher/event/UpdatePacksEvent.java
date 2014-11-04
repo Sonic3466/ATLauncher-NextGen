@@ -1,5 +1,6 @@
 package com.atlauncher.event;
 
-public final class UpdatePacksEvent{
-
-}
+/**
+ * Fired to notify the client to update the packs
+ */
+public final class UpdatePacksEvent{}

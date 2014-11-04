@@ -1,14 +1,11 @@
 package com.atlauncher.ui.panel.tabs;
 
 import com.atlauncher.ATLauncher;
-import com.atlauncher.event.PackLoadedEvent;
+import com.atlauncher.Settings;
+import com.atlauncher.event.ChangePackUIEvent;
 import com.atlauncher.event.UpdatePacksEvent;
-import com.atlauncher.thread.CollectPacksRunnable;
+import com.atlauncher.thread.CollectPacksWorker;
 import com.atlauncher.ui.comp.Card;
-import com.atlauncher.ui.panel.CenterBottomPanel;
-import com.atlauncher.ui.panel.PackDisplayPanel;
-import com.atlauncher.ui.panel.PackPanel;
-import com.atlauncher.ui.panel.PacksBottomPanel;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -18,15 +15,7 @@ import javax.swing.JPanel;
 public final class PacksTab
 extends JPanel
 implements Card{
-    private final PacksBottomPanel bottomPanel = new PacksBottomPanel();
-    private final PackDisplayPanel packDisplayPanel = new PackDisplayPanel();
-
-    private final JPanel bottom = new JPanel(new BorderLayout());
-    {
-        this.bottom.add(new CenterBottomPanel(), BorderLayout.NORTH);
-        this.bottom.add(this.bottomPanel, BorderLayout.CENTER);
-        this.bottom.setOpaque(false);
-    }
+    private JPanel currentUI = Settings.packUI.panel();
 
     public PacksTab(){
         super(new BorderLayout());
@@ -34,21 +23,22 @@ implements Card{
 
         ATLauncher.EVENT_BUS.register(this);
 
-        this.add(this.bottom, BorderLayout.SOUTH);
-        this.add(this.packDisplayPanel, BorderLayout.CENTER);
+        this.add(currentUI, BorderLayout.CENTER);
     }
 
     @Subscribe
     public void onAccountUpdate(UpdatePacksEvent e){
-        this.packDisplayPanel.unregisterAll();
-        new CollectPacksRunnable().execute();
+        ATLauncher.LOGGER.info("Collecting Packs");
+        new CollectPacksWorker().execute();
     }
 
     @Subscribe
-    public void onPackLoaded(PackLoadedEvent e){
-        this.packDisplayPanel.register(new PackPanel(e.pack));
-        this.packDisplayPanel.repaint();
-        this.packDisplayPanel.revalidate();
+    public void changeUI(ChangePackUIEvent e){
+        this.remove(currentUI);
+        this.currentUI = e.ui.panel();
+        this.add(this.currentUI, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
     }
 
     @Override

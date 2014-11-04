@@ -136,10 +136,10 @@ implements Card{
 
     @Subscribe
     public void onUpdateI18N(UpdateI18NEvent e){
-        this.generalButton.setText(Language.tr("settings.generaltab"));
-        this.javaButton.setText(Language.tr("settings.javatab"));
-        this.loggingButton.setText(Language.tr("settings.loggingtab"));
-        this.networkButton.setText(Language.tr("settings.networktab"));
+        this.generalButton.setText(Language.tr("settings.generaltab").toUpperCase());
+        this.javaButton.setText(Language.tr("settings.javatab").toUpperCase());
+        this.loggingButton.setText(Language.tr("settings.loggingtab").toUpperCase());
+        this.networkButton.setText(Language.tr("settings.networktab").toUpperCase());
     }
 
     public <T extends JPanel & Card> void register(T card){

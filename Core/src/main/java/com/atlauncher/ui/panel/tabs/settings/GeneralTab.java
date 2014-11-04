@@ -1,8 +1,11 @@
 package com.atlauncher.ui.panel.tabs.settings;
 
+import com.atlauncher.ATLauncher;
 import com.atlauncher.Language;
 import com.atlauncher.Settings;
+import com.atlauncher.event.ChangePackUIEvent;
 import com.atlauncher.plaf.UIUtils;
+import com.atlauncher.ui.PackUI;
 import com.atlauncher.ui.comp.Card;
 
 import java.awt.GridBagConstraints;
@@ -26,6 +29,7 @@ implements Card{
     private final JTextField downloadsField = new JTextField(16);
     private final JButton downloadsButton = new JButton("Change");
     private final JComboBox<String> languageBox = new JComboBox<>(Language.available());
+    private final JComboBox<PackUI> packUIBox = new JComboBox<>(PackUI.values());
 
     public GeneralTab(){
         this.setLayout(new GridBagLayout());
@@ -42,6 +46,8 @@ implements Card{
         this.add(new JLabel("Downloads: "), this.gbc);
         this.gbc.gridy++;
         this.add(new JLabel("Language: "), this.gbc);
+        this.gbc.gridy++;
+        this.add(new JLabel("Pack UI: "), this.gbc);
 
         this.gbc.anchor = GridBagConstraints.CENTER;
         this.gbc.fill = GridBagConstraints.BOTH;
@@ -55,6 +61,8 @@ implements Card{
         this.add(this.downloadsField, this.gbc);
         this.gbc.gridy++;
         this.add(this.languageBox, this.gbc);
+        this.gbc.gridy++;
+        this.add(this.packUIBox, this.gbc);
 
         this.addActionListeners();
         this.addItemListeners();
@@ -88,6 +96,12 @@ implements Card{
                 } catch(IOException e1){
                     throw new RuntimeException(e1);
                 }
+            }
+        });
+        this.packUIBox.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent e){
+                ATLauncher.EVENT_BUS.post(new ChangePackUIEvent((PackUI) e.getItem()));
             }
         });
     }

@@ -1,10 +1,8 @@
 package com.atlauncher.ui.frame;
 
-import com.atlauncher.ATLauncher;
 import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.Blurable;
 import com.atlauncher.ui.layer.BlurLayer;
-import com.atlauncher.ui.layer.WaitLayer;
 import com.atlauncher.ui.panel.BackPanel;
 import com.atlauncher.ui.panel.CenterPanel;
 import com.atlauncher.ui.panel.RightPanel;
@@ -29,13 +27,10 @@ implements MouseListener,
     private int dGX;
     private int dGY;
 
-    private final WaitLayer wait = new WaitLayer();
     private final BlurLayer blur = new BlurLayer();
 
     public ATLauncherFrame(){
         super("ATLauncher");
-
-        ATLauncher.EVENT_BUS.register(this);
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);

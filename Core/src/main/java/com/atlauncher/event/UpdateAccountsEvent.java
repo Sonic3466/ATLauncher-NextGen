@@ -1,5 +1,6 @@
 package com.atlauncher.event;
 
-public final class UpdateAccountsEvent{
-    
-}
+/**
+ * Fired to notify the client to update the accounts UI
+ */
+public final class UpdateAccountsEvent{}

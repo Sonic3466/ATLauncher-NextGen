@@ -10,5 +10,15 @@ import java.lang.annotation.Target;
         ElementType.METHOD
 })
 public @interface UpdatePacks{
-
+    /**
+     * Used to update the packs UI after a method call is finished.
+     * Example:
+     *  @UpdatePacks
+     *  public void helloWorld(){
+     *      System.out.println("Hello World");
+     *  }
+     *
+     * AspectJ injects this bytecode to the tail end of the method:
+     *  ATLauncher.EVENT_BUS.post(new UpdatePacksEvent());
+     */
 }

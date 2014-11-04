@@ -19,6 +19,14 @@ public final class Authentication{
 
     private Authentication(){}
 
+    /**
+     * Creates an account from the specified username and password.
+     * Updates the packs and accounts after method run.
+     *
+     * @param u <- Username/Email
+     * @param p <- Password
+     * @throws Exception
+     */
     @UpdatePacks
     @UpdateAccounts
     public static void create(final String u, final String p)

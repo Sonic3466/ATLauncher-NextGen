@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 public final class HeadPanel
 extends JPanel{
     private static final int scale = 64;
+
     private boolean hovering = false;
     private Image head;
     private Account account;
@@ -64,6 +65,19 @@ extends JPanel{
         this.setToolTipText("Login to Minecraft.net");
     }
 
+    public Rectangle getHeadBounds(){
+        return new Rectangle(
+                ((this.getWidth() - scale) / 2),
+                ((this.getHeight() - scale) / 2) - 15,
+                scale,
+                scale
+        );
+    }
+
+    public void setWidth(int width){
+        this.setSize(width, this.getHeight());
+    }
+
     @Subscribe
     public void updateHead(UpdateAccountsEvent event){
         this.account = Accounts.instance.getCurrent();
@@ -76,20 +90,19 @@ extends JPanel{
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setColor(Color.white);
         g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-        int x = ((this.getWidth() - scale) / 2);
-        int y = ((this.getHeight() - scale) / 2) - 15;
-        g2.drawImage(this.head, x, y, scale, scale, null);
+        Rectangle bounds = this.getHeadBounds();
+        g2.drawImage(this.head, bounds.x, bounds.y, scale, scale, null);
         g2.setColor(Color.black);
         g2.setStroke(new BasicStroke(2));
-        Rectangle border = new Rectangle(x, y, scale, scale);
+        Rectangle border = new Rectangle(bounds.x, bounds.y, scale, scale);
         g2.draw(border);
         int sX = (this.getWidth() - g2.getFontMetrics().stringWidth(this.account.name)) / 2;
-        g2.drawString(this.account.name, sX, y + scale + 5 + g2.getFontMetrics().getHeight());
+        g2.drawString(this.account.name, sX, bounds.y + scale + 5 + g2.getFontMetrics().getHeight());
 
         if(this.hovering){
             g2.setComposite(UIUtils.alpha(0.50F));
             g2.setColor(new Color(45, 150, 190));
-            g2.fillRect(x, y, scale, scale);
+            g2.fillRect(bounds.x, bounds.y, scale, scale);
         }
     }
 }

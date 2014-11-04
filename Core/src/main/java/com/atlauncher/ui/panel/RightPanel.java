@@ -25,6 +25,8 @@ extends JPanel{
     private final JToggleButton accountsButton = new JToggleButton("ACCOUNTS");
     private final JToggleButton settingsButton = new JToggleButton("SETTINGS");
 
+    private final HeadPanel head;
+
     private final ToggleButtonGroup tbg = new ToggleButtonGroup();
     {
         this.tbg.add(this.newsButton);
@@ -37,6 +39,8 @@ extends JPanel{
     public RightPanel(){
         super(new GridBagLayout());
         this.setOpaque(false);
+
+        this.head = new HeadPanel(Accounts.instance.getCurrent());
 
         ATLauncher.EVENT_BUS.register(this);
 
@@ -92,7 +96,7 @@ extends JPanel{
         c.weighty = 0.1;
         c.gridx = 0;
         c.gridy = 1;
-        this.add(new HeadPanel(Accounts.instance.getCurrent()), c);
+        this.add(this.head, c);
         c.gridy++;
         this.add(this.newsButton, c);
         c.gridy++;
