@@ -20,6 +20,7 @@ package com.atlauncher.ui.diag;
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
 import com.atlauncher.ui.frame.ATLauncherFrame;
+import com.atlauncher.ui.layer.FieldValidationLayer;
 import com.atlauncher.ui.panel.DialogBackPanel;
 import com.atlauncher.utils.Authentication;
 
@@ -37,6 +38,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -88,9 +90,10 @@ extends JDialog{
     extends JPanel{
         private final JTextField uField = new JTextField(16);
         private final JPasswordField pField = new JPasswordField(16);
+        private final FieldValidationLayer fieldValidityLayer = new FieldValidationLayer();
+        private final JLayer<JTextField> pFieldWrapper = new JLayer<>(pField, fieldValidityLayer);
 
         public CenterPanel(){
-            super();
             this.setOpaque(false);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             JLabel uLabel = new JLabel("Email: ", JLabel.LEFT);
@@ -98,7 +101,6 @@ extends JDialog{
             uLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             uLabel.setForeground(Color.white);
             this.add(uLabel);
-            this.uField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             this.uField.setAlignmentX(Component.LEFT_ALIGNMENT);
             this.add(this.uField);
             JLabel pLabel = new JLabel("Password: ", JLabel.LEFT);
@@ -106,22 +108,22 @@ extends JDialog{
             pLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             pLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             this.add(pLabel);
-            this.pField.setBorder(BorderFactory.createLineBorder(Color.black, 1));
             this.pField.setAlignmentX(Component.LEFT_ALIGNMENT);
             this.pField.addKeyListener(new KeyAdapter(){
                 @Override
                 public void keyPressed(KeyEvent e){
                     if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                        dispose();
                         try{
                             Authentication.create(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
+                            dispose();
                         } catch(Exception e1){
-                            e1.printStackTrace();
+                            ATLauncher.LOGGER.error("Error Logging In", e1);
+                            fieldValidityLayer.setShow(true);
                         }
                     }
                 }
             });
-            this.add(this.pField);
+            this.add(this.pFieldWrapper);
         }
     }
 
@@ -136,11 +138,12 @@ extends JDialog{
             this.loginButton.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    dispose();
                     try{
                         Authentication.create(center_panel.uField.getText(), new String(center_panel.pField.getPassword()));
+                        dispose();
                     } catch(Exception e1){
-                        e1.printStackTrace();
+                        ATLauncher.LOGGER.error(e1);
+                        center_panel.fieldValidityLayer.setShow(true);
                     }
                 }
             });

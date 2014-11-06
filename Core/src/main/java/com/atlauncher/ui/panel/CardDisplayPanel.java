@@ -78,14 +78,6 @@ extends JPanel{
         this.add(this.displayPanel, BorderLayout.CENTER);
     }
 
-    public int max(){
-        return this.cards.size();
-    }
-
-    public int curr(){
-        return this.ptr;
-    }
-
     public void unregisterAll(){
         this.displayPanel.removeAll();
         this.displayPanel.revalidate();

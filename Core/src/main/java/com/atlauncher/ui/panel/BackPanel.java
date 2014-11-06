@@ -26,7 +26,6 @@ import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-//TODO: Rewrite & Optimize
 public final class BackPanel
 extends JPanel{
     public BackPanel(){

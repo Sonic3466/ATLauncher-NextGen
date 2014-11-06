@@ -19,6 +19,11 @@ package com.atlauncher.plaf;
 
 import com.atlauncher.plaf.button.ATLButtonUI;
 import com.atlauncher.plaf.button.ATLToggleButtonUI;
+import com.atlauncher.plaf.container.ATLSplitPaneUI;
+import com.atlauncher.plaf.container.ATLTabbedPaneUI;
+import com.atlauncher.plaf.input.ATLPasswordFieldUI;
+import com.atlauncher.plaf.input.ATLTextFieldUI;
+import com.atlauncher.plaf.output.ATLLabelUI;
 
 import java.awt.Color;
 import javax.swing.UIDefaults;
@@ -32,31 +37,28 @@ extends MetalLookAndFeel{
         // Button
         table.put("ButtonUI", ATLButtonUI.class.getCanonicalName());
         table.put("ToggleButtonUI", ATLToggleButtonUI.class.getCanonicalName());
-        Object[] def = {
-                "TabbedPaneUI", get("ATLTabbedPaneUI"),
-                "LabelUI", get("ATLLabelUI"),
-                "TextFieldUI", this.get("ATLTextFieldUI"),
-                "ProgressBarUI", this.get("ATLProgressBarUI")
-        };
-        table.putDefaults(def);
+
+        // Container
+        table.put("TabbedPaneUI", ATLTabbedPaneUI.class.getCanonicalName());
+        table.put("SplitPaneUI", ATLSplitPaneUI.class.getCanonicalName());
+
+        // Output
+        table.put("LabelUI", ATLLabelUI.class.getCanonicalName());
+
+        // Input
+        table.put("TextFieldUI", ATLTextFieldUI.class.getCanonicalName());
+        table.put("PasswordFieldUI", ATLPasswordFieldUI.class.getCanonicalName());
     }
 
     @Override
     protected void initComponentDefaults(UIDefaults table){
         super.initComponentDefaults(table);
-        Object[] defs = {
-                "Label.font", UIUtils.DINPRO_BLACK.deriveFont(12.0F),
-                "ComboBox.selectionForeground", Color.black,
-                "ComboBox.selectionBackground", Color.green,
-                "ComboBox.foreground", Color.black,
-                "ComboBox.background", Color.white,
-                "Panel.background", UIUtils.GRAY
-        };
-        table.putDefaults(defs);
-    }
-
-    private String get(String s){
-        return "com.atlauncher.plaf." + s;
+        table.put("Label.font", UIUtils.DINPRO_BLACK.deriveFont(12.0F));
+        table.put("ComboBox.selectionForeground", Color.black);
+        table.put("ComboBox.selectionBackground", Color.green);
+        table.put("ComboBox.foreground", Color.black);
+        table.put("ComboBox.background", Color.white);
+        table.put("Panel.background", UIUtils.GRAY);
     }
 
     @Override

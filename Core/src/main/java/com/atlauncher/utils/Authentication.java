@@ -27,6 +27,7 @@ import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
+import sun.plugin.dom.exception.InvalidStateException;
 
 import java.net.Proxy;
 import java.util.concurrent.Callable;
@@ -48,28 +49,23 @@ public final class Authentication{
     @UpdateAccounts
     public static void create(final String u, final String p)
     throws Exception{
-        try{
-            final LoadingDialog diag = new LoadingDialog("Logging In");
-            final Account acc = ATLauncher.TASKS.submit(new Callable<Account>(){
-                @Override
-                public Account call()
-                throws Exception{
-                    diag.title.setText("Loggin In");
-                    diag.bar.setValue(50);
-                    return get(u, p);
-                }
-            }).get();
-
-            if(acc == null){
-                System.out.println("Error Logging In");
+        final LoadingDialog diag = new LoadingDialog("Logging In");
+        final Account acc = ATLauncher.TASKS.submit(new Callable<Account>(){
+            @Override
+            public Account call()
+            throws Exception{
+                diag.title.setText("Loggin In");
+                diag.bar.setValue(50);
+                return get(u, p);
             }
+        }).get();
 
-            diag.bar.setValue(100);
-            Accounts.instance.setCurrent(acc);
-        } catch(Exception ex){
-            ATLauncher.LOGGER.error(ex);
-            return;
+        if(acc == null){
+            throw new InvalidStateException("Can't Login");
         }
+
+        diag.bar.setValue(100);
+        Accounts.instance.setCurrent(acc);
     }
 
     public static boolean login(String username, String password){
@@ -85,7 +81,6 @@ public final class Authentication{
                 return false;
             }
         } else{
-            System.err.println("Cannot login");
             return false;
         }
     }

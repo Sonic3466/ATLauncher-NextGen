@@ -15,22 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.atlauncher.plaf;
+package com.atlauncher.plaf.output;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
-public final class ATLTextFieldUI
-extends BasicTextFieldUI{
+public final class ATLProgressBarUI
+extends BasicProgressBarUI{
+    public static final Color ACTIVE = new Color(18, 255, 13);
+
     public static ComponentUI createUI(JComponent comp){
-        return new ATLTextFieldUI();
+        return new ATLProgressBarUI();
     }
 
     @Override
     public void installUI(JComponent comp){
         super.installUI(comp);
+        comp.setForeground(ACTIVE);
+        comp.setBackground(Color.gray);
         comp.setBorder(BorderFactory.createEmptyBorder());
+    }
+
+    @Override
+    public Dimension getPreferredSize(JComponent comp){
+        return new Dimension(super.getPreferredSize(comp).width, 20);
     }
 }

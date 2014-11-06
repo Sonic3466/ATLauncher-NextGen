@@ -17,6 +17,7 @@
  */
 package com.atlauncher.obj;
 
+import com.atlauncher.ATLauncher;
 import com.atlauncher.Resources;
 import com.atlauncher.Settings;
 import com.atlauncher.plaf.UIUtils;
@@ -91,11 +92,16 @@ public final class Account{
 
             Path path = Settings.SKINS.resolve(this.name.toLowerCase() + ".png");
 
+            if(Files.exists(path)){
+                return this;
+            }
+
             HttpURLConnection conn = (HttpURLConnection) new URL("http://s3.amazonaws.com/MinecraftSkins/" + this.name + ".png").openConnection();
             try(InputStream in = conn.getInputStream();
                 ReadableByteChannel rbc = Channels.newChannel(in);
                 FileChannel channel = FileChannel.open(path, Resources.WRITE)){
 
+                ATLauncher.LOGGER.info("Updating Skin For: " + this.name);
                 channel.transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch(Exception ex){
@@ -121,6 +127,7 @@ public final class Account{
                 ReadableByteChannel rbc = Channels.newChannel(in);
                 FileChannel channel = FileChannel.open(path, Resources.WRITE)){
 
+                ATLauncher.LOGGER.info("Updating Skin For: " + this.name);
                 channel.transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch(Exception ex){

@@ -101,7 +101,7 @@ implements Card, MouseListener{
             this.reloadItem.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e){
-                    UserPanel.this.account.updateSkin();
+                    UserPanel.this.account.forceUpdate();
                 }
             });
             this.loginAsItem.addActionListener(new ActionListener(){

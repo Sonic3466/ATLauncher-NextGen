@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -29,6 +30,9 @@ extends JDialog{
         this.getContentPane().add(new TopPanel(pack), BorderLayout.NORTH);
         this.getContentPane().add(new BottomPanel(), BorderLayout.SOUTH);
         JSplitPane splitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, required, optional);
+        splitter.setResizeWeight(0.5);
+        splitter.setEnabled(false);
+        splitter.setBorder(BorderFactory.createEmptyBorder());
         this.getContentPane().add(splitter, BorderLayout.CENTER);
         ATLauncherFrame parent = ATLauncher.getFrame();
         this.setSize(new Dimension(parent.getWidth() / 2, parent.getHeight() / 2));
