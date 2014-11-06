@@ -39,16 +39,6 @@ Download and install the latest version from [Oracle's Java Downloads page](http
 
 Install Apache Maven via the official [Apache Maven Install Docs](http://maven.apache.org/download.cgi#Installation).
 
-###### launch4j
-
-Download and install [launch4j](http://sourceforge.net/projects/launch4j/files/launch4j-3/3.1.0-beta2/).
-
-Make sure to add the directory containing launch4jc to your executable path which for me on 64bit Windows was:
-
-```
-C:\Program Files (x86)\Launch4j
-```
-
 ### Plugging In Your Data
 
 TODO
