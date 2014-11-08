@@ -166,5 +166,10 @@ public final class Pack{
             this.minecraft_version = minecraft_version;
             this.is_developer = isDeveloper;
         }
+
+        @Override
+        public String toString(){
+            return this.version + " (" + this.minecraft_version + ")" + (this.is_developer ? " - Developer" : "");
+        }
     }
 }

@@ -25,6 +25,9 @@ ATLauncher is a Launcher for Minecraft which integrates multiple different ModPa
 + Please mark all classes that are to be de/serialized with Gson with the @Json annotation for other developers
 + Please use the IntelliJ-Coding-Style.xml for the project (if using IntelliJ) in order to keep all formatting consistent
 
+### Contributing
+You can find a wiki page on how to setup a workspace [here](https://github.com/ATLauncher/ATLauncher-NextGen/wiki/Setting-Up-A-Workspace)
+
 ### Building
 
 #### Windows
@@ -40,8 +43,7 @@ Download and install the latest version from [Oracle's Java Downloads page](http
 Install Apache Maven via the official [Apache Maven Install Docs](http://maven.apache.org/download.cgi#Installation).
 
 ### Plugging In Your Data
-
-TODO
+You can find a wiki page on how to plug in your own data [here](https://github.com/ATLauncher/ATLauncher-NextGen/wiki/Creating-a-DataProvider)
 
 #### How to make your data
 

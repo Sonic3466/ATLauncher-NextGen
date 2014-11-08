@@ -46,4 +46,9 @@ public final class Version{
         }
         return mods;
     }
+
+    @Override
+    public String toString(){
+        return this.version + " (" + this.minecraft + ")";
+    }
 }

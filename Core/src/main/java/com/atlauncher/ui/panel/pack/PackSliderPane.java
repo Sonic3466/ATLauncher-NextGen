@@ -2,45 +2,44 @@ package com.atlauncher.ui.panel.pack;
 
 import com.atlauncher.Resources;
 import com.atlauncher.event.PackLoadedEvent;
+import com.atlauncher.event.PacksDoneLoadingEvent;
 import com.atlauncher.obj.Pack;
+import com.atlauncher.obj.Pack.Version;
 import com.atlauncher.plaf.UIUtils;
-import com.atlauncher.ui.diag.ViewModpackDialog;
 
 import com.google.common.eventbus.Subscribe;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 /**
  * Stack based slider panel, similar to TechnicLauncher's UI
  */
 public final class PackSliderPane
 extends JPanel
-implements MouseWheelListener,
-           MouseListener{
+implements MouseWheelListener{
     private final List<Pack> master = new LinkedList<>();
     private final List<Pack> packs = new LinkedList<>();
     private int ptr = 0;
@@ -49,13 +48,14 @@ implements MouseWheelListener,
     private final JButton installServerButton = new JButton("Install Server");
     private final JButton websiteButton = new JButton("Website");
     private final JButton supportButton = new JButton("Support");
+    private final JButton clearButton = new JButton("Clear");
+    private final JComboBox<Version> versionBox = new JComboBox<>();
 
     private final JTextField searchField = new JTextField(16);
 
     public PackSliderPane(){
         super(new BorderLayout());
         this.addMouseWheelListener(this);
-        this.addMouseListener(this);
         this.addActionListeners();
         this.addKeyListeners();
 
@@ -65,7 +65,7 @@ implements MouseWheelListener,
         gbc.gridy = 0;
         gbc.weightx = 0.0;
         gbc.anchor = GridBagConstraints.LINE_START;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.fill = GridBagConstraints.NONE;
         gbc.insets.set(2, 2, 2, 2);
         bottom.add(new JLabel("Search: ", SwingConstants.RIGHT), gbc);
 
@@ -76,10 +76,12 @@ implements MouseWheelListener,
         bottom.add(this.searchField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy += 2;
+        gbc.gridy++;
         gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets.set(0, 0, 0, 2);
+        bottom.add(this.clearButton, gbc);
+        gbc.gridx++;
         bottom.add(this.installClientButton, gbc);
         gbc.gridx++;
         bottom.add(this.installServerButton, gbc);
@@ -89,6 +91,10 @@ implements MouseWheelListener,
         gbc.insets.set(0, 0, 0, 0);
         bottom.add(this.websiteButton, gbc);
 
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        top.add(this.versionBox);
+
+        this.add(top, BorderLayout.NORTH);
         this.add(bottom, BorderLayout.SOUTH);
     }
 
@@ -120,6 +126,7 @@ implements MouseWheelListener,
 
             repaint();
         }
+        this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
     }
 
     private void addActionListeners(){
@@ -159,16 +166,10 @@ implements MouseWheelListener,
         this.revalidate();
     }
 
-    private Rectangle getCenterBounds(){
-        Pack pack = this.current();
-        if(pack != null){
-            BufferedImage background = pack.getImage();
-            int x = ((this.getWidth() - background.getWidth()) / 2) - 20;
-            int y = ((this.getHeight() - background.getHeight()) / 2) - 80;
-            return new Rectangle(x, y, 347, 182);
-        } else{
-            return new Rectangle(0, 0, 0, 0);
-        }
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void onPacksDoneLoading(PacksDoneLoadingEvent e){
+        this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
     }
 
     @Override
@@ -251,39 +252,7 @@ implements MouseWheelListener,
             this.next();
         }
 
+        this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
         this.repaint();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e){
-        if(e.getButton() == MouseEvent.BUTTON1 &&
-           this.getCenterBounds().contains(e.getPoint())){
-            SwingUtilities.invokeLater(new Runnable(){
-                @Override
-                public void run(){
-                    new ViewModpackDialog(current()).setVisible(true);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e){
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e){
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e){
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e){
-
     }
 }

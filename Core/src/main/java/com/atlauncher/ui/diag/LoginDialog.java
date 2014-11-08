@@ -19,6 +19,7 @@ package com.atlauncher.ui.diag;
 
 import com.atlauncher.ATLauncher;
 import com.atlauncher.Settings;
+import com.atlauncher.plaf.UIUtils;
 import com.atlauncher.ui.frame.ATLauncherFrame;
 import com.atlauncher.ui.layer.FieldValidationLayer;
 import com.atlauncher.ui.panel.DialogBackPanel;
@@ -26,15 +27,14 @@ import com.atlauncher.utils.Authentication;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -65,6 +65,7 @@ extends JDialog{
         this.pack();
         ATLauncherFrame parent = ATLauncher.getFrame();
         parent.blur();
+        this.setSize(new Dimension(parent.getWidth() / 2, parent.getHeight() / 2));
         this.setLocation(parent.getX() + ((parent.getWidth() - this.getWidth()) / 2), parent.getY() + ((parent.getHeight() - this.getHeight()) / 2));
     }
 
@@ -77,11 +78,11 @@ extends JDialog{
     private static final class TopPanel
     extends JPanel{
         public TopPanel(){
-            super(new FlowLayout(FlowLayout.LEFT));
+            super(new FlowLayout(FlowLayout.CENTER));
             this.setOpaque(false);
             JLabel label = new JLabel("Login To Minecraft");
             label.setForeground(Color.white);
-            label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+            label.setFont(UIUtils.DINPRO_BLACK.deriveFont(24.0F));
             this.add(label);
         }
     }
@@ -94,21 +95,30 @@ extends JDialog{
         private final JLayer<JTextField> pFieldWrapper = new JLayer<>(pField, fieldValidityLayer);
 
         public CenterPanel(){
+            super(new GridBagLayout());
             this.setOpaque(false);
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            JLabel uLabel = new JLabel("Email: ", JLabel.LEFT);
-            uLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            uLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            uLabel.setForeground(Color.white);
-            this.add(uLabel);
-            this.uField.setAlignmentX(Component.LEFT_ALIGNMENT);
-            this.add(this.uField);
-            JLabel pLabel = new JLabel("Password: ", JLabel.LEFT);
-            pLabel.setForeground(Color.white);
-            pLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            pLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            this.add(pLabel);
-            this.pField.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 0.0;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.insets.set(2, 2, 2, 2);
+            gbc.anchor = GridBagConstraints.LINE_START;
+            this.add(new JLabel("Username/Email: "), gbc);
+            gbc.gridy++;
+            this.add(new JLabel("Password: "), gbc);
+
+            gbc.gridy = 0;
+            gbc.gridx++;
+            gbc.weightx = 1.0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.anchor = GridBagConstraints.CENTER;
+            this.add(this.uField, gbc);
+            gbc.gridy++;
+            this.add(pFieldWrapper, gbc);
+
             this.pField.addKeyListener(new KeyAdapter(){
                 @Override
                 public void keyPressed(KeyEvent e){
@@ -123,7 +133,6 @@ extends JDialog{
                     }
                 }
             });
-            this.add(this.pFieldWrapper);
         }
     }
 

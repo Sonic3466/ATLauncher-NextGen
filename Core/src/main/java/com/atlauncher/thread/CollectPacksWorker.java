@@ -21,6 +21,7 @@ import com.atlauncher.ATLauncher;
 import com.atlauncher.Accounts;
 import com.atlauncher.Settings;
 import com.atlauncher.event.PackLoadedEvent;
+import com.atlauncher.event.PacksDoneLoadingEvent;
 import com.atlauncher.obj.Account;
 import com.atlauncher.obj.Pack;
 import com.atlauncher.obj.UserMeta;
@@ -57,7 +58,10 @@ extends SwingWorker<Void, Void>{
                 if(conn.getResponseCode() != 404){
                     try(InputStream stream = conn.getInputStream()){
                         meta = Settings.GSON.fromJson(new InputStreamReader(stream), UserMeta.class);
+                        ATLauncher.LOGGER.debug("Found User Meta");
                     }
+                } else{
+                    ATLauncher.LOGGER.debug("Skipping User Meta");
                 }
             } catch(Exception ex){
                 ex.printStackTrace(System.err);
@@ -100,6 +104,7 @@ extends SwingWorker<Void, Void>{
                 }
             }
 
+            ATLauncher.EVENT_BUS.post(new PacksDoneLoadingEvent());
             return null;
         } catch(Exception ex){
             throw new RuntimeException(ex);
