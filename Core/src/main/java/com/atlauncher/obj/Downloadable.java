@@ -53,11 +53,12 @@ public final class Downloadable implements Runnable {
         this.output = output.resolve(endpoint.substring(endpoint.lastIndexOf('/') + 1));
 
         try {
-            if (!Files.exists(output.getParent())) {
+            if (!Files.exists(output)) {
+                ATLauncher.LOGGER.info("Resolving parent directory for downloadable: " + this.endpoint);
                 Files.createDirectories(output.getParent());
             }
         } catch (IOException e) {
-            e.printStackTrace(System.out);
+            ATLauncher.LOGGER.error("Error trying to resolve parent directory for downloadable: " + this.endpoint);
         }
     }
 
@@ -134,7 +135,7 @@ public final class Downloadable implements Runnable {
     }
 
     private FileChannel getChannel() throws IOException {
-        return FileChannel.open(this.output, EnumSet.of(StandardOpenOption.CREATE, StandardOpenOption.WRITE));
+        return FileChannel.open(this.output, EnumSet.of(StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE));
     }
 
     private InputStream getStream() {

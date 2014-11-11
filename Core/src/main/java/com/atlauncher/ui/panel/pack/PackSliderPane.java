@@ -37,6 +37,7 @@ import javax.swing.SwingConstants;
 /**
  * Stack based slider panel, similar to TechnicLauncher's UI
  */
+//TODO: Add Arrow Key Navigation
 public final class PackSliderPane
 extends JPanel
 implements MouseWheelListener{

@@ -75,14 +75,13 @@ public final class ATLauncher{
 
             ATLauncher.EVENT_BUS.post(new UpdateI18NEvent());
 
-            if(Settings.properties.getProperty("lastAccount") != null){
-                SwingUtilities.invokeLater(new Runnable(){
-                    @Override
-                    public void run(){
-                        new LoginDialog().setVisible(true);
-                    }
-                });
-            }
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run(){
+                    new LoginDialog().setVisible(true);
+                }
+            });
+
         } catch(Exception ex){
             ex.printStackTrace(System.out);
         }

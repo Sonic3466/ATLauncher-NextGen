@@ -38,7 +38,7 @@ public enum Language {
 
     private Language() {
         try {
-            this.load("English");
+            this.load("english");
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
