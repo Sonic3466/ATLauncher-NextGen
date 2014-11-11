@@ -53,8 +53,8 @@ public final class Downloadable implements Runnable {
         this.output = output.resolve(endpoint.substring(endpoint.lastIndexOf('/') + 1));
 
         try {
-            if (!Files.exists(output.getParent())) {
-                Files.createDirectories(output.getParent());
+            if (!Files.exists(output)) {
+                Files.createDirectories(output);
             }
         } catch (IOException e) {
             e.printStackTrace(System.out);
