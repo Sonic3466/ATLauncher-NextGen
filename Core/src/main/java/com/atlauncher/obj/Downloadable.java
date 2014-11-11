@@ -54,8 +54,7 @@ public final class Downloadable implements Runnable {
 
         try {
             if (!Files.exists(output)) {
-                ATLauncher.LOGGER.info("Resolving parent directory for downloadable: " + this.endpoint);
-                Files.createDirectories(output.getParent());
+                Files.createDirectories(output);
             }
         } catch (IOException e) {
             ATLauncher.LOGGER.error("Error trying to resolve parent directory for downloadable: " + this.endpoint);

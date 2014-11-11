@@ -127,6 +127,10 @@ implements MouseWheelListener{
 
             repaint();
         }
+
+        /**
+         * TODO: Add in dev versions also for those who are testers, as those versions don't show in the selector
+         */
         this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
     }
 
@@ -170,6 +174,9 @@ implements MouseWheelListener{
     @Subscribe
     @SuppressWarnings("unused")
     public void onPacksDoneLoading(PacksDoneLoadingEvent e){
+        /**
+         * TODO: Add in dev versions also for those who are testers, as those versions don't show in the selector
+         */
         this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
     }
 
@@ -253,6 +260,9 @@ implements MouseWheelListener{
             this.next();
         }
 
+        /**
+         * TODO: Add in dev versions also for those who are testers, as those versions don't show in the selector
+         */
         this.versionBox.setModel(new DefaultComboBoxModel<>(current().versions));
         this.repaint();
     }
