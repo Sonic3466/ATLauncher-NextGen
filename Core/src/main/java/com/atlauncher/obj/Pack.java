@@ -83,7 +83,7 @@ public final class Pack{
         Path path = Settings.IMAGES.resolve(this.getSafeName().toLowerCase() + ".png");
         try{
             if(!Files.exists(path)){
-                return ImageIO.read(Settings.IMAGES.resolve("vanillaminecraft.png").toFile());
+                return ImageIO.read(Settings.IMAGES.resolve("defaultimage.png").toFile());
             } else{
                 return ImageIO.read(path.toFile());
             }
