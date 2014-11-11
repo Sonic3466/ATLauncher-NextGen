@@ -105,7 +105,7 @@ public final class Account{
                 channel.transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch(Exception ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Error updating skin for " + this.name, ex);
         }
         return this;
     }
@@ -131,7 +131,7 @@ public final class Account{
                 channel.transferFrom(rbc, 0, Long.MAX_VALUE);
             }
         } catch(Exception ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("[Forced] Error updating skin for " + this.name, ex);
         }
         return this;
     }
@@ -146,7 +146,7 @@ public final class Account{
             g.drawImage(main, 0, 0, null);
             return head.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         } catch(Exception ex){
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Error getting head for " + this.name, ex);
         }
     }
 
