@@ -57,6 +57,8 @@ public final class ATLauncher{
             AbstractModule module = regenModule(pC);
             injector = Guice.createInjector(module);
 
+            Settings.findActiveServers();
+
             if(!Boolean.valueOf(parser.get("developer"))){
                 Settings.updateLauncherFiles();
             } else{

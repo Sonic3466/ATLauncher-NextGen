@@ -27,25 +27,28 @@ import com.atlauncher.utils.OS;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import javax.swing.SwingUtilities;
 
-public final class Settings{
-    public static final Gson GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .create();
+public final class Settings {
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final Properties properties = new Properties();
 
-    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";
+    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like " +
+            "Gecko) Chrome/28.0.1500.72 Safari/537.36 ATLauncher/3.2.0.0";
 
     public static final Path CORE = OS.getStorageLocation();
     public static final Path DATA = CORE.resolve("data");
@@ -59,54 +62,54 @@ public final class Settings{
     public static final Path LIBS = DATA.resolve("libs");
     public static final Path TMP;
 
-    static
-    {
-        try{
+    static {
+        try {
             Path path = CORE.resolve("atlauncher.cfg");
 
-            if(!Files.exists(path)){
+            if (!Files.exists(path)) {
                 Files.createFile(path);
             }
 
-            try(InputStream in = new FileInputStream(path.toFile())){
+            try (InputStream in = new FileInputStream(path.toFile())) {
                 properties.load(in);
                 Language.INSTANCE.load(Settings.properties.getProperty("language", "English"));
             }
-        } catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
 
         try{
             TMP = Files.createTempDirectory(Paths.get(System.getProperty("java.io.tmpdir")), "tmp");
             TMP.toFile().deleteOnExit();
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
-            public void run(){
-                try{
+            public void run() {
+                try {
                     Path path = CORE.resolve("atlauncher.cfg");
                     ATLauncher.LOGGER.debug("Saving Settings");
-                    try(OutputStream out = new FileOutputStream(path.toFile())){
+                    try (OutputStream out = new FileOutputStream(path.toFile())) {
                         properties.store(out, "Don't Edit This File");
                     }
-                } catch(Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace(System.err);
                 }
             }
         }));
     }
 
-    public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", CORE.resolve("downloads").toString()));
+    public static Path downloads = Paths.get(Settings.properties.getProperty("downloads", CORE.resolve("downloads")
+            .toString()));
     public static PackUI packUI = PackUI.valueOf(Settings.properties.getProperty("packUI", "SLIDER"));
-    public static final Server[] SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
+    public static Server[] SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
     public static Server server = find(Settings.properties.getProperty("selectedServer", "Auto"));
 
-    public static Server find(String name){
-        for(Server server : SERVERS){
-            if(server.name.equalsIgnoreCase(name) && server.selectable){
+    public static Server find(String name) {
+        for (Server server : SERVERS) {
+            if (server.name.equalsIgnoreCase(name) && server.selectable) {
                 return server;
             }
         }
@@ -114,61 +117,88 @@ public final class Settings{
         return SERVERS[0];
     }
 
-    private Settings(){}
+    public static Server findMasterServer() {
+        for (Server server : SERVERS) {
+            if (server.master) {
+                return server;
+            }
+        }
 
-    private static FileHash[] getFileHashes(){
+        return SERVERS[0];
+    }
+
+    private Settings() {
+    }
+
+    private static FileHash[] getFileHashes() {
         Path hashes = DATA.resolve("hashes.json");
-        if(!Files.exists(hashes)){
+        if (!Files.exists(hashes)) {
             new Downloadable("newlauncher/hashes.json", Settings.DATA, null, false).run();
         }
 
-        try{
+        try {
             InputStream fis = new FileInputStream(hashes.toFile());
             FileHash[] h = GSON.fromJson(new InputStreamReader(fis), FileHash[].class);
             fis.close();
             return h;
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static News[] getNews(){
+    public static News[] getNews() {
         Path news = JSON.resolve("news.json");
-        if(!Files.exists(news)){
+        if (!Files.exists(news)) {
             updateLauncherFiles();
             return getNews();
         }
 
-        try{
+        try {
             InputStream fis = new FileInputStream(news.toFile());
             News[] n = GSON.fromJson(new InputStreamReader(fis), News[].class);
             fis.close();
             return n;
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public static void updateLauncherFiles(){
+    public static void findActiveServers() {
+        Downloadable download = new Downloadable(findMasterServer().getFileURL("newlauncher/servers.json"), Settings
+                .DATA);
+
+        download.run();
+
+        if (Files.exists(Settings.DATA.resolve("servers.json"))) {
+            try {
+                SERVERS = GSON.fromJson(new FileReader(Settings.DATA.resolve("servers.json").toFile()), Server[].class);
+            } catch (Exception ex) {
+                SERVERS = ATLauncher.getInjector().getInstance(Server[].class);
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateLauncherFiles() {
         final LoadingDialog frame = new LoadingDialog("Downloading");
-        SwingUtilities.invokeLater(new Runnable(){
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 frame.setVisible(true);
             }
         });
         FileHash[] hashes = Settings.getFileHashes();
-        for(int i = 0; i < hashes.length; i++){
+        for (int i = 0; i < hashes.length; i++) {
             frame.title.setText(hashes[i].name);
             frame.bar.setValue((i * 100) / hashes.length);
             Downloadable dl = hashes[i].getDownload();
-            if(dl != null){
+            if (dl != null) {
                 dl.run();
             }
         }
-        SwingUtilities.invokeLater(new Runnable(){
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 frame.dispose();
             }
         });
