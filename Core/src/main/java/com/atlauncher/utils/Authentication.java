@@ -27,7 +27,6 @@ import com.mojang.authlib.Agent;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilUserAuthentication;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import java.net.Proxy;
 import java.util.concurrent.Callable;
@@ -61,7 +60,7 @@ public final class Authentication{
         }).get();
 
         if(acc == null){
-            throw new InvalidStateException("Can't Login");
+            throw new RuntimeException("Can't Login");
         }
 
         diag.bar.setValue(100);
