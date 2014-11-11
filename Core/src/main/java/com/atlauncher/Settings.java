@@ -77,7 +77,7 @@ public final class Settings{
         }
 
         try{
-            TMP = Files.createTempDirectory(CORE, "tmp");
+            TMP = Files.createTempDirectory(Paths.get(System.getProperty("java.io.tmpdir")), "tmp");
             TMP.toFile().deleteOnExit();
         } catch(Exception e){
             throw new RuntimeException(e);
